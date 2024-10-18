@@ -1,4 +1,4 @@
-export default function UserInfoBtn() {
+export default function UserInfoBtn({ userName }) {
   return {
     element: `
     <button class="user__info">
@@ -6,7 +6,7 @@ export default function UserInfoBtn() {
             class="user__info__profile"
             src="../../static/image/temp_user_profile.png"
           />
-          <span>김기연</span>
+          <span>${userName}</span>
         </button>
         `,
   };
