@@ -9,8 +9,13 @@ export default function App() {
       header: `${headerComponent.element}`,
     },
     index: {
-      main: `<span>메인입니다</span>`,
+      main: `<span>홈 화면입니다.</span>`,
     },
-    regItems: {},
+    regItems: {
+      main: `<span>상품등록 화면입니다.</span>`,
+    },
+    mypage: {
+      main: `<span>마이페이지 화면입니다.</span>`,
+    },
   };
 }

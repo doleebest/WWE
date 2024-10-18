@@ -7,7 +7,7 @@ const render = () => {
   const appComponent = createComponent(App);
 
   $app.innerHTML += appComponent.common.header;
-  $app.innerHTML += appComponent.regItems.main;
+  $app.innerHTML += appComponent.mypage.main;
 };
 
 render();
