@@ -4,14 +4,8 @@ import UserInfoBtn from "./userInfoBtn.js";
 import LoginBtn from "./loginBtn.js";
 
 export default function Header() {
-  const state = {
-    userName: "김기연 props",
-  };
-
   const navbarComponent = createComponent(Navbar);
-  const userInfoBtnComponent = createComponent(UserInfoBtn, {
-    userName: state.userName,
-  }); //임시로 props 전달
+  const userInfoBtnComponent = createComponent(UserInfoBtn);
   const loginBtnComponent = createComponent(LoginBtn);
 
   return {
