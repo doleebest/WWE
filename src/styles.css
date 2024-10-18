@@ -5,10 +5,15 @@ html {
   font-family: "Pretendard", sans-serif;
 }
 
-.navbar {
-  display: grid;
+#header {
+  display: flex;
+  justify-content: space-between;
+  margin: 30px;
+  align-items: center;
 }
 
 .navbar__menu {
   display: flex;
+  gap: 120px;
+  font-weight: 600;
 }

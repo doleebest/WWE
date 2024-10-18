@@ -1,5 +1,5 @@
-import createComponent from "./core/component.js";
-import App from "./App.js";
+import createComponent from "../core/component.js";
+import App from "../App.js";
 
 const render = () => {
   const $app = document.getElementById("app");

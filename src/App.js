@@ -1,10 +1,16 @@
-import NavBar from "./components/navBar.js";
 import createComponent from "./core/component.js";
+import Header from "./components/header.js";
 
 export default function App() {
-  const navBarComponent = createComponent(NavBar);
+  const headerComponent = createComponent(Header);
 
   return {
-    element: `${navBarComponent.element}`,
+    common: {
+      header: `${headerComponent.element}`,
+    },
+    index: {
+      main: `<span>메인입니다</span>`,
+    },
+    regItems: {},
   };
 }
