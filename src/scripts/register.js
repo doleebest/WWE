@@ -47,7 +47,7 @@ const render = () => {
       document
         .getElementById("productForm")
         .addEventListener("submit", function (event) {
-          event.preventDefault(); // 기본 form 제출을 막음
+          //event.preventDefault(); // 기본 form 제출을 막음
 
           const sellerId = document.getElementById("sellerId").value;
           const contact = document.getElementById("contact").value;
