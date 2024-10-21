@@ -4,9 +4,9 @@ export default function Navbar() {
 
   // 필요하면 이후 수정
   const menuItems = [
-    { text: "홈", href: "/index.html" },
-    { text: "상품 등록", href: "/reg_items.html" },
-    { text: "마이페이지", href: "/mypage.html" },
+    { text: "홈", href: "/src/pages/index.html" },
+    { text: "상품 등록", href: "/src/pages/register.html" },
+    { text: "마이페이지", href: "/src/pages/mypage.html" },
   ];
 
   const menuHtml = menuItems
