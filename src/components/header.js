@@ -12,7 +12,7 @@ export default function Header() {
     element: `
     <header id="header">
       <div class="logo">
-        <a href="/"><img src="../../static/image/logo.png" alt="WWE 로고" /></a>
+        <a href="/"><img src="src/image/logo.png" alt="WWE 로고" /></a>
       </div>
       ${navbarComponent.element}
       <div class="user">

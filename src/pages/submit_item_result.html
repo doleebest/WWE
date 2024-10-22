@@ -1,0 +1,16 @@
+<p>
+    Seller {{data.sellerId}} sells {{data.productName}}.
+    The item is
+    {% if data['status'] == "new" %}
+    new!
+    {% endif %}
+    {% if data['status'] == "used" %}
+    used!
+    {% endif %}
+</p>
+<img src = '{{img_path}}'>
+<p>
+    Contact via {{data.contact}}
+    if you are interested!
+    The address is {{data.address}}
+</p>

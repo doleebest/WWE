@@ -18,7 +18,7 @@ export default function UserInfoBtn() {
     <button class="user__info">
           <img
             class="user__info__profile"
-            src="../../static/image/temp_user_profile.png"
+            src="src/image/temp_user_profile.png"
           />
           <span>${userName}</span>
         </button>
