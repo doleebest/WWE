@@ -1,11 +1,45 @@
+{% extends "header.html" %}
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% block head %}
     <title>로그인</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='login.css') }}"
+    />
+    {% endblock head %}
   </head>
   <body>
-    로그인
+    {% block main %}
+    <main>
+      <div class="login_container">
+        <h2>WWE 로그인</h2>
+        <form class="login_form">
+          <div class="input_container">
+            <div class="input_div">
+              <label for="id">ID</label>
+              <input type="text" id="id" placeholder="ID" required />
+            </div>
+            <div class="input_div">
+              <label for="pw">PASSWORD</label>
+              <input type="text" id="pw" placeholder="PASSWORD" required />
+            </div>
+          </div>
+          <button class="login_btn" type="submit">로그인</button>
+        </form>
+        <div class="login_signup">
+          <span>WWE 회원이 아니신가요?</span>
+          <a href="/signup">회원가입 하기</a>
+        </div>
+      </div>
+    </main>
+    {% endblock main %} {% block script %}
+    <script src="{{ url_for('static', filename='header.js') }}"></script>
+    <script src="{{ url_for('static', filename='login.js') }}"></script>
+    {% endblock script %}
   </body>
 </html>
