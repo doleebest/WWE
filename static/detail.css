@@ -1,0 +1,153 @@
+@import "./styles.css";
+/* 기본 스타일 초기화 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* 메인 컨테이너 */
+.container {
+  font-family: Arial, sans-serif;
+  width: 690px;
+  padding: 20px;
+  margin: 20px auto;
+  border-radius: 8px;
+}
+
+/* 이미지 컨테이너 */
+.product-image img {
+  width: 100%;
+  border-radius: 8px;
+}
+
+/* 판매자 정보 */
+.seller-info {
+  display: flex;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.seller-info img {
+  width: 47px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.seller-info .details {
+  margin-left: 13px;
+}
+
+.seller-info .details .name {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.seller-info .details .email {
+  color: #666;
+  font-size: 14px;
+}
+
+/* 구분선 */
+.divider {
+  height: 1px;
+  background-color: #ddd;
+  margin: 20px 0;
+}
+
+/* 상품 상태 태그 */
+.status-tag {
+  display: inline-block;
+  padding: 5px 10px;
+  font-size: 12px;
+  color: #ff5722;
+  border: 1px solid #ff5722;
+  background-color: #ff562206;
+  border-radius: 15px;
+  margin-top: 10px;
+}
+
+/* 상품 제목 */
+.product-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+/* 상품 설명 */
+.product-description {
+  font-size: 14px;
+  line-height: 1.5;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.product-description-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.product-detail {
+  font-size: 13px;
+  color: #666;
+  margin-top: 2px;
+}
+/* 가격 */
+.price {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  margin: 15px 0;
+}
+
+.product-footer {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* 하트 버튼 */
+.like-btn {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  transition: fill 0.3s;
+  margin-top: 15px;
+}
+
+.like-btn svg {
+  width: 100%;
+  height: 100%;
+  fill: #aaa;
+  transition: fill 0.3s;
+}
+
+.like-btn:hover svg,
+.like-btn.clicked svg {
+  fill: red;
+}
+
+/* 판매자 연락하기 버튼 */
+.contact-btn {
+  display: block;
+  text-align: center;
+  width: 130px;
+  height: 32px;
+  font-size: 15px;
+  color: var(--ewhagreen);
+  background-color: #00462a1d;
+  border: none;
+  border-radius: 8px;
+  margin-top: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.contact-btn:hover {
+  color: #ffffff;
+  background-color: var(--ewhagreen);
+}
+
+.contact-btn:active {
+  color: #ffffff;
+  background-color: var(--ewhagreen);
+}
