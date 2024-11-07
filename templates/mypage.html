@@ -8,7 +8,10 @@
 {% block main %}
 <div class="profile-container">
     <div class="profile-header">
-        <img src="{{ url_for('static', filename='images/profile.png') }}" alt="Profile Picture" class="profile-pic">
+      <img
+      src="{{ url_for('static', filename='images/user_icon.png') }}"
+      alt="user_icon.png"
+    />
         <div class="profile-info">
             <h2>osori01</h2>
             <p>유럽</p>
@@ -16,7 +19,10 @@
             <p>010-XXXX-XXXX</p>
         </div>
         <button class="edit-profile-btn">
-            <img src="{{ url_for('static', filename='images/edit-icon.png') }}" alt="Edit Icon">
+          <img
+          src="{{ url_for('static', filename='images/edit.png') }}"
+          alt="edit.png"
+        />
         </button>
     </div>
 
@@ -31,7 +37,10 @@
     <div class="tab-content" id="wishlist">
         <ul class="product-items">
             <li class="product-item">
-                <img src="{{ url_for('static', filename='images/product1.png') }}" alt="Product Image">
+              <img
+              src="{{ url_for('static', filename='images/clothes.png') }}"
+              alt="clothes.png"
+            />
                 <div class="product-info">
                     <p class="product-name">비비안웨스트우드 아이보리 가디건</p>
                     <p class="product-desc">따뜻하고 가벼운 가디건 입니다</p>
