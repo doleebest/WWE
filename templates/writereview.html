@@ -7,50 +7,56 @@
 
 {% block main %}
 <div class="review-container">
-    <!-- 상품 정보 섹션 -->
+    <!-- Product Information Section -->
     <div class="product-info">
         <img src="{{ url_for('static', filename='images/clothes.png') }}" alt="Product Image" class="product-thumbnail">
         <div class="product-details">
             <h2>비비안웨스트우드 아이보리 가디건</h2>
             <p>따뜻하고 가벼운 가디건 입니다</p>
-            <p class="price">35,000원</p>
         </div>
+        <p class="price">35,000원</p>
     </div>
 
-    <!-- 리뷰 작성 섹션 -->
-    <div class="review-form">
-        <h3>별점</h3>
-        <div class="rating">
+    <!-- Rating Section -->
+    <div class="rating-section">
+        <div class="stars">
             <span class="star" data-rating="1">★</span>
             <span class="star" data-rating="2">★</span>
             <span class="star" data-rating="3">★</span>
             <span class="star" data-rating="4">★</span>
-            <span class="star" data-rating="5">★</span>
+            <span class="star">★</span>
         </div>
-        
-        <div class="form-group">
-            <label>구매자 ID</label>
-            <input type="text" placeholder="구매자 ID">
-        </div>
-        <div class="form-group">
-            <label>판매자 ID</label>
-            <input type="text" placeholder="판매자 ID">
-        </div>
-        
-        <div class="form-group">
-            <label>제품명</label>
-            <input type="text" placeholder="제품명">
-        </div>
-        <div class="form-group">
-            <label>리뷰 제목</label>
-            <input type="text" placeholder="리뷰 제목">
-        </div>
-        <div class="form-group">
-            <label>리뷰글</label>
-            <textarea placeholder="구매한 상품은 어떠셨나요?"></textarea>
-        </div>
+        <p class="rating-label">별점</p>
+    </div>
 
-        <button type="submit" class="submit-btn">리뷰 등록</button>
+    <!-- Review Form -->
+    <div class="review-form">
+        <div class="form-row">
+            <div class="form-group camera-group">
+                <img src="{{ url_for('static', filename='images/camera-img.svg') }}" alt="Camera Icon" class="camera-icon">
+            </div>
+            <div class="form-group">
+                <label for="buyer-id">구매자 ID</label>
+                <input type="text" id="buyer-id" placeholder="구매자 ID">
+            </div>
+            <div class="form-group">
+                <label for="seller-id">판매자 ID</label>
+                <input type="text" id="seller-id" placeholder="판매자 ID">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="product-name">제품명</label>
+            <input type="text" id="product-name" placeholder="제품명">
+        </div>
+        <div class="form-group">
+            <label for="review-title">리뷰 제목</label>
+            <input type="text" id="review-title" placeholder="리뷰 제목">
+        </div>
+        <div class="form-group">
+            <label for="review-content">리뷰글</label>
+            <textarea id="review-content" placeholder="구매한 상품은 어땠나요?"></textarea>
+        </div>
+        <button class="submit-btn">리뷰 등록</button>
     </div>
 </div>
 {% endblock main %}
