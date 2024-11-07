@@ -2,7 +2,17 @@
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
 
 * {
-  font-family: "Pretendard", sans-serif;
+  font-family: "Pretendard", sans-serif !important;
+}
+
+/* 색상 팔레트 */
+:root {
+  --ewhagreen: #00462a;
+  --ewhagray: #b9b9b9;
+  --ewhapear: #fffdf1;
+  --ewhamint: #36ae92;
+  --ewhacoral: #f27367;
+  --gray: #8e8e93;
 }
 
 body {
@@ -29,22 +39,22 @@ header {
 
 .navbar__menu {
   display: flex;
-  gap: 120px;
-  font-weight: 600;
+  gap: 150px;
+  font-weight: 500;
+  color: var(--gray);
 }
 
 .navbar__menu_selected a {
-  color: #00462a;
-  text-decoration: underline;
+  color: var(--ewhamint);
 }
 
 .user {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 10px;
   margin-left: auto;
 }
 
-.user__info__profile {
-  height: 30px;
+.user * {
+  color: var(--gray);
 }
