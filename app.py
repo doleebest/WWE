@@ -27,6 +27,10 @@ def view_list():
 def view_review():
     return render_template("review.html")
 
+@application.route("/writereview")
+def write_review():
+    return render_template("writereview.html")
+
 @application.route("/reg_items")
 def reg_item():
     return render_template("register.html")
@@ -39,13 +43,13 @@ def reg_review():
 def detail():
     return render_template("detail.html")
 
-# POST 방식으로 하면 form을 통으로 넘겨받음.
+# POST 방식으로 form 데이터를 받아 처리
 @application.route("/submit_product_post", methods=['POST'])
 def reg_item_submit_post():
-    image_file=request.files["file"]
+    image_file = request.files["file"]
     image_file.save("static/images/{}".format(image_file.filename))
 
-    data=request.form
+    data = request.form
     return render_template("submit_item_result.html", data=data, img_path="static/images/{}".format(image_file.filename))
 
 if __name__ == "__main__":

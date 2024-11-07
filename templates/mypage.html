@@ -8,10 +8,7 @@
 {% block main %}
 <div class="profile-container">
     <div class="profile-header">
-      <img
-      src="{{ url_for('static', filename='images/user_icon.png') }}"
-      alt="user_icon.png"
-    />
+        <img src="{{ url_for('static', filename='images/user_icon.png') }}" alt="user_icon.png" />
         <div class="profile-info">
             <h2>osori01</h2>
             <p>유럽</p>
@@ -19,10 +16,7 @@
             <p>010-XXXX-XXXX</p>
         </div>
         <button class="edit-profile-btn">
-          <img
-          src="{{ url_for('static', filename='images/edit.png') }}"
-          alt="edit.png"
-        />
+            <img src="{{ url_for('static', filename='images/edit.png') }}" alt="edit.png" />
         </button>
     </div>
 
@@ -37,10 +31,7 @@
     <div class="tab-content" id="wishlist">
         <ul class="product-items">
             <li class="product-item">
-              <img
-              src="{{ url_for('static', filename='images/clothes.png') }}"
-              alt="clothes.png"
-            />
+                <img src="{{ url_for('static', filename='images/clothes.png') }}" alt="clothes.png" />
                 <div class="product-info">
                     <p class="product-name">비비안웨스트우드 아이보리 가디건</p>
                     <p class="product-desc">따뜻하고 가벼운 가디건 입니다</p>
@@ -56,13 +47,14 @@
     <div class="tab-content" id="purchase-history">
         <ul class="product-items">
             <li class="product-item">
-                <img src="{{ url_for('static', filename='images/product1.png') }}" alt="Product Image">
+              <img src="{{ url_for('static', filename='images/clothes.png') }}" alt="clothes.png" />
                 <div class="product-info">
                     <p class="product-name">비비안웨스트우드 아이보리 가디건</p>
                     <p class="product-desc">따뜻하고 가벼운 가디건 입니다</p>
                 </div>
                 <p class="product-price">35,000원</p>
-                <button class="review-btn">리뷰 남기기</button>
+
+                <a href="{{ url_for('write_review') }}" class="review-btn">리뷰 남기기</a>
             </li>
         </ul>
     </div>
@@ -71,7 +63,7 @@
     <div class="tab-content" id="sales-history">
         <ul class="product-items">
             <li class="product-item">
-                <img src="{{ url_for('static', filename='images/product1.png') }}" alt="Product Image">
+              <img src="{{ url_for('static', filename='images/clothes.png') }}" alt="clothes.png" />
                 <div class="product-info">
                     <p class="product-name">비비안웨스트우드 아이보리 가디건</p>
                     <p class="product-desc">따뜻하고 가벼운 가디건 입니다</p>
@@ -87,7 +79,7 @@
     <div class="tab-content" id="review-overview">
         <ul class="review-items">
             <li class="review-item">
-                <img src="{{ url_for('static', filename='images/product1.png') }}" alt="Product Image">
+              <img src="{{ url_for('static', filename='images/clothes.png') }}" alt="clothes.png" />
                 <div class="review-info">
                     <p class="review-username">osori022</p>
                     <p class="product-name">비비안웨스트우드 아이보리 가디건</p>

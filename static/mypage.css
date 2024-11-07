@@ -85,21 +85,22 @@ body {
 
 .product-item {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     padding: 15px 0;
     border-bottom: 1px solid #ddd;
     position: relative;
 }
 
 .product-item img {
-    width: 60px;
-    height: 60px;
+    width: 80px;
+    height: 80px;
     margin-right: 15px;
     border-radius: 5px;
 }
 
 .product-info {
     flex-grow: 1;
+    padding-right: 60px;
 }
 
 .product-name {
@@ -116,8 +117,154 @@ body {
     font-weight: bold;
     font-size: 16px;
     color: #333;
-    margin-right: 10px;
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
 }
+
+.review-btn {
+    background-color: #d5e8d4;
+    color: #333;
+    border: 1px solid #b7d7a8;
+    padding: 5px 12px;
+    font-size: 13px;* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
+    color: #333;
+}
+
+.profile-container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+
+.profile-header img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+
+.profile-info h2 {
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+
+.profile-info p {
+    color: #777;
+    margin-bottom: 3px;
+}
+
+.edit-profile-btn img {
+    width: 20px;
+    height: 20px;
+}
+
+.tab-menu {
+    display: flex;
+    justify-content: space-around;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 20px;
+}
+
+.tab {
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    color: #ccc;
+    border: none;
+    background: none;
+}
+
+.tab.active {
+    font-weight: bold;
+    color: #000;
+    border-bottom: 2px solid #000;
+}
+
+.product-items {
+    list-style: none;
+}
+
+.product-item {
+    display: flex;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid #ddd;
+    position: relative;
+}
+
+.product-item img {
+    width: 80px;
+    height: 80px;
+    margin-right: 15px;
+    border-radius: 5px;
+}
+
+.product-info {
+    flex-grow: 1;
+    padding-right: 100px;
+}
+
+.product-price {
+    font-weight: bold;
+    font-size: 16px;
+    color: #333;
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+}
+
+.toggle-sale-status {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    border-radius: 15px;
+    padding: 3px 10px;
+    cursor: pointer;
+    position: absolute;
+    right: 80px;
+    top: 20px;
+}
+
+.toggle-sale-status.selling {
+    background-color: #d1ecf1;
+    color: #0c5460;
+    border-color: #bee5eb;
+}
+
+.delete-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    right: 10px;
+    top: 20px;
+}
+
+    border-radius: 6px;
+    cursor: pointer;
+    position: absolute;
+    right: 5px;
+    top: 10px;
+    text-align: center;
+}
+
 
 .sold-out {
     position: absolute;
@@ -128,14 +275,6 @@ body {
     background: #f9f9f9;
     padding: 2px 5px;
     border-radius: 4px;
-}
-
-.review-btn {
-    background-color: #e0e0e0;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-    border-radius: 5px;
 }
 
 .delete-btn {
@@ -158,18 +297,27 @@ body {
 
 .review-item {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     padding: 15px 0;
     border-bottom: 1px solid #ddd;
+    position: relative;
+}
+
+.review-item img {
+    width: 80px; 
+    height: 80px;
+    margin-right: 15px;
+    border-radius: 5px;
 }
 
 .review-info {
-    margin-left: 10px;
+    flex-grow: 1;
+    padding-right: 60px;
 }
 
 .review-username {
     font-weight: bold;
-    font-size: 14px;
+    margin-bottom: 5px;
 }
 
 .review-text {
