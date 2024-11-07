@@ -76,6 +76,7 @@
       </div>
     </main>
     {% endblock main %} {% block script %}
+    <script src="{{ url_for('static', filename='header.js') }}"></script>
     <script src="{{ url_for('static', filename='detail.js') }}"></script>
     {% endblock script %}
   </body>
