@@ -15,7 +15,9 @@
   </head>
   <body>
     {% block main %}
-    <main>로그인</main>
+    <main>
+      <div class="login_container"></div>
+    </main>
     {% endblock main %} {% block script %}
     <script src="{{ url_for('static', filename='header.js') }}"></script>
     <script src="{{ url_for('static', filename='login.js') }}"></script>

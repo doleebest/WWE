@@ -27,10 +27,17 @@ header {
   display: grid;
   grid-template-columns: min-content auto auto;
   gap: 200px;
-  padding: 30px;
-  padding-bottom: 15px;
   align-items: center;
   border-bottom: 1px solid rgba(0, 0, 0, 0.081);
+  height: 100px;
+  position: fixed;
+  top: 0;
+  background-color: #ffffff;
+  z-index: 999;
+}
+
+main {
+  padding-top: 100px;
 }
 
 .navbar {
