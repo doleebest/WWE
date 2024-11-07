@@ -1,11 +1,24 @@
+{% extends "header.html" %}
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% block head %}
     <title>로그인</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='login.css') }}"
+    />
+    {% endblock head %}
   </head>
   <body>
-    로그인
+    {% block main %}
+    <main>로그인</main>
+    {% endblock main %} {% block script %}
+    <script src="{{ url_for('static', filename='header.js') }}"></script>
+    <script src="{{ url_for('static', filename='login.js') }}"></script>
+    {% endblock script %}
   </body>
 </html>
