@@ -1,0 +1,44 @@
+{% extends "header.html" %}
+
+{% block head %}
+<title>Review Page</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='review.css') }}">
+{% endblock head %}
+
+{% block main %}
+<div class="product-container">
+    <!-- Product Information Section -->
+    <div class="product-info">
+        <img src="{{ url_for('static', filename='desk1.png') }}" class="product-thumbnail">
+        <div class="product-details">
+            <h2>이케아 책상 팝니다</h2>
+            <p>스웨덴 이케아에서 사서 사용감 별로 없는 제품입니다. 작은 흠집은 있을 수 있고 직접 가져가셔야 합니다.</p>
+            <p class="price">5,000원</p>
+        </div>
+    </div>
+
+    <!-- Review Section -->
+    <div class="review-section">
+        <img src="{{ url_for('static', filename='desk2.png') }}" alt="Desk Review Image" class="review-image">
+        <div class="reviewer-info">
+            <p class="reviewer-name">osori42</p>
+            <p class="reviewer-email">osori42@ewha.ac.kr</p>
+            <p class="reviewer-type">유럽</p>
+        </div>
+        <h3>책상 잘 쓰겠습니다~</h3>
+        <div class="rating">
+            <span class="star filled">★</span>
+            <span class="star filled">★</span>
+            <span class="star filled">★</span>
+            <span class="star filled">★</span>
+            <span class="star">★</span>
+        </div>
+        <p class="review-text">생각보다 상태가 좋네요.<br>기분 좋은 가격에 얻어갑니다.<br>기스와 책상이 약간의 걱정했는데 다행이네요</p>
+        <p class="review-date">2024.02.05 03:08</p>
+    </div>
+</div>
+{% endblock main %}
+
+{% block script %}
+<script src="{{ url_for('static', filename='review.js') }}"></script>
+{% endblock script %}
