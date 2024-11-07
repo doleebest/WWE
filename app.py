@@ -35,6 +35,10 @@ def reg_item():
 def reg_review():
     return render_template("reg_reviews.html")
 
+@application.route("/detail")
+def detail():
+    return render_template("detail.html")
+
 # POST 방식으로 하면 form을 통으로 넘겨받음.
 @application.route("/submit_product_post", methods=['POST'])
 def reg_item_submit_post():
