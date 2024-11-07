@@ -1,0 +1,82 @@
+{% extends "header.html" %}
+
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% block head %}
+    <title>제품 리뷰</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='detail.css') }}"
+    />
+    {% endblock head %}
+  </head>
+  <body>
+    {% block main %}
+    <main>
+      <div class="container">
+        <!-- 상품 이미지 -->
+        <div class="product-image">
+          <img
+            src="{{ url_for('static', filename='images/ikea_desk.png') }}"
+            alt="책상 이미지"
+          />
+        </div>
+
+        <!-- 판매자 정보 -->
+        <div class="seller-info">
+          <img
+            src="{{ url_for('static', filename='images/user_icon.png') }}"
+            alt="판매자 프로필 사진"
+          />
+          <div class="details">
+            <div class="name">김기연</div>
+            <div class="email">kyean07@ewha.ac.kr</div>
+            <div class="email">유럽</div>
+          </div>
+        </div>
+
+        <!-- 구분선 -->
+        <div class="divider"></div>
+
+        <!-- 상품 정보 -->
+        <div class="product-description-header">
+          <div class="product-title">상태 좋은 책상</div>
+          <span class="status-tag">중고물품</span>
+        </div>
+        <div class="product-detail">유럽 / 독일 / 뮌헨공과대학교</div>
+        <div class="price">20,000원</div>
+
+        <div class="product-description">
+          상태 좋은 책상 팝니다.<br />
+          작년 겨울에 이케아에서 사고<br />
+          작은 흠집 있지만 잘 보이지 않습니다.
+        </div>
+
+        <div class="product-detail">2023.11.05 23:58</div>
+
+        <!-- 구분선 -->
+        <div class="divider"></div>
+
+        <div class="product-footer">
+          <!-- 하트 버튼 -->
+          <div class="like-btn" onclick="toggleLike()">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path
+                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+              />
+            </svg>
+          </div>
+
+          <!-- 판매자 연락하기 버튼 -->
+          <button class="contact-btn">판매자 연락하기</button>
+        </div>
+      </div>
+    </main>
+    {% endblock main %} {% block script %}
+    <script src="{{ url_for('static', filename='detail.js') }}"></script>
+    {% endblock script %}
+  </body>
+</html>
