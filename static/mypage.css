@@ -130,6 +130,58 @@ body {
     border-radius: 4px;
 }
 
+.review-btn {
+    background-color: #e0e0e0;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.delete-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #e74c3c;
+}
+
+.toggle-sale-status {
+    background: #f0f0f0;
+    border: 1px solid #ddd;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.review-items {
+    list-style: none;
+}
+
+.review-item {
+    display: flex;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.review-info {
+    margin-left: 10px;
+}
+
+.review-username {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.review-text {
+    font-size: 14px;
+    color: #666;
+}
+
+.star-rating {
+    color: #ff9800;
+    font-size: 14px;
+}
+
 .pagination {
     display: flex;
     justify-content: center;
