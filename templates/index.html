@@ -1,0 +1,25 @@
+{% extends "header.html" %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    {% block head %}
+    <title>WWE</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+    {% endblock head %}
+  </head>
+  <body>
+    {% block main %}
+    <main>홈 화면</main>
+    {% endblock main %} {% block script %}
+    <script src="{{ url_for('static', filename='header.js') }}"></script>
+    <script src="{{ url_for('static', filename='index.js') }}"></script>
+    {% endblock script %}
+  </body>
+</html>

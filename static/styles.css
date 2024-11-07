@@ -5,16 +5,25 @@
   font-family: "Pretendard", sans-serif;
 }
 
+body {
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 header {
   display: grid;
-  grid-template-columns: min-content auto 250px;
+  grid-template-columns: min-content auto auto;
+  gap: 200px;
   padding: 30px;
   padding-bottom: 15px;
   align-items: center;
   border-bottom: 1px solid rgba(0, 0, 0, 0.081);
 }
 
-#Navbar {
+.navbar {
   margin: 0 auto;
 }
 
@@ -24,30 +33,18 @@ header {
   font-weight: 600;
 }
 
+.navbar__menu_selected a {
+  color: #00462a;
+  text-decoration: underline;
+}
+
 .user {
   display: flex;
   align-items: center;
-  gap: 30px;
+  gap: 15px;
   margin-left: auto;
-}
-
-.user__info {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-weight: 600;
-  font-size: 15px;
 }
 
 .user__info__profile {
   height: 30px;
-}
-
-.login {
-  background-color: rgba(0, 70, 42, 0.2);
-  padding: 8px 20px;
-  border-radius: 10px;
-  color: #00462a;
-  font-weight: 600;
-  font-size: 15px;
 }
