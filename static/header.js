@@ -1,5 +1,5 @@
 const isLogin = false; // 백엔드 연결
-const userName = "김기연"; // 백엔드 연결
+const userName = "김기연dddddddddd"; // 백엔드 연결
 
 // 페이지별로 정의될 함수
 let setNavBar = () => {};
@@ -11,6 +11,7 @@ const clickUserInfo = () => {
 const setUserInfo = (user) => {
   const button = document.createElement("button");
   button.addEventListener("click", clickUserInfo);
+  button.classList.add("user_name");
   button.textContent = userName;
   user.appendChild(button);
 };

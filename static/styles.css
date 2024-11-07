@@ -24,21 +24,36 @@ body {
   align-items: center;
 }
 
-header {
-  display: grid;
-  grid-template-columns: min-content auto auto;
-  gap: 200px;
+main {
+  padding-top: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.081);
-  height: 100px;
+}
+
+.header_bg {
+  display: flex;
+  justify-content: center;
+  width: 100%;
   position: fixed;
   top: 0;
   background-color: #ffffff;
   z-index: 999;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.081);
 }
 
-main {
-  padding-top: 100px;
+header {
+  width: 90%;
+  height: 100px;
+  margin: 0 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  width: 150px;
 }
 
 .navbar {
@@ -60,9 +75,16 @@ main {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-left: auto;
+  justify-content: flex-end;
 }
 
 .user * {
   color: var(--gray);
+}
+
+.user_name {
+  width: 80px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
