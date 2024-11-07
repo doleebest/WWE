@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>상품 등록</title>
-    <link rel="stylesheet" href="/src/styles/styles.css" />
-    <link rel="stylesheet" href="/src/styles/register.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/register.css') }}">
   </head>
   <body style="display: flex; flex-direction: column; padding-top: 110px">
     <div id="app" style="width: 100vw"></div>
@@ -18,7 +18,7 @@
       >
         <div class="productForm-topDiv">
           <div class="productPhoto">
-            <img src="/static/image/camera-img.svg" alt="상품 사진" />
+            <img src="src/image/camera-img.svg" alt="상품 사진" />
           </div>
           <div class="sellerInfo">
             <label for="sellerId">판매자 ID</label>
@@ -57,6 +57,14 @@
           placeholder="가격"
           required
         />
+
+        <label for="img">상품 이미지</label>
+        <input 
+          type="file" 
+          name="file" 
+          placeholder="이미지"
+          required
+         />
 
         <div class="select-button-container">
           <label>대륙</label>
@@ -133,11 +141,12 @@
 
         <div class="select-button-container">
           <label>상품 상태</label>
-          <div class="select-buttons" style="margin-top: 5px">
+          <div class="select-buttons" style="margin-top: 5px" name="status">
             <button
               type="button"
               class="state-btn select-btn"
               data-state="중고물품"
+              value="used"
             >
               중고물품
             </button>
@@ -145,6 +154,7 @@
               type="button"
               class="state-btn select-btn"
               data-state="새상품"
+              value="new"
             >
               새상품
             </button>
@@ -163,6 +173,6 @@
       </form>
     </div>
 
-    <script type="module" src="../scripts/register.js"></script>
+    <script type="module" src="{{ url_for('static', filename='scripts/register.js') }}"></script>
   </body>
 </html>
