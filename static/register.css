@@ -1,4 +1,6 @@
-body {
+@import "./styles.css";
+
+/* body {
   font-family: Arial, sans-serif;
   background-color: #ffffff;
   display: flex;
@@ -6,7 +8,7 @@ body {
   align-items: center;
   height: 100vh;
   margin: 0;
-}
+} */
 
 .form-container {
   width: 650px;

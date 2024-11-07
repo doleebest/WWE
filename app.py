@@ -1,12 +1,23 @@
 from flask import Flask, render_template, request
 import sys
 
-# template과 static 폴더 불러오는 경로 변경
-application = Flask(__name__, template_folder="src/pages", static_folder="src")
+application = Flask(__name__)
 
 @application.route("/")
 def hello():
     return render_template("index.html")
+
+@application.route("/login")
+def login():
+    return render_template("login.html")
+
+@application.route("/signup")
+def signup():
+    return render_template("signup.html")
+
+@application.route("/mypage")
+def mypage():
+    return render_template("mypage.html")
 
 @application.route("/list")
 def view_list():
@@ -28,10 +39,10 @@ def reg_review():
 @application.route("/submit_product_post", methods=['POST'])
 def reg_item_submit_post():
     image_file=request.files["file"]
-    image_file.save("src/image/{}".format(image_file.filename))
+    image_file.save("static/image/{}".format(image_file.filename))
 
     data=request.form
-    return render_template("submit_item_result.html", data=data, img_path="src/image/{}".format(image_file.filename))
+    return render_template("submit_item_result.html", data=data, img_path="static/image/{}".format(image_file.filename))
 
 if __name__ == "__main__":
     application.run(host='0.0.0.0', debug=True)
