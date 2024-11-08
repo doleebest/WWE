@@ -1,19 +1,14 @@
 @import "./styles.css";
 
 .profile-container {
-    margin-top: 20px;
-    width: 100%;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 650px;
+    padding-top: 30px;
+    padding-bottom: 70px;
 }
 
 .profile-header {
     display: flex;
     align-items: center;
-    border-bottom: 1px solid #ddd;
     padding-bottom: 20px;
     margin-bottom: 20px;
 }

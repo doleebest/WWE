@@ -36,41 +36,6 @@ const setContent = () => {
     });
   });
 
-  document
-    .getElementById("productForm")
-    .addEventListener("submit", function (event) {
-      //event.preventDefault(); // 기본 form 제출을 막음
-
-      const sellerId = document.getElementById("sellerId").value;
-      const contact = document.getElementById("contact").value;
-      const productName = document.getElementById("productName").value;
-      const price = document.getElementById("price").value;
-      const nation = document.getElementById("nation").value;
-      const address = document.getElementById("address").value;
-      const description = document.getElementById("description").value;
-      const stateButton = document.querySelector(".state-btn.selected");
-      const continentButton = document.querySelector(".continent-btn.selected");
-
-      // 입력값을 확인하고, 서버로 전송하는 코드가 여기에 추가될 수 있음
-      console.log("=== 입력값 확인 ===");
-      console.log("판매자 ID:", sellerId);
-      console.log("판매자 연락처:", contact);
-      console.log("제품명:", productName);
-      console.log("가격:", price);
-      console.log("국가:", nation);
-      console.log("상세주소:", address);
-      console.log("설명:", description);
-      console.log("상품 상태:", stateButton.dataset.state);
-      console.log("대륙:", continentButton.dataset.continent);
-
-      // 폼 초기화
-      document.getElementById("productForm").reset();
-      stateButton.classList.remove("selected");
-      continentButton.classList.remove("selected");
-
-      // 알림 메시지
-      alert("상품이 성공적으로 등록되었습니다!");
-    });
 };
 
 const init = () => {
