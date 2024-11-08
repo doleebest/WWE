@@ -39,7 +39,6 @@
                 <p class="product-price">35,000원</p>
                 <span class="sold-out">거래완료</span>
             </li>
-            <!-- 추가 상품 예시 -->
         </ul>
     </div>
 
@@ -47,13 +46,12 @@
     <div class="tab-content" id="purchase-history">
         <ul class="product-items">
             <li class="product-item">
-              <img src="{{ url_for('static', filename='images/clothes.png') }}" alt="clothes.png" />
+                <img src="{{ url_for('static', filename='images/clothes.png') }}" alt="clothes.png" />
                 <div class="product-info">
                     <p class="product-name">비비안웨스트우드 아이보리 가디건</p>
                     <p class="product-desc">따뜻하고 가벼운 가디건 입니다</p>
                 </div>
                 <p class="product-price">35,000원</p>
-
                 <a href="{{ url_for('write_review') }}" class="review-btn">리뷰 남기기</a>
             </li>
         </ul>
@@ -63,14 +61,32 @@
     <div class="tab-content" id="sales-history">
         <ul class="product-items">
             <li class="product-item">
-              <img src="{{ url_for('static', filename='images/clothes.png') }}" alt="clothes.png" />
+                <img src="{{ url_for('static', filename='images/clothes.png') }}" alt="clothes.png" />
                 <div class="product-info">
-                    <p class="product-name">비비안웨스트우드 아이보리 가디건</p>
-                    <p class="product-desc">따뜻하고 가벼운 가디건 입니다</p>
+                  <p class="product-name">비비안웨스트우드 아이보리 가디건</p>
+                  <p class="product-desc">따뜻하고 가벼운 가디건 입니다</p>
+                  <button class="delete-btn" onclick="deleteItem(this)">
+                      <img src="{{ url_for('static', filename='images/trashbin.png') }}" alt="삭제">
+                  </button>
+              </div>
+              
+                <p class="product-price">35,000원</p>
+                <button class="toggle-sale-status selling" onclick="toggleSaleStatus(this)">
+                    <img src="{{ url_for('static', filename='images/selling.png') }}" alt="판매 미완">
+            </li>
+            <li class="product-item">
+                <img src="{{ url_for('static', filename='images/clothes.png') }}" alt="clothes.png" />
+                <div class="product-info">
+                  <p class="product-name">비비안웨스트우드 아이보리 가디건</p>
+                  <p class="product-desc">따뜻하고 가벼운 가디건 입니다</p>
+                  <button class="delete-btn" onclick="deleteItem(this)">
+                      <img src="{{ url_for('static', filename='images/trashbin.png') }}" alt="삭제">
+                  </button>
                 </div>
                 <p class="product-price">35,000원</p>
-                <button class="toggle-sale-status">판매중</button>
-                <button class="delete-btn">삭제</button>
+                <button class="toggle-sale-status soldout" onclick="toggleSaleStatus(this)">
+                    <img src="{{ url_for('static', filename='images/soldout.png') }}" alt="판매 완료">
+                </button>
             </li>
         </ul>
     </div>
@@ -79,7 +95,7 @@
     <div class="tab-content" id="review-overview">
         <ul class="review-items">
             <li class="review-item">
-              <img src="{{ url_for('static', filename='images/clothes.png') }}" alt="clothes.png" />
+                <img src="{{ url_for('static', filename='images/clothes.png') }}" alt="clothes.png" />
                 <div class="review-info">
                     <p class="review-username">osori022</p>
                     <p class="product-name">비비안웨스트우드 아이보리 가디건</p>

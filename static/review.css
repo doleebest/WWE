@@ -1,114 +1,122 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 body {
     font-family: Arial, sans-serif;
-    background-color: #ffffff;
+    background-color: #fff;
     color: #333;
+    margin: 0;
+    padding: 0;
 }
 
 .product-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    margin: 40px auto;
-    max-width: 800px;
-    padding: 20px;
-    /* 배경, 그림자, 테두리 반경 제거 */
-    background-color: transparent; 
-    box-shadow: none;
-    border-radius: 0;
+    align-items: flex-start;
+    gap: 20px;
 }
 
 .product-info {
     display: flex;
-    align-items: flex-start;
-    margin-bottom: 20px;
+    gap: 20px;
     width: 100%;
+    align-items: flex-start;
 }
 
-.product-thumbnail {
+.product-image {
     width: 120px;
-    height: auto;
-    margin-right: 20px;
+    height: 80px;
+    object-fit: cover;
     border-radius: 8px;
+}
+
+.product-details {
+    flex: 1;
 }
 
 .product-details h2 {
     font-size: 18px;
-    color: #333;
-    margin-bottom: 8px;
     font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
 }
 
 .product-details p {
-    color: #666;
-    margin-bottom: 5px;
+    margin: 0;
     line-height: 1.5;
+    color: #666;
 }
 
 .price {
+    margin-top: 10px;
     font-size: 18px;
     font-weight: bold;
     color: #333;
-    margin-top: 8px;
 }
 
 .review-section {
     width: 100%;
-    margin-top: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center; 
 }
 
-.review-section img {
+.review-image {
     width: 100%;
-    height: auto;
     border-radius: 8px;
-    margin-bottom: 15px;
+    object-fit: cover;
 }
 
 .reviewer-info {
     display: flex;
     align-items: center;
-    margin-bottom: 10px;
+    margin-top: 15px;
+    gap: 10px;
 }
 
-.reviewer-info p {
-    font-size: 14px;
+.reviewer-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.reviewer-text {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.reviewer-name {
+    font-weight: bold;
     color: #333;
-    margin-right: 10px;
 }
 
-.reviewer-type {
+.reviewer-email, .reviewer-type {
     font-size: 12px;
     color: #666;
 }
 
-.rating .star {
-    font-size: 20px;
-    color: #ccc;
-    margin-right: 3px;
+.rating {
+    display: flex;
+    gap: 5px;
+    margin-top: 10px;
 }
 
-.rating .star.filled {
+.star {
+    font-size: 20px;
+    color: #ccc;
+}
+
+.star.filled {
     color: #ff9800;
 }
 
 .review-text {
-    font-size: 14px;
-    color: #333;
     margin-top: 10px;
+    font-size: 14px;
     line-height: 1.6;
+    color: #333;
 }
 
 .review-date {
+    margin-top: 8px;
     font-size: 12px;
     color: #999;
-    margin-top: 8px;
-    text-align: right;
 }
