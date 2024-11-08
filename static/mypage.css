@@ -4,17 +4,32 @@
     box-sizing: border-box;
 }
 
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    background-color: #fff;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
 body {
-    font-family: Arial, sans-serif;
-    background-color: #ffffff;
-    color: #333;
+    padding-top: 60px;
 }
 
 .profile-container {
+    margin-top: 20px;
     width: 80%;
-    margin: 0 auto;
+    margin: 20px auto;
     padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
+
+
 
 .profile-header {
     display: flex;
