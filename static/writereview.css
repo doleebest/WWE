@@ -1,8 +1,4 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+@import "./styles.css";
 
 body {
     font-family: Arial, sans-serif;
@@ -82,12 +78,15 @@ body {
     display: flex;
     flex-direction: column;
 }
-
+ 
+.buyer-seller *{
+    width: 300px;
+}
 .form-row {
     display: flex;
     align-items: center;
-    gap: 10px;
     margin-bottom: 15px;
+    justify-content: space-between;
 }
 
 .form-group {

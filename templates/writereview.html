@@ -1,13 +1,18 @@
 {% extends "header.html" %}
 
-{% block head %}
-<title>My Page</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-<link rel="stylesheet" href="{{ url_for('static', filename='mypage.css') }}">
-{% endblock head %}
-
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% block head %}
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Page</title><link rel="stylesheet" href="{{ url_for('static', filename='writereview.css') }}">
+    {% endblock head %}
+  </head>
+  <body>
 
 {% block main %}
+<main>
 <div class="review-container">
     <!-- Product Information Section -->
     <div class="product-info">
@@ -37,6 +42,7 @@
             <div class="form-group camera-group">
                 <img src="{{ url_for('static', filename='images/camera-img.svg') }}" alt="Camera Icon" class="camera-icon">
             </div>
+            <div class="buyer-seller">
             <div class="form-group">
                 <label for="buyer-id">구매자 ID</label>
                 <input type="text" id="buyer-id" placeholder="구매자 ID">
@@ -45,6 +51,7 @@
                 <label for="seller-id">판매자 ID</label>
                 <input type="text" id="seller-id" placeholder="판매자 ID">
             </div>
+        </div>
         </div>
         <div class="form-group">
             <label for="product-name">제품명</label>
@@ -61,6 +68,7 @@
         <button class="submit-btn">리뷰 등록</button>
     </div>
 </div>
+</main>
 {% endblock main %}
 
 {% block script %}
