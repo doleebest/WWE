@@ -1,23 +1,4 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 60px;
-    background-color: #fff;
-    z-index: 1000;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-body {
-    padding-top: 60px;
-}
+@import "./styles.css";
 
 .profile-container {
     margin-top: 20px;
@@ -28,8 +9,6 @@ body {
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
-
-
 
 .profile-header {
     display: flex;

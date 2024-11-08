@@ -1,122 +1,73 @@
 {% extends "header.html" %}
 
-{% block head %}
-<title>My Page</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-<link rel="stylesheet" href="{{ url_for('static', filename='mypage.css') }}">
-{% endblock head %}
-
 {% block main %}
-<div class="profile-container">
-    <div class="profile-header">
-        <img src="{{ url_for('static', filename='images/user_icon.png') }}" alt="user_icon.png" />
-        <div class="profile-info">
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% block head %}
+    <title>마이 페이지</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='mypage.css') }}"
+    />
+    {% endblock head %}
+  </head>
+  <body> <!-- body 태그 추가 -->
+    <main>
+      <div class="profile-container">
+        <div class="profile-header">
+          <img src="{{ url_for('static', filename='images/user_icon.png') }}" alt="user_icon.png" />
+          <div class="profile-info">
             <h2>osori01</h2>
             <p>유럽</p>
             <p>osori01@ewha.ac.kr</p>
             <p>010-XXXX-XXXX</p>
-        </div>
-        <button class="edit-profile-btn">
+          </div>
+          <button class="edit-profile-btn">
             <img src="{{ url_for('static', filename='images/edit.png') }}" alt="edit.png" />
-        </button>
-    </div>
+          </button>
+        </div>
 
-    <div class="tab-menu">
-        <button class="tab active" onclick="showTab('wishlist')">찜한 상품</button>
-        <button class="tab" onclick="showTab('purchase-history')">구매 내역</button>
-        <button class="tab" onclick="showTab('sales-history')">판매 내역</button>
-        <button class="tab" onclick="showTab('review-overview')">리뷰 전체 조회</button>
-    </div>
+        <div class="tab-menu">
+          <button class="tab active" onclick="showTab('wishlist')">찜한 상품</button>
+          <button class="tab" onclick="showTab('purchase-history')">구매 내역</button>
+          <button class="tab" onclick="showTab('sales-history')">판매 내역</button>
+          <button class="tab" onclick="showTab('review-overview')">리뷰 전체 조회</button>
+        </div>
 
-    <!-- 찜한 상품 콘텐츠 -->
-    <div class="tab-content" id="wishlist">
-        <ul class="product-items">
-            <li class="product-item">
-                <img src="{{ url_for('static', filename='images/clothes.png') }}" alt="clothes.png" />
-                <div class="product-info">
-                    <p class="product-name">비비안웨스트우드 아이보리 가디건</p>
-                    <p class="product-desc">따뜻하고 가벼운 가디건 입니다</p>
-                </div>
-                <p class="product-price">35,000원</p>
-                <span class="sold-out">거래완료</span>
-            </li>
-        </ul>
-    </div>
+        <!-- 탭 콘텐츠 영역 -->
+        <div class="tab-content" id="wishlist">
+          <!-- 찜한 상품 -->
+        </div>
 
-    <!-- 구매 내역 콘텐츠 -->
-    <div class="tab-content" id="purchase-history">
-        <ul class="product-items">
-            <li class="product-item">
-                <img src="{{ url_for('static', filename='images/clothes.png') }}" alt="clothes.png" />
-                <div class="product-info">
-                    <p class="product-name">비비안웨스트우드 아이보리 가디건</p>
-                    <p class="product-desc">따뜻하고 가벼운 가디건 입니다</p>
-                </div>
-                <p class="product-price">35,000원</p>
-                <a href="{{ url_for('write_review') }}" class="review-btn">리뷰 남기기</a>
-            </li>
-        </ul>
-    </div>
+        <div class="tab-content" id="purchase-history">
+          <!-- 구매 내역 -->
+        </div>
 
-    <!-- 판매 내역 콘텐츠 -->
-    <div class="tab-content" id="sales-history">
-        <ul class="product-items">
-            <li class="product-item">
-                <img src="{{ url_for('static', filename='images/clothes.png') }}" alt="clothes.png" />
-                <div class="product-info">
-                  <p class="product-name">비비안웨스트우드 아이보리 가디건</p>
-                  <p class="product-desc">따뜻하고 가벼운 가디건 입니다</p>
-                  <button class="delete-btn" onclick="deleteItem(this)">
-                      <img src="{{ url_for('static', filename='images/trashbin.png') }}" alt="삭제">
-                  </button>
-              </div>
-              
-                <p class="product-price">35,000원</p>
-                <button class="toggle-sale-status selling" onclick="toggleSaleStatus(this)">
-                    <img src="{{ url_for('static', filename='images/selling.png') }}" alt="판매 미완">
-            </li>
-            <li class="product-item">
-                <img src="{{ url_for('static', filename='images/clothes.png') }}" alt="clothes.png" />
-                <div class="product-info">
-                  <p class="product-name">비비안웨스트우드 아이보리 가디건</p>
-                  <p class="product-desc">따뜻하고 가벼운 가디건 입니다</p>
-                  <button class="delete-btn" onclick="deleteItem(this)">
-                      <img src="{{ url_for('static', filename='images/trashbin.png') }}" alt="삭제">
-                  </button>
-                </div>
-                <p class="product-price">35,000원</p>
-                <button class="toggle-sale-status soldout" onclick="toggleSaleStatus(this)">
-                    <img src="{{ url_for('static', filename='images/soldout.png') }}" alt="판매 완료">
-                </button>
-            </li>
-        </ul>
-    </div>
+        <div class="tab-content" id="sales-history">
+          <!-- 판매 내역 -->
+        </div>
 
-    <!-- 리뷰 전체 조회 콘텐츠 -->
-    <div class="tab-content" id="review-overview">
-        <ul class="review-items">
-            <li class="review-item">
-                <img src="{{ url_for('static', filename='images/clothes.png') }}" alt="clothes.png" />
-                <div class="review-info">
-                    <p class="review-username">osori022</p>
-                    <p class="product-name">비비안웨스트우드 아이보리 가디건</p>
-                    <p class="review-text">잘받았습니다~</p>
-                    <div class="star-rating">★★★★★</div>
-                </div>
-            </li>
-        </ul>
-    </div>
+        <div class="tab-content" id="review-overview">
+          <!-- 리뷰 전체 조회 -->
+        </div>
 
-    <div class="pagination">
-        <span class="prev-page">«</span>
-        <span class="page-number active">1</span>
-        <span class="page-number">2</span>
-        <span class="page-number">3</span>
-        <span class="next-page">»</span>
-    </div>
-</div>
+        <div class="pagination">
+          <span class="prev-page">«</span>
+          <span class="page-number active">1</span>
+          <span class="page-number">2</span>
+          <span class="page-number">3</span>
+          <span class="next-page">»</span>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
 {% endblock main %}
 
 {% block script %}
 <script src="{{ url_for('static', filename='mypage.js') }}"></script>
+<script src="{{ url_for('static', filename='header.js') }}"></script>
 {% endblock script %}
