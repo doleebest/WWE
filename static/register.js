@@ -1,3 +1,8 @@
+const setRegNavBar = () => {
+  const regItems = document.querySelector("#navbar__menu__reg_items");
+  regItems.classList.add("navbar__menu_selected");
+};
+
 const setContent = () => {
   const continentButtons = document.querySelectorAll(".continent-btn");
   const stateButtons = document.querySelectorAll(".state-btn");
