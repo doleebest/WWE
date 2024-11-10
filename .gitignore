@@ -8,7 +8,7 @@ instance/*
 .env
 
 # Authentication
-firebase_auth.json
+authentication/firebase_auth.json
 
 ### Flask.Python Stack ###
 # Byte-compiled / optimized / DLL files
