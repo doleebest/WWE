@@ -15,18 +15,23 @@
   </head>
   <body>
     {% block main %}
+    {% with mesg = get_flashed_messages() %}
+    {% if mesg !=[] %}
+      <script> alert("{{ mesg[0] }}")</script>
+    {% endif %}
+    {% endwith %}
     <main>
       <div class="signup_container">
         <img src="../static/images/logo-long.svg" alt="long WWE logo" />
-        <form class="signup_form">
+        <form class="signup_form" method="post" action="/signup_post">
           <div class="input_container">
             <div class="input_div">
               <label for="id">아이디</label>
-              <input type="text" id="id" placeholder="아이디" required />
+              <input type="text" id="id" name="id" placeholder="아이디" required />
             </div>
             <div class="input_div">
               <label for="pw">비밀번호</label>
-              <input type="password" id="pw" placeholder="비밀번호" required />
+              <input type="password" id="pw" name="pw" placeholder="비밀번호" required />
             </div>
             <div class="input_div">
               <label for="pw_check">비밀번호 재확인</label>
