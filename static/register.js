@@ -40,3 +40,10 @@ const setContent = () => {
     });
   });
 };
+
+const init = () => {
+  setNavBar = setRegNavBar; // 재정의
+  setContent();
+};
+
+init();
