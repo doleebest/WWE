@@ -1,19 +1,39 @@
 from flask import Flask, render_template, request, flash, redirect, url_for, session
 from database import DBhandler
 import sys, hashlib
+import firebase_admin
+from firebase_admin import credentials, auth, exceptions
 
 application = Flask(__name__)
 application.config["SECRET_KEY"] = "helloosp"
 
 DB = DBhandler()
 
+# Firebase 초기화
+cred = credentials.Certificate("authentication/firebase_auth.json")  # JSON 파일 경로
+firebase_admin.initialize_app(cred)
+
 @application.route("/")
 def hello():
     return render_template("index.html")
 
-@application.route("/login")
+#@application.route("/login")
+#def login():
+#    return render_template("login.html")
+@application.route('/login', methods=['GET', 'POST'])
 def login():
-    return render_template("login.html")
+    if request.method == 'POST':
+        id = request.form['id']
+        pw = request.form['pw']
+        try:
+            # Firebase에서 사용자 ID로 로그인 처리
+            user = auth.get_user(id)
+            # 인증 성공 시 세션에 사용자 정보를 저장
+            session['user_id'] = user.uid
+            return redirect('/')
+        except exceptions.FirebaseError:
+            flash('Invalid id or password')
+    return render_template('login.html')
 
 @application.route("/signup")
 def signup():
