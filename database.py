@@ -16,10 +16,10 @@ class DBhandler:
             "productName": data['productName'],
             "price": data['price'],
             "img_path": img_path,
-            #"continent": data['continent'],
+            "continent": data['continent'],
             "nation": data['nation'],
             "address": data['address'],
-            #"state": data['state'],
+            "state": data['state'],
             "description": data['description']
         }
         self.db.child("item").child(name).set(item_info)
