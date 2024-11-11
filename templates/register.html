@@ -69,6 +69,10 @@
           <label for="img">상품 이미지</label>
           <input type="file" name="file" placeholder="이미지" required />
 
+          <!-- 대륙, 상품 상태 값 input 태그로 저장 -->
+          <input type="hidden" id="continentInput" name="continent" />
+          <input type="hidden" id="stateInput" name="state" />
+
           <div class="select-button-container">
             <label>대륙</label>
             <div class="select-buttons" style="margin-top: 5px">
@@ -149,7 +153,6 @@
                 type="button"
                 class="state-btn select-btn"
                 data-state="중고물품"
-                value="used"
               >
                 중고물품
               </button>
@@ -157,7 +160,6 @@
                 type="button"
                 class="state-btn select-btn"
                 data-state="새상품"
-                value="new"
               >
                 새상품
               </button>
