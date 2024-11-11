@@ -8,18 +8,19 @@ class DBhandler:
 
         firebase = pyrebase.initialize_app(config)
         self.db = firebase.database()
-    
-    # post 방식으로 넘겨 받은 상품 정보를 firebase로 넣는 함수    
+
     def insert_item(self, name, data, img_path):
-        item_info={
-            "seller":data['seller'],
-            "addr":data['addr'],
-            "email":data['email'],
-            "category":data['category'],
-            "card":data['card'],
-            "status":data['status'],
-            "phone":data['phone'],
-            "img_path":img_path
+        item_info ={
+            "sellerId": data['sellerId'],
+            "contact": data['contact'],
+            "productName": data['productName'],
+            "price": data['price'],
+            "img_path": img_path,
+            "continent": data['continent'],
+            "nation": data['nation'],
+            "address": data['address'],
+            "state": data['state'],
+            "description": data['description']
         }
         self.db.child("item").child(name).set(item_info)
         print(data,img_path)
