@@ -35,6 +35,11 @@ def login():
             flash('Invalid id or password')
     return render_template('login.html')
 
+@application.route("/logout")
+def logout_user():
+    session.clear()
+    return render_template("index.html")
+
 @application.route("/signup")
 def signup():
     return render_template("signup.html")
