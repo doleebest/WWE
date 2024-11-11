@@ -18,6 +18,26 @@
   gap: 40px;
 }
 
+.input_container__id {
+  display: grid;
+  grid-template-columns: auto max-content;
+  gap: 20px;
+  align-items: center;
+}
+
+.duplicate_check_btn {
+  height: 40px;
+  width: 80px;
+  border-radius: 15px;
+  background-color: #00462a1a;
+  color: var(--ewhagreen);
+}
+
+.duplicate_check_btn:hover {
+  background-color: var(--ewhagreen);
+  color: white;
+}
+
 .input_div {
   display: flex;
   flex-direction: column;
