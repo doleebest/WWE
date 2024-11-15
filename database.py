@@ -61,3 +61,19 @@ class DBhandler:
             if value['id'] == id_ and value['pw'] == pw_:
               return True
         return False
+    
+    # my page 관련
+    def get_user_wishlist(self,user_id):
+        wishlist_ref = self.db.collection('wishlist').where('user_id', '==', user_id)
+        wishlist = [doc.to_dict() for doc in wishlist_ref.stream()]
+        return wishlist
+
+    def get_user_purchases(self,user_id):
+        purchases_ref = self.db.collection('purchases').where('user_id', '==', user_id)
+        purchases = [doc.to_dict() for doc in purchases_ref.stream()]
+        return purchases
+
+    def get_user_sales(self,user_id):
+        sales_ref = self,db.collection('products').where('seller_id', '==', user_id)
+        sales = [doc.to_dict() for doc in sales_ref.stream()]
+        return sales

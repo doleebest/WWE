@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, flash, redirect, url_for, session
+from flask import Flask, render_template, request, flash, redirect, url_for, session, jsonify
 from database import DBhandler
 import sys, hashlib
 
@@ -49,10 +49,32 @@ def register_user() :
         flash("user id already exist!")
         return render_template("signup.html")
     
-
+# my page 관련 routing
 @application.route("/mypage")
 def mypage():
     return render_template("mypage.html")
+
+@application.route('/mypage/<int:user_id>/wishlist', methods=['GET'])
+def wishlist(user_id):
+    wishlist = DB.get_user_wishlist(user_id)
+    if not wishlist:
+        return jsonify({'error': 'No items in wishlist'}), 404
+    return jsonify(wishlist), 200
+
+@application.route('/mypage/<int:user_id>/purchases', methods=['GET'])
+def purchases(user_id):
+    purchases = DB.get_user_purchases(user_id)
+    if not purchases:
+        return jsonify({'error': 'No purchase history'}), 404
+    return jsonify(purchases), 200
+
+@application.route('/mypage/<int:user_id>/sales', methods=['GET'])
+def sales(user_id):
+    sales = DB.get_user_sales(user_id)
+    if not sales:
+        return jsonify({'error': 'No sales history'}), 404
+    return jsonify(sales), 200
+
 
 @application.route("/list")
 def view_list():
@@ -89,3 +111,5 @@ def reg_item_submit_post():
 
 if __name__ == "__main__":
     application.run(host='0.0.0.0', debug=True)
+    
+
