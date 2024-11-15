@@ -39,8 +39,18 @@ def signup():
 @application.route("/signup_post", methods=['POST'])
 def register_user() :
     data=request.form
+    id=request.form['id']
     pw=request.form['pw']
     pw_hash = hashlib.sha256(pw.encode('utf-8')).hexdigest()
+    # ID와 비밀번호 유효성 검사
+    if not DB.validate_user_id(id):
+        flash("ID는 영문자로 시작하고, 영문자와 숫자만 포함하며 5~15자여야 합니다!")
+        return render_template("signup.html")
+    if not DB.validate_password(pw):
+        flash("비밀번호는 최소 8자이며, 문자, 숫자, 특수문자를 각각 1개 이상 포함해야 합니다!")
+        return render_template("signup.html")
+    
+    #사용자 정보 삽입
     if DB.insert_user(data,pw_hash):
         return render_template("login.html")
     else :
