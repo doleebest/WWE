@@ -52,7 +52,19 @@ def register_user() :
 # my page 관련 routing
 @application.route("/mypage")
 def mypage():
-    return render_template("mypage.html")
+    user_id = session.get('user_id')
+    if not user_id : 
+        return redirect(url_for('login'))
+    wishlist = DB.get_user_wishlist(user_id)
+    purchase_history = DB.get_user_purchase_history(user_id)
+    sales_history = DB.get_user_sales_history(user_id)
+    
+    return render_template(
+        'mypage.html',
+        wishlist=wishlist,
+        purchase_history=purchase_history,
+        sales_history=sales_history,
+    )
 
 @application.route('/mypage/<int:user_id>/wishlist', methods=['GET'])
 def wishlist(user_id):
