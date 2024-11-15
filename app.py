@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, flash, redirect, url_for, session, jsonify
 from database import DBhandler
-import sys, hashlib
+import hashlib
 
 application = Flask(__name__)
 application.config["SECRET_KEY"] = "helloosp"
@@ -136,5 +136,3 @@ def reg_item_submit_post():
 
 if __name__ == "__main__":
     application.run(host='0.0.0.0', debug=True)
-    
-
