@@ -24,13 +24,13 @@ def login_user():
             session['id']=id
             return redirect('/')
         else:
-            flash("wrond ID or PW!")
+            flash("wrong ID or PW!")
             return render_template("login.html")
         
 @application.route("/logout")
 def logout_user():
     session.clear()
-    return render_template("index.html")
+    return redirect(url_for('/'))
 
 @application.route("/signup")
 def signup():
