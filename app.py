@@ -12,9 +12,9 @@ DB = DBhandler()
 # 홈화면
 @application.route("/")
 def hello():
-    page = request.args.get("page", 0, type=int)
-    start_index = ITEM_COUNT_PER_PAGE * page
-    end_index = ITEM_COUNT_PER_PAGE * (page + 1)
+    page = request.args.get("page", 1, type=int)
+    start_index = ITEM_COUNT_PER_PAGE * (page - 1)
+    end_index = ITEM_COUNT_PER_PAGE * page
 
     data = DB.get_items()
     total_item_count = len(data)
