@@ -63,17 +63,17 @@ class DBhandler:
         return False
     
     # my page 관련
-    def get_user_wishlist(self,user_id):
-        wishlist_ref = self.db.collection('wishlist').where('user_id', '==', user_id)
-        wishlist = [doc.to_dict() for doc in wishlist_ref.stream()]
+    def get_user_wishlist(self,id):
+        wishlist_ref = self.db.child('wishlist').order_by_child('id').equal_to(id).get()
+        wishlist = [item.val() for item in wishlist_ref.each()]
         return wishlist
 
-    def get_user_purchases(self,user_id):
-        purchases_ref = self.db.collection('purchases').where('user_id', '==', user_id)
-        purchases = [doc.to_dict() for doc in purchases_ref.stream()]
+    def get_user_purchases(self,id):
+        purchases_ref = self.db.child('purchases').order_by_child('id').equal_to(id).get()
+        purchases = [item.val() for item in purchases_ref.each()]
         return purchases
 
-    def get_user_sales(self,user_id):
-        sales_ref = self,db.collection('products').where('seller_id', '==', user_id)
-        sales = [doc.to_dict() for doc in sales_ref.stream()]
+    def get_user_sales(self,id):
+        sales_ref = self.db.child('products').order_by_child('sellerId').equal_to(id).get()
+        sales = [item.val() for item in sales_ref.each()]
         return sales

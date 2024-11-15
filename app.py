@@ -7,8 +7,6 @@ application.config["SECRET_KEY"] = "helloosp"
 
 DB = DBhandler()
 
-DB = DBhandler()
-
 @application.route("/")
 def hello():
     return render_template("index.html")
@@ -52,12 +50,14 @@ def register_user() :
 # my page 관련 routing
 @application.route("/mypage")
 def mypage():
-    user_id = session.get('user_id')
-    if not user_id : 
+    id = session.get('id')
+    if not id : 
         return redirect(url_for('login'))
-    wishlist = DB.get_user_wishlist(user_id)
-    purchase_history = DB.get_user_purchase_history(user_id)
-    sales_history = DB.get_user_sales_history(user_id)
+    
+    #사용자가 마이페이지를 열면, 각각을 데베에서 가져온다.
+    wishlist = DB.get_user_wishlist(id)
+    purchase_history = DB.get_user_purchases(id)
+    sales_history = DB.get_user_sales(id)
     
     return render_template(
         'mypage.html',
@@ -66,26 +66,29 @@ def mypage():
         sales_history=sales_history,
     )
 
-@application.route('/mypage/<int:user_id>/wishlist', methods=['GET'])
-def wishlist(user_id):
-    wishlist = DB.get_user_wishlist(user_id)
-    if not wishlist:
-        return jsonify({'error': 'No items in wishlist'}), 404
-    return jsonify(wishlist), 200
+@application.route('/mypage/wishlist', methods=['GET'])
+def wishlist():
+    id = session.get('id')
+    if not id:
+        return redirect(url_for('login'))
+    wishlist = DB.get_user_wishlist(id)
+    return jsonify(wishlist or []), 200  # 빈 리스트 반환
 
-@application.route('/mypage/<int:user_id>/purchases', methods=['GET'])
-def purchases(user_id):
-    purchases = DB.get_user_purchases(user_id)
-    if not purchases:
-        return jsonify({'error': 'No purchase history'}), 404
-    return jsonify(purchases), 200
+@application.route('/mypage/purchases', methods=['GET'])
+def purchases():
+    id = session.get('id')
+    if not id:
+        return redirect(url_for('login'))
+    purchases = DB.get_user_purchases(id)
+    return jsonify(purchases or []), 200
 
-@application.route('/mypage/<int:user_id>/sales', methods=['GET'])
-def sales(user_id):
-    sales = DB.get_user_sales(user_id)
-    if not sales:
-        return jsonify({'error': 'No sales history'}), 404
-    return jsonify(sales), 200
+@application.route('/mypage/sales', methods=['GET'])
+def sales(id):
+    id = session.get('id')
+    if not id:
+        return redirect(url_for('login'))
+    sales = DB.get_user_sales(id)
+    return jsonify(sales or []), 200
 
 
 @application.route("/list")
