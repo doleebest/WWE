@@ -2,6 +2,8 @@ from flask import Flask, render_template, request, flash, redirect, url_for, ses
 from database import DBhandler
 import hashlib
 
+ITEM_COUNT_PER_PAGE = 12
+
 application = Flask(__name__)
 application.config["SECRET_KEY"] = "helloosp"
 
@@ -10,14 +12,21 @@ DB = DBhandler()
 # 홈화면
 @application.route("/")
 def hello():
+    page = request.args.get("page", 0, type=int)
+    start_index = ITEM_COUNT_PER_PAGE * page
+    end_index = ITEM_COUNT_PER_PAGE * (page + 1)
 
     data = DB.get_items()
-    total_count = len(data)
+    total_item_count = len(data)
+    data = dict(list(data.items())[start_index:end_index])
 
     return render_template(
         "index.html",
         datas = data.items(),
-        total = total_count)
+        limit = ITEM_COUNT_PER_PAGE, # 한 페이지에 상품 개수
+        page = page, # 현재 페이지 인덱스
+        page_count = int((total_item_count/ITEM_COUNT_PER_PAGE)+1), # 페이지 개수
+        total = total_item_count) # 총 상품 개수
 
 @application.route("/login")
 def login():
