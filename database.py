@@ -1,5 +1,6 @@
 import pyrebase
 import json
+import re
 
 class DBhandler:
     def __init__(self):
@@ -52,6 +53,16 @@ class DBhandler:
                 if value['id'] == id_string:
                     return False
             return True
+
+    def validate_user_id(self,id):
+        # 영문자로 시작하고, 영문자와 숫자만 포함하며 5~15자 길이
+        pattern = r'^[a-zA-Z][0-9a-zA-Z]{4,14}$'
+        return re.match(pattern, id)
+
+    def validate_password(self,pw):
+        # 최소 8자, 문자, 숫자, 특수문자 각각 1개 이상 포함
+        pattern = r'^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$'
+        return re.match(pattern, pw)
         
     def find_user(self, id_, pw_):  
         users = self.db.child("user").get()
@@ -61,3 +72,19 @@ class DBhandler:
             if value['id'] == id_ and value['pw'] == pw_:
               return True
         return False
+    
+    # my page 관련
+    def get_user_wishlist(self,id):
+        wishlist_ref = self.db.child('wishlist').order_by_child('id').equal_to(id).get()
+        wishlist = [item.val() for item in wishlist_ref.each()]
+        return wishlist
+
+    def get_user_purchases(self,id):
+        purchases_ref = self.db.child('purchases').order_by_child('id').equal_to(id).get()
+        purchases = [item.val() for item in purchases_ref.each()]
+        return purchases
+
+    def get_user_sales(self,id):
+        sales_ref = self.db.child('products').order_by_child('sellerId').equal_to(id).get()
+        sales = [item.val() for item in sales_ref.each()]
+        return sales
