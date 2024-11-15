@@ -7,9 +7,17 @@ application.config["SECRET_KEY"] = "helloosp"
 
 DB = DBhandler()
 
+# 홈화면
 @application.route("/")
 def hello():
-    return render_template("index.html")
+
+    data = DB.get_items()
+    total_count = len(data)
+
+    return render_template(
+        "index.html",
+        datas = data.items(),
+        total = total_count)
 
 @application.route("/login")
 def login():
