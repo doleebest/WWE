@@ -29,20 +29,29 @@ const mypage = () => {
   // 기본 탭 설정
   document.getElementById("wishlist").style.display = "block";
 
-  // 판매 상태 토글 함수
-  window.toggleSaleStatus = function (button) {
-    const isSelling = button.classList.contains("selling");
+document.addEventListener('DOMContentLoaded', function() {
+    // 삭제 버튼 이벤트 리스너
+    document.querySelectorAll('.delete-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            this.closest('.product-item').remove();
+        });
+    });
 
-    if (isSelling) {
-      button.classList.remove("selling");
-      button.classList.add("soldout");
-      button.innerHTML = '<img src="{{ url_for("static", filename="images/soldout.png") }}" alt="판매 완료">';
-    } else {
-      button.classList.remove("soldout");
-      button.classList.add("selling");
-      button.innerHTML = '<img src="{{ url_for("static", filename="images/selling.png") }}" alt="판매 미완">';
-    }
-  };
+    // 판매 상태 토글 버튼 이벤트 리스너
+    document.querySelectorAll('.toggle-sale-status').forEach(button => {
+        button.addEventListener('click', function() {
+            if (this.textContent === '판매 미완') {
+                this.textContent = '판매 완료';
+                this.classList.remove('soldout');
+                this.classList.add('completed');
+            } else if (this.textContent === '판매 완료') {
+                this.textContent = '판매 미완';
+                this.classList.remove('completed');
+                this.classList.add('soldout');
+            }
+        });
+    });
+});
 
   // 항목 삭제 함수
   window.deleteItem = function (button) {

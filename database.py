@@ -1,5 +1,6 @@
 import pyrebase
 import json
+import re
 
 class DBhandler:
     def __init__(self):
@@ -8,22 +9,27 @@ class DBhandler:
 
         firebase = pyrebase.initialize_app(config)
         self.db = firebase.database()
-    
-    # post 방식으로 넘겨 받은 상품 정보를 firebase로 넣는 함수    
+
     def insert_item(self, name, data, img_path):
-        item_info={
-            "seller":data['seller'],
-            "addr":data['addr'],
-            "email":data['email'],
-            "category":data['category'],
-            "card":data['card'],
-            "status":data['status'],
-            "phone":data['phone'],
-            "img_path":img_path
+        item_info ={
+            "sellerId": data['sellerId'],
+            "contact": data['contact'],
+            "productName": data['productName'],
+            "price": data['price'],
+            "img_path": img_path,
+            "continent": data['continent'],
+            "nation": data['nation'],
+            "address": data['address'],
+            "state": data['state'],
+            "description": data['description']
         }
         self.db.child("item").child(name).set(item_info)
         print(data,img_path)
         return True
+    
+    def get_items(self):
+        items = self.db.child("item").get().val()
+        return items
 
     def insert_user(self, data, pw) :
          user_info = {
@@ -51,6 +57,16 @@ class DBhandler:
                 if value['id'] == id_string:
                     return False
             return True
+
+    def validate_user_id(self,id):
+        # 영문자로 시작하고, 영문자와 숫자만 포함하며 5~15자 길이
+        pattern = r'^[a-zA-Z][0-9a-zA-Z]{4,14}$'
+        return re.match(pattern, id)
+
+    def validate_password(self,pw):
+        # 최소 8자, 문자, 숫자, 특수문자 각각 1개 이상 포함
+        pattern = r'^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$'
+        return re.match(pattern, pw)
         
     def find_user(self, id_, pw_):  
         users = self.db.child("user").get()
@@ -60,3 +76,19 @@ class DBhandler:
             if value['id'] == id_ and value['pw'] == pw_:
               return True
         return False
+    
+    # my page 관련
+    def get_user_wishlist(self,id):
+        wishlist_ref = self.db.child('wishlist').order_by_child('id').equal_to(id).get()
+        wishlist = [item.val() for item in wishlist_ref.each()]
+        return wishlist
+
+    def get_user_purchases(self,id):
+        purchases_ref = self.db.child('purchases').order_by_child('id').equal_to(id).get()
+        purchases = [item.val() for item in purchases_ref.each()]
+        return purchases
+
+    def get_user_sales(self,id):
+        sales_ref = self.db.child('products').order_by_child('sellerId').equal_to(id).get()
+        sales = [item.val() for item in sales_ref.each()]
+        return sales
