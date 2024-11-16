@@ -1,15 +1,32 @@
 from flask import Flask, render_template, request, flash, redirect, url_for, session, jsonify
 from database import DBhandler
-import sys, hashlib
+import hashlib
+
+ITEM_COUNT_PER_PAGE = 12
 
 application = Flask(__name__)
 application.config["SECRET_KEY"] = "helloosp"
 
 DB = DBhandler()
 
+# 홈화면
 @application.route("/")
 def hello():
-    return render_template("index.html")
+    page = request.args.get("page", 1, type=int)
+    start_index = ITEM_COUNT_PER_PAGE * (page - 1)
+    end_index = ITEM_COUNT_PER_PAGE * page
+
+    data = DB.get_items()
+    total_item_count = len(data)
+    data = dict(list(data.items())[start_index:end_index])
+
+    return render_template(
+        "index.html",
+        datas = data.items(),
+        limit = ITEM_COUNT_PER_PAGE, # 한 페이지에 상품 개수
+        page = page, # 현재 페이지 인덱스
+        page_count = int((total_item_count/ITEM_COUNT_PER_PAGE)+1), # 페이지 개수
+        total = total_item_count) # 총 상품 개수
 
 @application.route("/login")
 def login():
@@ -136,5 +153,3 @@ def reg_item_submit_post():
 
 if __name__ == "__main__":
     application.run(host='0.0.0.0', debug=True)
-    
-
