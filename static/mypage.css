@@ -1,5 +1,17 @@
 @import "./styles.css";
 
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
+    color: #333;
+}
+
 .profile-container {
     width: 650px;
     padding-top: 30px;
@@ -68,6 +80,7 @@
     display: none;
 }
 
+/* Product Styles */
 .product-items {
     list-style: none;
 }
@@ -85,11 +98,12 @@
     height: 80px;
     margin-right: 15px;
     border-radius: 5px;
+    object-fit: cover;
 }
 
 .product-info {
     flex-grow: 1;
-    padding-right: 60px;
+    padding-right: 100px;
 }
 
 .product-name {
@@ -111,58 +125,6 @@
     bottom: 10px;
 }
 
-.review-btn {
-    background-color: #d5e8d4;
-    color: #333;
-    border: 1px solid #b7d7a8;
-    padding: 5px 12px;
-    font-size: 13px;* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: Arial, sans-serif;
-    background-color: #ffffff;
-    color: #333;
-}
-
-.edit-profile-btn img {
-    width: 20px;
-    height: 20px;
-}
-
-.tab-menu {
-    display: flex;
-    justify-content: space-around;
-    border-bottom: 1px solid #ddd;
-    margin-bottom: 20px;
-}
-
-.tab {
-    padding: 10px;
-    font-size: 16px;
-    cursor: pointer;
-    color: #ccc;
-    border: none;
-    background: none;
-}
-
-.tab.active {
-    font-weight: bold;
-    color: #000;
-    border-bottom: 2px solid #000;
-}
-
-.product-item img {
-    width: 80px;
-    height: 80px;
-    margin-right: 15px;
-    border-radius: 5px;
-    object-fit: cover; /* 이미지를 잘라내거나 맞춤 */
-}
-
 .toggle-sale-status {
     display: flex;
     align-items: center;
@@ -174,46 +136,11 @@ body {
     cursor: pointer;
     text-align: center;
     position: absolute;
-    right: 10px;
-    top: 20px;
-}
-
-.toggle-sale-status.selling {
-    background-color: #d1ecf1;
-    color: #0c5460;
-    border: 1px solid #bee5eb;
-}
-
-.toggle-sale-status.soldout {
-    background-color: #f8d7da;
-    color: #721c24;
-    border: 1px solid #f5c6cb;
-}
-
-.product-info {
-    flex-grow: 1;
-    padding-right: 100px;
-}
-
-.product-price {
-    font-weight: bold;
-    font-size: 16px;
-    color: #333;
-    position: absolute;
-    right: 10px;
-    bottom: 10px;
-}
-
-.toggle-sale-status {
-    background-color: #f8d7da;
-    color: #721c24;
-    border: 1px solid #f5c6cb;
-    border-radius: 15px;
-    padding: 3px 10px;
-    cursor: pointer;
-    position: absolute;
     right: 80px;
     top: 20px;
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
 }
 
 .toggle-sale-status.selling {
@@ -231,48 +158,13 @@ body {
     top: 20px;
 }
 
-    border-radius: 6px;
-    cursor: pointer;
-    position: absolute;
-    right: 5px;
-    top: 10px;
-    text-align: center;
-}
-
-
-.sold-out {
-    position: absolute;
-    right: 10px;
-    top: 15px;
-    font-size: 14px;
-    background: #f9f9f9;
-    padding: 2px 5px;
-    border-radius: 4px;
-}
-
-.delete-btn {
-    display: inline-block;
-    margin-top: 13px; 
-    background: none;
-    border: none;
-    cursor: pointer;
-    text-align: left;
-}
-
 .delete-btn img {
     width: 20px;
     height: 20px;
-    vertical-align: middle; 
+    vertical-align: middle;
 }
 
-
-.toggle-sale-status {
-    background: #f0f0f0;
-    border: 1px solid #ddd;
-    padding: 5px 10px;
-    cursor: pointer;
-}
-
+/* Review Styles */
 .review-items {
     list-style: none;
 }
@@ -286,7 +178,7 @@ body {
 }
 
 .review-item img {
-    width: 80px; 
+    width: 80px;
     height: 80px;
     margin-right: 15px;
     border-radius: 5px;
@@ -312,6 +204,21 @@ body {
     font-size: 14px;
 }
 
+.review-btn {
+    background-color: #d5e8d4;
+    color: #333;
+    border: 1px solid #b7d7a8;
+    padding: 5px 12px;
+    font-size: 13px;
+    border-radius: 6px;
+    cursor: pointer;
+    position: absolute;
+    right: 5px;
+    top: 10px;
+    text-align: center;
+}
+
+/* Pagination */
 .pagination {
     display: flex;
     justify-content: center;

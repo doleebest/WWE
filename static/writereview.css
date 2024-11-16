@@ -7,8 +7,7 @@ body {
 }
 
 .review-container {
-    width: 100%;
-    max-width: 600px;
+    width: 650px;
     margin: 20px auto;
     padding: 20px;
 }
@@ -34,7 +33,7 @@ body {
     font-size: 16px;
     color: #333;
     margin: 0 0 5px 0;
-    font-weight: normal;
+    font-weight: bold;
 }
 
 .product-details p {
@@ -47,6 +46,7 @@ body {
     color: #333;
     font-size: 14px;
     margin-left: auto;
+    font-weight: bold;
 }
 
 .rating-section {
@@ -99,7 +99,7 @@ body {
 
 .camera-group {
     width: 120px; 
-    height: 120px;
+    height: 120px;  /* 너비와 동일하게 설정 */
     background-color: #F5F5F5;
     display: flex;
     justify-content: center;
@@ -119,12 +119,8 @@ body {
 
 .camera-icon {
     width: 24px;
-    height: 24px;
+    height: 24px;  /* 아이콘도 정사각형 유지 */
     opacity: 0.3;
-}
-
-.form-group {
-    flex-grow: 1;
 }
 
 label {
