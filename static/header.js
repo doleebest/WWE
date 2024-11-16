@@ -1,5 +1,5 @@
-const isLogin = false; // 백엔드 연결
-const userName = "김기연dddddddddd"; // 백엔드 연결
+const isLogin = document.querySelector(".user").dataset.id ? true : false;
+const userName = document.querySelector(".user").dataset.id;
 
 // 페이지별로 정의될 함수
 let setNavBar = () => {};
@@ -17,7 +17,7 @@ const setUserInfo = (user) => {
 };
 
 const clickLogout = () => {
-  console.log("로그아웃"); // 백엔드 연결
+  window.location.href = "/logout";
 };
 
 const clickSignup = () => {
