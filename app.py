@@ -41,7 +41,7 @@ def login_user():
             session['id']=id
             return redirect('/')
         else:
-            flash("wrong ID or PW!")
+            flash("잘못된 아이디 또는 비밀번호 입니다.")
             return render_template("login.html")
         
 @application.route("/logout")
