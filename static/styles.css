@@ -88,3 +88,8 @@ header {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+/* 일반화 */
+.none {
+  display: none;
+}

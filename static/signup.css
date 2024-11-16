@@ -21,7 +21,7 @@
 .input_container__id {
   display: grid;
   grid-template-columns: auto max-content;
-  gap: 20px;
+  gap: 15px;
   align-items: center;
 }
 
@@ -29,13 +29,22 @@
   height: 40px;
   width: 80px;
   border-radius: 15px;
+}
+
+.btn_activate {
   background-color: #00462a1a;
   color: var(--ewhagreen);
 }
 
-.duplicate_check_btn:hover {
+.btn_activate:hover {
   background-color: var(--ewhagreen);
   color: white;
+}
+
+.btn_deactivate {
+  background-color: var(--ewhagrayblank);
+  color: gray;
+  cursor: default;
 }
 
 .input_div {
@@ -50,6 +59,14 @@
   padding: 15px;
   border-radius: 15px;
   background-color: var(--ewhagrayblank);
+}
+
+.alert_good {
+  color: var(--ewhagreen);
+}
+
+.alert_bad {
+  color: var(--ewhacoral);
 }
 
 .signup_btn {

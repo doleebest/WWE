@@ -59,8 +59,8 @@ class DBhandler:
             return True
 
     def validate_user_id(self,id):
-        # 영문자로 시작하고, 영문자와 숫자만 포함하며 5~15자 길이
-        pattern = r'^[a-zA-Z][0-9a-zA-Z]{4,14}$'
+        # 영어 소문자로 시작하고, 숫자를 1개 이상 포함하며 영어와 숫자로만 구성된 5~15자
+        pattern = r'^[a-z](?=.*[0-9])[a-zA-Z0-9]{4,14}$'
         return re.match(pattern, id)
 
     def validate_password(self,pw):
