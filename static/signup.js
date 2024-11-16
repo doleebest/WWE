@@ -1,7 +1,15 @@
+// ID 관련 element
 const idInput = document.getElementById("id");
 const idAlert = document.getElementById("id_alert");
 const duplicateCheckBtn = document.querySelector(".duplicate_check_btn");
+// PW 관련 element
+const pwInput = document.getElementById("pw");
+const pwAlert = document.getElementById("pw_alert");
+// PW 재확인 관련 element
+const pwReInput = document.getElementById("pw_check");
+const pwReAlert = document.getElementById("pw_check_alert");
 
+// 정규식
 const regExp = {
   id: /^[a-z](?=.*[0-9])[a-zA-Z0-9]{4,14}$/,
   pw: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
@@ -9,6 +17,7 @@ const regExp = {
   phone: /^\d{3}-\d{3,4}-\d{4}$/,
 };
 
+// input별 유효성 검사 여부
 const validationFlag = {
   id: false,
   pw: false,
@@ -29,16 +38,47 @@ const checkIdValidation = () => {
     duplicateCheckBtn.classList.add("btn_deactivate");
     idAlert.classList.add("alert_bad");
     idAlert.textContent =
-      "아이디는 영어와 숫자로 구성된 5~15자로, 영어 소문자로 시작하고 숫자를 1개 이상 포함해야 합니다.";
+      "아이디는 영어 소문자로 시작하는 영문, 숫자 조합으로 5~15자 이내 입력해주세요.";
+  }
+};
+
+const checkPwValidation = () => {
+  pwAlert.classList.remove("none");
+  if (pwReInput.value.length > 0) {
+    checkPwReValidation();
+  }
+
+  if (regExp.pw.test(pwInput.value)) {
+    pwAlert.classList.add("none");
+  } else {
+    pwAlert.classList.add("alert_bad");
+    pwAlert.textContent =
+      "비밀번호는 영문, 숫자, 특수문자 조합으로 8자 이상 입력해주세요.";
+  }
+};
+
+const checkPwReValidation = () => {
+  pwReAlert.classList.remove("none");
+  if (pwReInput.value === pwInput.value) {
+    pwReAlert.classList.remove("alert_bad");
+    pwReAlert.classList.add("alert_good");
+    pwReAlert.textContent = "비밀번호가 일치합니다.";
+  } else {
+    pwReAlert.classList.remove("alert_good");
+    pwReAlert.classList.add("alert_bad");
+    pwReAlert.textContent = "비밀번호가 일치하지 않습니다.";
   }
 };
 
 idInput.addEventListener("input", checkIdValidation);
+pwInput.addEventListener("input", checkPwValidation);
+pwReInput.addEventListener("input", checkPwReValidation);
 
 /* TODO
 0. 아이디 중복 체크 API 연결
    - 프론트에서도 중복 체크 여부 저장하는 변수 생성 필요
    - 중복 체크를 했더라도 id input란에 변경이 생기면 다시 중복 체크 여부 저장하는 변수 false
+   - 중복 체크 true가 되었다면 중복 확인 버튼은 비활성화
 1. validationFlag가 모두 true가 되었을 때만 회원가입 하기 버튼 활성화
    - 중복 체크 여부와 상관없이 우선 id input이 validate 한지만 판단
    - 휴대전화와 관심 지역은 값을 입력했을 경우에만 flag를 false로 바꾸고 validation 체크
