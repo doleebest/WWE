@@ -64,35 +64,34 @@
     </div>
 
     <!-- 판매 내역 콘텐츠 -->
-    <div class="tab-content" id="sales-history">
-        <ul class="product-items">
-            <li class="product-item">
-                <img src="{{ url_for('static', filename='images/clothes.png') }}" alt="clothes.png" />
-                <div class="product-info">
-                  <p class="product-name">비비안웨스트우드 아이보리 가디건</p>
-                  <p class="product-desc">따뜻하고 가벼운 가디건 입니다</p>
-                  <button class="delete-btn" onclick="deleteItem(this)">
-                      <img src="{{ url_for('static', filename='images/trashbin.png') }}" alt="삭제">
-                  </button>
-              </div>
-              
-                <p class="product-price">35,000원</p>
-                <button class="toggle-sale-status soldout" onclick="toggleSaleStatus(this)">판매 미완</button>
-            </li>
-            <li class="product-item">
-                <img src="{{ url_for('static', filename='images/clothes.png') }}" alt="clothes.png" />
-                <div class="product-info">
-                  <p class="product-name">비비안웨스트우드 아이보리 가디건</p>
-                  <p class="product-desc">따뜻하고 가벼운 가디건 입니다</p>
-                  <button class="delete-btn" onclick="deleteItem(this)">
-                      <img src="{{ url_for('static', filename='images/trashbin.png') }}" alt="삭제">
-                  </button>
-                </div>
-                <p class="product-price">35,000원</p>
-                <button class="toggle-sale-status soldout" onclick="toggleSaleStatus(this)">판매 완료</button>
-            </li>
-        </ul>
-    </div>
+<div class="tab-content" id="sales-history">
+    <ul class="product-items">
+        <li class="product-item">
+            <img src="{{ url_for('static', filename='images/clothes.png') }}" alt="clothes.png" />
+            <div class="product-info">
+                <p class="product-name">비비안웨스트우드 아이보리 가디건</p>
+                <p class="product-desc">따뜻하고 가벼운 가디건 입니다</p>
+                <button class="delete-btn">
+                    <img src="{{ url_for('static', filename='images/trashbin.png') }}" alt="삭제">
+                </button>
+            </div>
+            <p class="product-price">35,000원</p>
+            <button class="toggle-sale-status soldout">판매 미완</button>
+        </li>
+        <li class="product-item">
+            <img src="{{ url_for('static', filename='images/clothes.png') }}" alt="clothes.png" />
+            <div class="product-info">
+                <p class="product-name">비비안웨스트우드 아이보리 가디건</p>
+                <p class="product-desc">따뜻하고 가벼운 가디건 입니다</p>
+                <button class="delete-btn">
+                    <img src="{{ url_for('static', filename='images/trashbin.png') }}" alt="삭제">
+                </button>
+            </div>
+            <p class="product-price">35,000원</p>
+            <button class="toggle-sale-status completed">판매 완료</button>
+        </li>
+    </ul>
+</div>
 
     <!-- 리뷰 전체 조회 콘텐츠 -->
     <div class="tab-content" id="review-overview">
@@ -110,13 +109,22 @@
     </div>
 
     <div class="pagination">
-        <span class="prev-page">«</span>
+        <div class="arrow-group-left">
+            <span class="first-page"></span>
+            <span class="prev-page"></span>
+        </div>
+        
         <span class="page-number active">1</span>
         <span class="page-number">2</span>
         <span class="page-number">3</span>
-        <span class="next-page">»</span>
+        <span class="page-number">4</span>
+        <span class="page-number">5</span>
+        
+        <div class="arrow-group-right">
+            <span class="next-page"></span>
+            <span class="last-page"></span>
+        </div>
     </div>
-</div>
 </main>
 {% endblock main %}
 </body>
