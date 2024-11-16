@@ -21,9 +21,13 @@
             </li>
             <li id="navbar__menu__mypage">
               <a href="/mypage">마이페이지</a>
+            </li>
           </ul>
         </nav>
-        <div class="user"></div>
+        <div
+          class="user"
+          data-id="{{ session['id'] if 'id' in session else '' }}"
+        ></div>
       </header>
     </div>
 
