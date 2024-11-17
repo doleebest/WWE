@@ -9,6 +9,10 @@ application.config["SECRET_KEY"] = "helloosp"
 
 DB = DBhandler()
 
+@application.route('/dynamicurl/<varible_name>/')
+def DynamicUrl(varible_name):
+    return str(varible_name)
+
 # 홈화면
 @application.route("/")
 def hello():
@@ -153,3 +157,10 @@ def reg_item_submit_post():
 
 if __name__ == "__main__":
     application.run(host='0.0.0.0', debug=True)
+
+@application.route("/view_detail/<name>/")
+def view_item_detail(name):
+    print("###name:",name)
+    data = DB.get_item_byname(str(name))
+    print("####data:",data)
+    return render_template("detail.html", name=name, data=data)
