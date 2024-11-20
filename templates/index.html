@@ -36,24 +36,41 @@
             <!-- 개발 및 삭제 예정 -->
 
             {% if total > 0 %}
-            <p>상품 리스트 -- 현재까지 {{total}}개 등록됨</p>
-
+            <p class="item_count">상품 전체 {{total}}개</p>
             <div class="whole_items">
               {% for key, value in datas %}
-              <div class="item_container">
-                <img
-                  src="static/images/{{value.img_path}}"
-                  alt="상태 좋은 책상 팝니다"
-                />
-                <div class="region_container">
-                  <img src="../static/images/pin.svg" /><span>미국</span>
+              <a href="{{ url_for('view_item_detail', name=key) }}">
+                <div class="item_container">
+                  <img
+                    src="static/images/{{value.img_path}}"
+                    alt="상품 이미지 사진"
+                  />
+                  <div class="region_container">
+                    <img src="../static/images/pin.svg" /><span
+                      >{{value.address}}</span
+                    >
+                  </div>
+                  <div class="tag_container">
+                    <span># {{value.nation}}</span
+                    ><span># {{value.state}}</span>
+                  </div>
+                  <span class="title">{{key}}</span>
                 </div>
-                <div class="tag_container">
-                  <span># 새상품</span><span># 택배거래</span>
-                </div>
-                <span class="title">{{key}}</span>
-              </div>
+              </a>
               {% endfor %}
+            </div>
+            <div class="page-wrap">
+              <div class="page-nation">
+                <ul>
+                  <li>
+                    {% for i in range(page_count)%}
+                    <a href="{{url_for('hello', page=i+1)}}" color="black"
+                      >{{i+1}}</a
+                    >
+                    {% endfor %}
+                  </li>
+                </ul>
+              </div>
             </div>
             {% else %}
             <p>등록된 상품이 없습니다.</p>
