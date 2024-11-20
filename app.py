@@ -158,7 +158,7 @@ def reg_item_submit_post():
 if __name__ == "__main__":
     application.run(host='0.0.0.0', debug=True)
 
-@application.route("/view_detail/<name>/")
+@application.route("/detail/<name>/")
 def view_item_detail(name):
     print("###name:",name)
     data = DB.get_item_byname(str(name))
