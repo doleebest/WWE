@@ -109,6 +109,7 @@ class DBhandler:
             "title": data['title'],
             "rate": data['reviewStar'],
             "review": data['reviewContents'],
+            "review_time": data['review_time'],
             "img_path": img_path
         }
         self.db.child("review").child(data['name']).set(review_info)

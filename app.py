@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, flash, redirect, url_for, session, jsonify, abort
 from database import DBhandler
+from datetime import datetime
 import hashlib
 
 ITEM_COUNT_PER_PAGE = 12
@@ -141,7 +142,6 @@ def view_review(name):
     )
 
 # 리뷰 등록 페이지
-# TODO: 리뷰 등록한 날짜도 함께 저장
 @application.route("/writereview/<name>/")
 def write_review(name):
     # DB에서 상품 정보를 가져옴
@@ -159,9 +159,14 @@ def write_review(name):
 # 리뷰 등록 POST
 @application.route("/submit_review/", methods=['POST'])
 def submit_review():
-    data=request.form
+    data=request.form.to_dict()
     image_file=request.files["file"]
     image_file.save("static/images/{}".format(image_file.filename))
+
+    # 데이터에 현재 시간 추가 (2024.02.05 03:08 형식)
+    current_time = datetime.now().strftime("%Y.%m.%d %H:%M")
+    data['review_time'] = current_time
+
     DB.reg_review(data, image_file.filename)
     return redirect(url_for('mypage'))  # TODO: redirect 어디로 할 건지 결정
 
