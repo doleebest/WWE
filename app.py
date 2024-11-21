@@ -1,5 +1,6 @@
-from flask import Flask, render_template, request, flash, redirect, url_for, session, jsonify
+from flask import Flask, render_template, request, flash, redirect, url_for, session, jsonify, abort
 from database import DBhandler
+from datetime import datetime
 import hashlib
 
 ITEM_COUNT_PER_PAGE = 12
@@ -122,27 +123,62 @@ def sales(id):
 def view_list():
     return render_template("list.html")
 
-@application.route("/review")
-def view_review():
-    return render_template("review.html")
+# 리뷰 상세 페이지
+# TODO: 리뷰어 정보 가져오기
+@application.route("/review/<name>/")
+def view_review(name):
+    # DB에서 리뷰정보 및 상품정보 가져옴
+    review = DB.get_review_by_name(name)
+    item = DB.get_item_byname(name)
 
-@application.route("/writereview")
-def write_review():
-    return render_template("writereview.html")
+    # 리뷰정보 혹은 상품정보 없을 경우 404
+    if not review or not item:
+        return abort(404)
+    return render_template(
+        "review.html", 
+        review=review,  # 리뷰 정보
+        item=item,  # 상품 정보
+        name=name
+    )
 
+# 리뷰 등록 페이지
+@application.route("/writereview/<name>/")
+def write_review(name):
+    # DB에서 상품 정보를 가져옴
+    item = DB.get_item_byname(name)
+
+    # 상품 정보가 없을 경우 404
+    if item is None:
+        return abort(404)
+    return render_template(
+        "writereview.html", 
+        item=item, 
+        name=name
+    )
+
+# 리뷰 등록 POST
+@application.route("/submit_review/", methods=['POST'])
+def submit_review():
+    data=request.form.to_dict()
+    image_file=request.files["file"]
+    image_file.save("static/images/{}".format(image_file.filename))
+
+    # 데이터에 현재 시간 추가 (2024.02.05 03:08 형식)
+    current_time = datetime.now().strftime("%Y.%m.%d %H:%M")
+    data['review_time'] = current_time
+
+    DB.reg_review(data, image_file.filename)
+    return redirect(url_for('mypage'))  # TODO: redirect 어디로 할 건지 결정
+
+# 상품 등록 페이지
 @application.route("/reg_items")
 def reg_item():
     return render_template("register.html")
-
-@application.route("/reg_reviews")
-def reg_review():
-    return render_template("reg_reviews.html")
 
 @application.route("/detail")
 def detail():
     return render_template("detail.html")
 
-# POST 방식으로 form 데이터를 받아 처리
 @application.route("/submit_product_post", methods=['POST'])
 def reg_item_submit_post():
     image_file = request.files["file"]
@@ -151,12 +187,12 @@ def reg_item_submit_post():
     DB.insert_item(data['productName'], data, image_file.filename)
     return render_template("submit_item_result.html", data=data, img_path="static/images/{}".format(image_file.filename))
 
-if __name__ == "__main__":
-    application.run(host='0.0.0.0', debug=True)
-
 @application.route("/detail/<name>/")
 def view_item_detail(name):
     print("###name:",name)
     data = DB.get_item_byname(str(name))
     print("####data:",data)
     return render_template("detail.html", name=name, data=data)
+
+if __name__ == "__main__":
+    application.run(host='0.0.0.0', debug=True)
