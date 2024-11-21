@@ -58,7 +58,8 @@
                     <p class="product-desc">따뜻하고 가벼운 가디건 입니다</p>
                 </div>
                 <p class="product-price">35,000원</p>
-                <a href="{{ url_for('write_review') }}" class="review-btn">리뷰 남기기</a>
+                <!-- TODO: 백이랑 연결되면 url도 함께 수정 필요 -->
+                <a href="{{ url_for('write_review', name='비비안웨스트우드 아이보리 가디건') }}" class="review-btn">리뷰 남기기</a>
             </li>
         </ul>
     </div>

@@ -27,6 +27,9 @@
 
     <!-- review write Form -->
     <form name="review-form" method="post" action="/submit_review"  enctype="multipart/form-data">
+        <!-- db에 넣기 위해 hidden input -->
+        <input type="hidden" name="name" id="name" value="{{name}}">
+
         <!-- Rating Section -->
         <fieldset class="rating-section">
             <div class="stars">
