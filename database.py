@@ -113,3 +113,10 @@ class DBhandler:
         }
         self.db.child("review").child(data['name']).set(review_info)
         return True
+    
+    # 리뷰 상세 조회
+    def get_review_by_name(self, name):
+        item = self.db.child("review").child(name).get()
+        if item.val() is None:  # name에 해당하는 데이터가 없을 경우
+            return None 
+        return item.val()

@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, flash, redirect, url_for, session, jsonify
+from flask import Flask, render_template, request, flash, redirect, url_for, session, jsonify, abort
 from database import DBhandler
 import hashlib
 
@@ -122,11 +122,26 @@ def sales(id):
 def view_list():
     return render_template("list.html")
 
-@application.route("/review")
-def view_review():
-    return render_template("review.html")
+# 리뷰 상세 페이지
+# TODO: 리뷰어 정보 가져오기
+@application.route("/review/<name>/")
+def view_review(name):
+    # DB에서 리뷰정보 및 상품정보 가져옴
+    review = DB.get_review_by_name(name)
+    item = DB.get_item_byname(name)
+
+    # 리뷰정보 혹은 상품정보 없을 경우 404
+    if not review or not item:
+        return abort(404)
+    return render_template(
+        "review.html", 
+        review=review,  # 리뷰 정보
+        item=item,  # 상품 정보
+        name=name
+    )
 
 # 리뷰 등록 페이지
+# TODO: 리뷰 등록한 날짜도 함께 저장
 @application.route("/writereview/<name>/")
 def write_review(name):
     # DB에서 상품 정보를 가져옴
@@ -134,8 +149,12 @@ def write_review(name):
 
     # 상품 정보가 없을 경우 404
     if item is None:
-        return render_template("404.html"), 404
-    return render_template("writereview.html", item=item, name=name)
+        return abort(404)
+    return render_template(
+        "writereview.html", 
+        item=item, 
+        name=name
+    )
 
 # 리뷰 등록 POST
 @application.route("/submit_review/", methods=['POST'])
@@ -145,11 +164,6 @@ def submit_review():
     image_file.save("static/images/{}".format(image_file.filename))
     DB.reg_review(data, image_file.filename)
     return redirect(url_for('mypage'))  # TODO: redirect 어디로 할 건지 결정
-
-# 리뷰 상세 페이지
-@application.route("/reg_reviews/<name>/")
-def reg_review(name):
-    return render_template("reg_reviews.html", name=name)
 
 # 상품 등록 페이지
 @application.route("/reg_items")
