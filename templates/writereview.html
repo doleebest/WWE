@@ -17,7 +17,7 @@
 <div class="review-container">
     <!-- Product Information Section -->
     <div class="product-info">
-        <img src="{{ url_for('static', filename='images/clothes.png') }}" alt="Product Image" class="product-thumbnail">
+        <img src="{{ url_for('static', filename='images/' + item.img_path) }}" alt="Product Image" class="product-thumbnail">
         <div class="product-details">
             <h2>{{ name }}</h2>
             <p>{{ item.description }}</p>
