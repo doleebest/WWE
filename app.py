@@ -9,10 +9,6 @@ application.config["SECRET_KEY"] = "helloosp"
 
 DB = DBhandler()
 
-@application.route('/dynamicurl/<varible_name>/')
-def DynamicUrl(varible_name):
-    return str(varible_name)
-
 # 홈화면
 @application.route("/")
 def hello():
