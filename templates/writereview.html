@@ -19,10 +19,10 @@
     <div class="product-info">
         <img src="{{ url_for('static', filename='images/clothes.png') }}" alt="Product Image" class="product-thumbnail">
         <div class="product-details">
-            <h2>비비안웨스트우드 아이보리 가디건</h2>
-            <p>따뜻하고 가벼운 가디건 입니다</p>
+            <h2>{{ name }}</h2>
+            <p>{{ item.description }}</p>
         </div>
-        <p class="price">35,000원</p>
+        <p class="price">{{ item.price }}원</p>
     </div>
 
     <!-- review write Form -->

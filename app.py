@@ -127,10 +127,15 @@ def view_review():
     return render_template("review.html")
 
 # 리뷰 등록 페이지
-# TODO: 리뷰 등록 페이지 상단에 해당 상품 관련 정보 띄워줘야함
 @application.route("/writereview/<name>/")
 def write_review(name):
-    return render_template("writereview.html", name=name)
+    # DB에서 상품 정보를 가져옴
+    item = DB.get_item_byname(name)
+
+    # 상품 정보가 없을 경우 404
+    if item is None:
+        return render_template("404.html"), 404
+    return render_template("writereview.html", item=item, name=name)
 
 # 리뷰 등록 POST
 @application.route("/submit_review/", methods=['POST'])

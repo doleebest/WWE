@@ -31,15 +31,13 @@ class DBhandler:
         items = self.db.child("item").get().val()
         return items
     
+    # name값으로 item 정보 가져오기
     def get_item_byname(self, name):
-        items = self.db.child("item").get()
-        target_value=""
-        print("###########",name)
-        for res in items.each():
-            key_value = res.key()
-            if key_value == name:
-                target_value=res.val()
-        return target_value
+        item = self.db.child("item").child(name).get()
+        if item.val() is None:  # name에 해당하는 데이터가 없을 경우
+            return None 
+        return item.val()
+
 
     def insert_user(self, data, pw) :
          user_info = {
