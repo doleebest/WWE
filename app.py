@@ -126,23 +126,35 @@ def view_list():
 def view_review():
     return render_template("review.html")
 
-@application.route("/writereview")
-def write_review():
-    return render_template("writereview.html")
+# 리뷰 등록 페이지
+# TODO: 리뷰 등록 페이지 상단에 해당 상품 관련 정보 띄워줘야함
+@application.route("/writereview/<name>/")
+def write_review(name):
+    return render_template("writereview.html", name=name)
 
+# 리뷰 등록 POST
+@application.route("/submit_review/", methods=['POST'])
+def submit_review():
+    data=request.form
+    image_file=request.files["file"]
+    image_file.save("static/images/{}".format(image_file.filename))
+    DB.reg_review(data, image_file.filename)
+    return redirect(url_for('mypage'))  # TODO: redirect 어디로 할 건지 결정
+
+# 리뷰 상세 페이지
+@application.route("/reg_reviews/<name>/")
+def reg_review(name):
+    return render_template("reg_reviews.html", name=name)
+
+# 상품 등록 페이지
 @application.route("/reg_items")
 def reg_item():
     return render_template("register.html")
-
-@application.route("/reg_reviews")
-def reg_review():
-    return render_template("reg_reviews.html")
 
 @application.route("/detail")
 def detail():
     return render_template("detail.html")
 
-# POST 방식으로 form 데이터를 받아 처리
 @application.route("/submit_product_post", methods=['POST'])
 def reg_item_submit_post():
     image_file = request.files["file"]
@@ -151,12 +163,12 @@ def reg_item_submit_post():
     DB.insert_item(data['productName'], data, image_file.filename)
     return render_template("submit_item_result.html", data=data, img_path="static/images/{}".format(image_file.filename))
 
-if __name__ == "__main__":
-    application.run(host='0.0.0.0', debug=True)
-
 @application.route("/detail/<name>/")
 def view_item_detail(name):
     print("###name:",name)
     data = DB.get_item_byname(str(name))
     print("####data:",data)
     return render_template("detail.html", name=name, data=data)
+
+if __name__ == "__main__":
+    application.run(host='0.0.0.0', debug=True)

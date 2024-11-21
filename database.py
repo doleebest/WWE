@@ -102,3 +102,16 @@ class DBhandler:
         sales_ref = self.db.child('products').order_by_child('sellerId').equal_to(id).get()
         sales = [item.val() for item in sales_ref.each()]
         return sales
+    
+    # 리뷰 작성 등록
+    def reg_review(self, data, img_path):
+        review_info ={
+            "buyerId": data['buyerId'],
+            "sellerId": data['sellerId'],
+            "title": data['title'],
+            "rate": data['reviewStar'],
+            "review": data['reviewContents'],
+            "img_path": img_path
+        }
+        self.db.child("review").child(data['name']).set(review_info)
+        return True
