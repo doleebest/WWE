@@ -194,5 +194,21 @@ def view_item_detail(name):
     print("####data:",data)
     return render_template("detail.html", name=name, data=data)
 
+# 좋아요
+@application.route('/show_heart/<name>/', methods=['GET'])
+def show_heart(name):
+    my_heart = DB.get_heart_by_name(session['id'],name)
+    return jsonify({'my_heart': my_heart})
+
+@application.route('/like/<name>/', methods=['POST'])
+def like(name):
+    my_heart = DB.update_heart(session['id'],'Y',name)
+    return jsonify({'msg': '좋아요 완료!'})
+
+@application.route('/unlike/<name>/', methods=['POST'])
+def unlike(name):
+    my_heart = DB.update_heart(session['id'],'N',name)
+    return jsonify({'msg': '안좋아요 완료!'})
+
 if __name__ == "__main__":
     application.run(host='0.0.0.0', debug=True)
