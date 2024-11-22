@@ -164,7 +164,7 @@ def delete_sale():
 @application.route("/mypage/profile/update", methods=["POST"])
 def update_user_info():
     data = request.json
-    user_id = 'user_id_example'  # 사용자 ID는 세션 등에서 가져올 수 있음
+    id = session.get('id') 
     new_email = data.get("email")
     new_phone = data.get("phone")
 
