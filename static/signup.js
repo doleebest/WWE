@@ -8,6 +8,12 @@ const pwAlert = document.getElementById("pw_alert");
 // PW 재확인 관련 element
 const pwReInput = document.getElementById("pw_check");
 const pwReAlert = document.getElementById("pw_check_alert");
+// 이메일 관련 element
+const emailInput = document.getElementById("email");
+const emailAlert = document.getElementById("email_alert");
+// 휴대전화 관련 element
+const phoneInput = document.getElementById("phone");
+const phoneAlert = document.getElementById("phone_alert");
 
 // 정규식
 const regExp = {
@@ -24,7 +30,6 @@ const validationFlag = {
   pwRe: false,
   email: false,
   phone: true,
-  region: true,
 };
 
 const checkIdValidation = () => {
@@ -70,9 +75,31 @@ const checkPwReValidation = () => {
   }
 };
 
+const checkEmailValidation = () => {
+  emailAlert.classList.remove("none");
+  if (regExp.email.test(emailInput.value)) {
+    emailAlert.classList.add("none");
+  } else {
+    emailAlert.classList.add("alert_bad");
+    emailAlert.textContent = "이메일 형식을 지켜서 입력해주세요.";
+  }
+};
+
+const checkPhoneValidation = () => {
+  phoneAlert.classList.remove("none");
+  if (regExp.phone.test(phoneInput.value)) {
+    phoneAlert.classList.add("none");
+  } else {
+    phoneAlert.classList.add("alert_bad");
+    phoneAlert.textContent = "010-XXXX-XXXX 형식으로 입력해주세요.";
+  }
+};
+
 idInput.addEventListener("input", checkIdValidation);
 pwInput.addEventListener("input", checkPwValidation);
 pwReInput.addEventListener("input", checkPwReValidation);
+emailInput.addEventListener("input", checkEmailValidation);
+phoneInput.addEventListener("input", checkPhoneValidation);
 
 /* TODO
 0. 아이디 중복 체크 API 연결
