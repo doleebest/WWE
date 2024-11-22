@@ -58,7 +58,8 @@
                     <p class="product-desc">따뜻하고 가벼운 가디건 입니다</p>
                 </div>
                 <p class="product-price">35,000원</p>
-                <a href="{{ url_for('write_review') }}" class="review-btn">리뷰 남기기</a>
+                <!-- TODO: 백이랑 연결되면 url도 함께 수정 필요 -->
+                <a href="{{ url_for('write_review', name='드롱기 토스터기') }}" class="review-btn">리뷰 남기기</a>
             </li>
         </ul>
     </div>
@@ -96,7 +97,8 @@
     <!-- 리뷰 전체 조회 콘텐츠 -->
     <div class="tab-content" id="review-overview">
         <ul class="review-items">
-            <li class="review-item">
+            <!-- TODO: 전체 조회 연결 후에 경로 name 수정 필요 -->
+            <a href="{{ url_for('view_review', name='드롱기 토스터기') }}" class="review-item">
                 <img src="{{ url_for('static', filename='images/clothes.png') }}" alt="clothes.png" />
                 <div class="review-info">
                     <p class="review-username">osori022</p>
@@ -104,7 +106,7 @@
                     <p class="review-text">잘받았습니다~</p>
                     <div class="star-rating">★★★★★</div>
                 </div>
-            </li>
+            </a>
         </ul>
     </div>
 

@@ -31,15 +31,13 @@ class DBhandler:
         items = self.db.child("item").get().val()
         return items
     
+    # name값으로 item 정보 가져오기
     def get_item_byname(self, name):
-        items = self.db.child("item").get()
-        target_value=""
-        print("###########",name)
-        for res in items.each():
-            key_value = res.key()
-            if key_value == name:
-                target_value=res.val()
-        return target_value
+        item = self.db.child("item").child(name).get()
+        if item.val() is None:  # name에 해당하는 데이터가 없을 경우
+            return None 
+        return item.val()
+
 
     def insert_user(self, data, pw) :
          user_info = {
@@ -120,3 +118,24 @@ class DBhandler:
         heart_info = {"interested" : isHeart}
         self.db.child("heart").child(user_id).child(item).set(heart_info)
         return True
+
+    # 리뷰 작성 등록
+    def reg_review(self, data, img_path):
+        review_info ={
+            "buyerId": data['buyerId'],
+            "sellerId": data['sellerId'],
+            "title": data['title'],
+            "rate": data['reviewStar'],
+            "review": data['reviewContents'],
+            "review_time": data['review_time'],
+            "img_path": img_path
+        }
+        self.db.child("review").child(data['name']).set(review_info)
+        return True
+    
+    # 리뷰 상세 조회
+    def get_review_by_name(self, name):
+        item = self.db.child("review").child(name).get()
+        if item.val() is None:  # name에 해당하는 데이터가 없을 경우
+            return None 
+        return item.val()
