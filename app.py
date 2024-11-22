@@ -118,6 +118,56 @@ def sales(id):
     sales = DB.get_user_sales(id)
     return jsonify(sales or []), 200
 
+# 판매 상태 업데이트
+@application.route("/mypage/sales/update_status", methods=['POST'])
+def update_sale_status():
+    id = session.get('id')
+    if not id:
+        return redirect(url_for('login'))
+
+    data = request.json
+    product_id = data.get("product_id")
+    status = data.get("status")
+
+    if not DB.update_sale_status(id, product_id, status):
+        return jsonify({"error": "Failed to update sale status"}), 500
+
+    return jsonify({"message": "Sale status updated"}), 200
+
+# 상품 삭제
+@application.route("/mypage/sales/delete", methods=['POST'])
+def delete_sale():
+    id = session.get('id')
+    if not id:
+        return redirect(url_for('login'))
+
+    product_id = request.json.get("product_id")
+    if not DB.delete_product(id, product_id):
+        return jsonify({"error": "Failed to delete product"}), 500
+
+    return jsonify({"message": "Product deleted successfully"}), 200
+
+
+@application.route("/mypage/profile/update", methods=["POST"])
+def update_user_info():
+    data = request.json
+    user_id = 'user_id_example'  # 사용자 ID는 세션 등에서 가져올 수 있음
+    new_email = data.get("email")
+    new_phone = data.get("phone")
+
+    db_handler = DBhandler()
+
+    # 이메일, 전화번호 중 적어도 하나가 주어져야 업데이트가 진행됨
+    if not new_email and not new_phone:
+        return jsonify({"success": False, "message": "이메일 또는 전화번호를 입력하세요."}), 400
+
+    # 사용자 정보 업데이트
+    success = db_handler.update_user_info(user_id, new_email=new_email, new_phone=new_phone)
+    if success:
+        return jsonify({"success": True, "message": "정보가 업데이트되었습니다."}), 200
+    else:
+        return jsonify({"success": False, "message": "정보 업데이트에 실패했습니다."}), 500
+
 
 @application.route("/list")
 def view_list():
