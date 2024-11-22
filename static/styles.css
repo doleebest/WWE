@@ -87,6 +87,7 @@ header {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  text-align: end;
 }
 
 /* 일반화 */
