@@ -74,6 +74,19 @@ def register_user() :
     else :
         flash("user id already exist!")
         return render_template("signup.html")
+
+@app.route('/check_id_duplicate', methods=['POST'])
+def check_id_duplicate():
+    """Endpoint to check if an ID is already in use."""
+    id_to_check = request.json.get('id')  # Expecting JSON payload with 'id'
+    if not id_to_check:
+        return jsonify({'success': False, 'message': 'ID not provided'}), 400
+
+    is_available = DB.user_duplicate_check(id_to_check)
+    if is_available:
+        return jsonify({'success': True, 'message': 'ID is available'})
+    else:
+        return jsonify({'success': False, 'message': 'ID is already in use'})
     
 # my page 관련 routing
 @application.route("/mypage")
