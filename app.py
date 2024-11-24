@@ -171,8 +171,8 @@ def submit_review():
     DB.reg_review(data, image_file.filename)
     return redirect(url_for('mypage'))  # TODO: redirect 어디로 할 건지 결정
 
-# 리뷰 전체 조회(AJAX) - session에서 가져오는건지, 아니면 특정 사용자를 클릭할 수도 있는건지?
-@application.route("/api/reviews/<id>")
+# 리뷰 전체 조회(AJAX)
+@application.route("/api/reviews/<id>", methods=['GET'])
 def all_review(id):
     page = request.args.get("page", 0, type=int)
 
@@ -233,6 +233,12 @@ def like(name):
 def unlike(name):
     my_heart = DB.update_heart(session['id'],'N',name)
     return jsonify({'msg': '안좋아요 완료!'})
+
+# 좋아요 전체 조회(회원별)
+@application.route('/mypage/likelist/<id>/', methods=['GET'])
+def likelist(id):
+    like_list = DB.get_all_like_by_id(id)
+    return jsonify(like_list)
 
 if __name__ == "__main__":
     application.run(host='0.0.0.0', debug=True)
