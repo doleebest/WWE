@@ -171,23 +171,28 @@ def submit_review():
     DB.reg_review(data, image_file.filename)
     return redirect(url_for('mypage'))  # TODO: redirect 어디로 할 건지 결정
 
-# 리뷰 전체 조회(AJAX)
-@application.route("/api/reviews/<id>", methods=['GET'])
-def all_review(id):
+@application.route("/view/all-reviews", methods=['GET'])
+def all_reviews():
+    id = session.get('id')
+    if not id:
+        return redirect(url_for('login'))
     page = request.args.get("page", 0, type=int)
 
     # 페이지 시작 및 끝 인덱스
-    start_idx=REVIEW_COUNT_PER_PAGE*page
-    end_idx=REVIEW_COUNT_PER_PAGE*(page + 1)
+    start_idx = REVIEW_COUNT_PER_PAGE * page
+    end_idx = REVIEW_COUNT_PER_PAGE * (page + 1)
 
     # db에서 id(회원)이 작성한 리뷰들 전체
     data = DB.get_all_review_by_id(id)
-    item_counts = len(data) # 총 리뷰 개수
-    current_page_data = dict(list(data.items())[start_idx:end_idx])
+    item_counts = len(data)  # 총 리뷰 개수
+    current_page_data = list(data.items())[start_idx:end_idx]
+
+    print(current_page_data)
 
     # JSON 응답으로 반환
-    return jsonify(
-        reviews=list(current_page_data.items()),
+    return render_template(
+        "all_reviews.html",
+        reviews=current_page_data,  # key-value 쌍 리스트로 보냄
         limit=REVIEW_COUNT_PER_PAGE,  # 한 화면에 보일 리뷰 개수
         page=page,  # 현재 페이지
         page_count=(item_counts + REVIEW_COUNT_PER_PAGE - 1) // REVIEW_COUNT_PER_PAGE,  # 총 페이지 수
