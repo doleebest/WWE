@@ -143,11 +143,12 @@ class DBhandler:
     # 회원 별 리뷰 전체 조회
     def get_all_review_by_id(self, id):
         all_reviews = self.db.child("review").get() 
+        filtered_reviews = {}
         # 전체 리뷰 들고와서 sellerId와 id가 동일한 것만
         for rev in all_reviews.each():
             if rev.val().get("sellerId") == id: 
-                return rev.val() 
-        return None
+                filtered_reviews[rev.key()] = rev.val()
+        return filtered_reviews
     
     # 회원 별 좋아요 전체 조회
     def get_all_like_by_id(self, uid):
