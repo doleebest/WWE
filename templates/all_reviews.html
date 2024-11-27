@@ -1,0 +1,42 @@
+{% extends "header.html" %}
+
+{% block main %}
+<main>
+  <div class="review-overview-container">
+    <h2>리뷰 전체 조회</h2>
+    <ul class="review-items">
+      {% for review in reviews %}
+        <a href="{{ url_for('view_review', name='드롱기 토스터기') }}" class="review-item"></a>
+            <li class="review-item">
+                <div class="review-info">
+                <p><strong>{{ review[0] }}:</strong> {{ review[1] }}</p>
+                </div>
+            </li>
+        </a>
+    </ul>
+      {% endfor %}
+    </ul>
+    
+    <!-- Pagination -->
+    <div class="pagination">
+      <div class="arrow-group-left">
+        {% if page > 0 %}
+        <a href="{{ url_for('all_reviews', page=page-1) }}" class="prev-page">이전</a>
+        {% endif %}
+      </div>
+      
+      {% for i in range(page_count) %}
+      <a href="{{ url_for('all_reviews', page=i) }}" class="page-number {% if i == page %}active{% endif %}">
+        {{ i + 1 }}
+      </a>
+      {% endfor %}
+      
+      <div class="arrow-group-right">
+        {% if page < page_count - 1 %}
+        <a href="{{ url_for('all_reviews', page=page+1) }}" class="next-page">다음</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}
