@@ -190,6 +190,15 @@ class DBhandler:
             return None 
         return item.val()
 
+    # 회원 별 리뷰 전체 조회
+    def get_all_review_by_id(self, id):
+        all_reviews = self.db.child("review").get() 
+        # 전체 리뷰 들고와서 sellerId와 id가 동일한 것만
+        for rev in all_reviews.each():
+            if rev.val().get("sellerId") == id: 
+                return rev.val() 
+        return None
+
     def update_sale_status(self, product_id, new_status):
         self.db.child("item").child(product_id).update({"state": new_status})
         print(f"Updated product {product_id} to {new_status}")
@@ -228,7 +237,6 @@ class DBhandler:
             if rev.val().get("sellerId") == id: 
                 filtered_reviews[rev.key()] = rev.val()
         return filtered_reviews
-
     
     # 회원 별 좋아요 전체 조회
     def get_all_like_by_id(self, uid):
