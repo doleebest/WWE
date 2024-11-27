@@ -148,3 +148,14 @@ class DBhandler:
             if rev.val().get("sellerId") == id: 
                 return rev.val() 
         return None
+    
+    # 회원 별 좋아요 전체 조회
+    def get_all_like_by_id(self, uid):
+        likes = self.db.child("heart").child(uid).get()
+        like_list = []
+        
+        if likes.each():
+            for l in likes.each():
+                if l.val().get("interested") == "Y":
+                    like_list.append(l.key())
+        return like_list
