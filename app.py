@@ -172,8 +172,11 @@ def submit_review():
     return redirect(url_for('mypage'))  # TODO: redirect 어디로 할 건지 결정
 
 # 리뷰 전체 조회(AJAX)
-@application.route("/api/reviews/<id>", methods=['GET'])
-def all_review(id):
+@application.route("/view/all-reviews", methods=['GET'])
+def all_reviews():
+    id = session.get('id')
+    if not id:
+        return redirect(url_for('login'))
     page = request.args.get("page", 0, type=int)
 
     # 페이지 시작 및 끝 인덱스
@@ -184,9 +187,12 @@ def all_review(id):
     data = DB.get_all_review_by_id(id)
     item_counts = len(data) # 총 리뷰 개수
     current_page_data = dict(list(data.items())[start_idx:end_idx])
+    
+    print(list(current_page_data.items()))
 
     # JSON 응답으로 반환
-    return jsonify(
+    return render_template(
+        "all_reviews.html",
         reviews=list(current_page_data.items()),
         limit=REVIEW_COUNT_PER_PAGE,  # 한 화면에 보일 리뷰 개수
         page=page,  # 현재 페이지
