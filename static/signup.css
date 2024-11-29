@@ -18,6 +18,35 @@
   gap: 40px;
 }
 
+.input_container__id {
+  display: grid;
+  grid-template-columns: auto max-content;
+  gap: 15px;
+  align-items: center;
+}
+
+.duplicate_check_btn {
+  height: 40px;
+  width: 80px;
+  border-radius: 15px;
+}
+
+.btn_activate {
+  background-color: #00462a1a;
+  color: var(--ewhagreen);
+}
+
+.btn_activate:hover {
+  background-color: var(--ewhagreen);
+  color: white;
+}
+
+.btn_deactivate {
+  background-color: var(--ewhagrayblank);
+  color: gray;
+  cursor: default;
+}
+
 .input_div {
   display: flex;
   flex-direction: column;
@@ -32,13 +61,28 @@
   background-color: var(--ewhagrayblank);
 }
 
+.alert {
+  font-size: 13px;
+}
+
+.alert_good {
+  color: var(--ewhagreen);
+}
+
+.alert_bad {
+  color: var(--ewhacoral);
+}
+
 .signup_btn {
   width: 100%;
   padding: 15px;
   border-radius: 15px;
-  background-color: var(--ewhagreen);
   font-weight: 500;
   font-size: 16px;
+}
+
+.signup_btn_activate {
+  background-color: var(--ewhagreen);
   color: white;
 }
 
