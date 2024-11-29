@@ -4,6 +4,7 @@ from datetime import datetime
 import hashlib
 
 ITEM_COUNT_PER_PAGE = 12
+REVIEW_COUNT_PER_PAGE = 6   # 마이페이지 내의 전체 리뷰 조회
 
 application = Flask(__name__)
 application.config["SECRET_KEY"] = "helloosp"
@@ -164,7 +165,7 @@ def delete_sale():
 @application.route("/mypage/profile/update", methods=["POST"])
 def update_user_info():
     data = request.json
-    id = session.get('id') 
+    id = session.get('id')
     new_email = data.get("email")
     new_phone = data.get("phone")
 
@@ -233,6 +234,34 @@ def submit_review():
     DB.reg_review(data, image_file.filename)
     return redirect(url_for('mypage'))  # TODO: redirect 어디로 할 건지 결정
 
+@application.route("/view/all-reviews", methods=['GET'])
+def all_reviews():
+    id = session.get('id')
+    if not id:
+        return redirect(url_for('login'))
+    page = request.args.get("page", 0, type=int)
+
+    # 페이지 시작 및 끝 인덱스
+    start_idx = REVIEW_COUNT_PER_PAGE * page
+    end_idx = REVIEW_COUNT_PER_PAGE * (page + 1)
+
+    # db에서 id(회원)이 작성한 리뷰들 전체
+    data = DB.get_all_review_by_id(id)
+    item_counts = len(data)  # 총 리뷰 개수
+    current_page_data = list(data.items())[start_idx:end_idx]
+
+    print(current_page_data)
+
+    # JSON 응답으로 반환
+    return render_template(
+        "all_reviews.html",
+        reviews=current_page_data,  # key-value 쌍 리스트로 보냄
+        limit=REVIEW_COUNT_PER_PAGE,  # 한 화면에 보일 리뷰 개수
+        page=page,  # 현재 페이지
+        page_count=(item_counts + REVIEW_COUNT_PER_PAGE - 1) // REVIEW_COUNT_PER_PAGE,  # 총 페이지 수
+        total=item_counts  # 전체 리뷰 개수
+    )
+
 # 상품 등록 페이지
 @application.route("/reg_items")
 def reg_item():
@@ -256,6 +285,28 @@ def view_item_detail(name):
     data = DB.get_item_byname(str(name))
     print("####data:",data)
     return render_template("detail.html", name=name, data=data)
+
+# 좋아요
+@application.route('/show_heart/<name>/', methods=['GET'])
+def show_heart(name):
+    my_heart = DB.get_heart_by_name(session['id'],name)
+    return jsonify({'my_heart': my_heart})
+
+@application.route('/like/<name>/', methods=['POST'])
+def like(name):
+    my_heart = DB.update_heart(session['id'],'Y',name)
+    return jsonify({'msg': '좋아요 완료!'})
+
+@application.route('/unlike/<name>/', methods=['POST'])
+def unlike(name):
+    my_heart = DB.update_heart(session['id'],'N',name)
+    return jsonify({'msg': '안좋아요 완료!'})
+
+# 좋아요 전체 조회(회원별)
+@application.route('/mypage/likelist/<id>/', methods=['GET'])
+def likelist(id):
+    like_list = DB.get_all_like_by_id(id)
+    return jsonify(like_list)
 
 if __name__ == "__main__":
     application.run(host='0.0.0.0', debug=True)
