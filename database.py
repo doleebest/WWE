@@ -168,6 +168,35 @@ class DBhandler:
         if item.val() is None:  # name에 해당하는 데이터가 없을 경우
             return None 
         return item.val()
+
+    def update_sale_status(self, product_id, new_status):
+        self.db.child("item").child(product_id).update({"state": new_status})
+        print(f"Updated product {product_id} to {new_status}")
+        
+    # 사용자 정보 업데이트 함수 추가
+    def update_user_info(self, user_id, new_email=None, new_phone=None):
+        # 사용자 정보 조회
+        user_ref = self.db.child("user").order_by_child("id").equal_to(user_id).get()
+
+        if user_ref.val() is None:  # 사용자가 존재하지 않으면 실패
+            return False
+
+        # 해당 사용자의 정보를 업데이트
+        for user in user_ref.each():
+            user_key = user.key()  # 사용자 고유 키
+
+            # 변경된 값만 업데이트
+            updates = {}
+            if new_email:
+                updates['email'] = new_email
+            if new_phone:
+                updates['phone'] = new_phone
+
+            # Firebase에서 사용자 정보 업데이트
+            self.db.child("user").child(user_key).update(updates)
+            print(f"User {user_id} updated with email: {new_email}, phone: {new_phone}")
+            return True
+        return False
     
     # 회원 별 리뷰 전체 조회
     def get_all_review_by_id(self, id):
