@@ -31,6 +31,19 @@ class DBhandler:
         items = self.db.child("item").get().val()
         return items
     
+    def get_items_by_continent(self, continent):
+        all_items = self.db.child("item").get()
+        filtered_items = {}
+        
+        if all_items.val() is None:
+            return filtered_items
+
+        for item in all_items.each():
+            if item.val().get("continent", "") == continent:
+                filtered_items[item.key()] = item.val()
+        
+        return filtered_items
+    
     # name값으로 item 정보 가져오기
     def get_item_byname(self, name):
         item = self.db.child("item").child(name).get()
@@ -100,7 +113,36 @@ class DBhandler:
         sales_ref = self.db.child('products').order_by_child('sellerId').equal_to(id).get()
         sales = [item.val() for item in sales_ref.each()]
         return sales
-    
+  
+    def update_sale_status(self, product_id, new_status):
+        self.db.child("item").child(product_id).update({"state": new_status})
+        print(f"Updated product {product_id} to {new_status}")
+        
+    # 사용자 정보 업데이트 함수 추가
+    def update_user_info(self, user_id, new_email=None, new_phone=None):
+        # 사용자 정보 조회
+        user_ref = self.db.child("user").order_by_child("id").equal_to(user_id).get()
+
+        if user_ref.val() is None:  # 사용자가 존재하지 않으면 실패
+            return False
+
+        # 해당 사용자의 정보를 업데이트
+        for user in user_ref.each():
+            user_key = user.key()  # 사용자 고유 키
+
+            # 변경된 값만 업데이트
+            updates = {}
+            if new_email:
+                updates['email'] = new_email
+            if new_phone:
+                updates['phone'] = new_phone
+
+            # Firebase에서 사용자 정보 업데이트
+            self.db.child("user").child(user_key).update(updates)
+            print(f"User {user_id} updated with email: {new_email}, phone: {new_phone}")
+            return True
+        return False
+      
     def get_heart_by_name(self, uid, name):
         hearts = self.db.child("heart").child(uid).get()
         target_value=""
@@ -139,3 +181,53 @@ class DBhandler:
         if item.val() is None:  # name에 해당하는 데이터가 없을 경우
             return None 
         return item.val()
+
+    def update_sale_status(self, product_id, new_status):
+        self.db.child("item").child(product_id).update({"state": new_status})
+        print(f"Updated product {product_id} to {new_status}")
+        
+    # 사용자 정보 업데이트 함수 추가
+    def update_user_info(self, user_id, new_email=None, new_phone=None):
+        # 사용자 정보 조회
+        user_ref = self.db.child("user").order_by_child("id").equal_to(user_id).get()
+
+        if user_ref.val() is None:  # 사용자가 존재하지 않으면 실패
+            return False
+
+        # 해당 사용자의 정보를 업데이트
+        for user in user_ref.each():
+            user_key = user.key()  # 사용자 고유 키
+
+            # 변경된 값만 업데이트
+            updates = {}
+            if new_email:
+                updates['email'] = new_email
+            if new_phone:
+                updates['phone'] = new_phone
+
+            # Firebase에서 사용자 정보 업데이트
+            self.db.child("user").child(user_key).update(updates)
+            print(f"User {user_id} updated with email: {new_email}, phone: {new_phone}")
+            return True
+        return False
+    
+    # 회원 별 리뷰 전체 조회
+    def get_all_review_by_id(self, id):
+        all_reviews = self.db.child("review").get() 
+        filtered_reviews = {}
+        # 전체 리뷰 들고와서 sellerId와 id가 동일한 것만
+        for rev in all_reviews.each():
+            if rev.val().get("sellerId") == id: 
+                filtered_reviews[rev.key()] = rev.val()
+        return filtered_reviews
+    
+    # 회원 별 좋아요 전체 조회
+    def get_all_like_by_id(self, uid):
+        likes = self.db.child("heart").child(uid).get()
+        like_list = []
+        
+        if likes.each():
+            for l in likes.each():
+                if l.val().get("interested") == "Y":
+                    like_list.append(l.key())
+        return like_list

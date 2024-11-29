@@ -30,7 +30,7 @@
         <button class="tab active" onclick="showTab('wishlist')">찜한 상품</button>
         <button class="tab" onclick="showTab('purchase-history')">구매 내역</button>
         <button class="tab" onclick="showTab('sales-history')">판매 내역</button>
-        <button class="tab" onclick="showTab('review-overview')">리뷰 전체 조회</button>
+        <a href="{{ url_for('all_reviews') }}" class="tab">리뷰 전체 조회</a>
     </div>
 
     <!-- 찜한 상품 콘텐츠 -->
