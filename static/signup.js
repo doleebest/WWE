@@ -197,24 +197,24 @@ const postIdDuplicate = async () => {
   }
 };
 
+const submitForm = () => {
+  if (!isDupChecked) {
+    idInput.focus();
+    idAlert.classList.remove("none");
+    idAlert.classList.remove("alert_good");
+    idAlert.classList.add("alert_bad");
+    idAlert.textContent = "아이디 중복 확인을 해주세요.";
+    return;
+  }
+  document.querySelector(".signup_form").submit();
+};
+
 duplicateCheckBtn.addEventListener("click", (e) => {
   e.preventDefault();
   postIdDuplicate();
 });
 
-signupBtn.addEventListener("click", () => {
-  console.log("회원가입 버튼 클릭");
+signupBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+  submitForm();
 });
-
-/* TODO
-0. 아이디 중복 체크 API 연결
-   완) 프론트에서도 중복 체크 여부 저장하는 변수 생성 필요
-   완) 중복 체크를 했더라도 id input란에 변경이 생기면 다시 중복 체크 여부 저장하는 변수 false
-   불필) 중복 체크 true가 되었다면 중복 확인 버튼은 비활성화
-1. validationFlag가 모두 true가 되었을 때만 회원가입 하기 버튼 활성화
-   완) 중복 체크 여부와 상관없이 우선 id input이 validate 한지만 판단
-  완) 휴대전화와 관심 지역은 값을 입력했을 경우에만 flag를 false로 바꾸고 validation 체크
-2. 회원가입 하기 버튼 활성화 클릭 시 post 하기 전 체크해야 할 것
-   - 아이디 중복 체크 여부 확인
-   - post 실패 원인으로 input focus해주기, input 아래에는 메세지 띄워줌
-*/
