@@ -2,6 +2,7 @@
 const idInput = document.getElementById("id");
 const idAlert = document.getElementById("id_alert");
 const duplicateCheckBtn = document.querySelector(".duplicate_check_btn");
+let isDupChecked = false; // 중복 확인 여부
 // PW 관련 element
 const pwInput = document.getElementById("pw");
 const pwAlert = document.getElementById("pw_alert");
@@ -39,6 +40,7 @@ const validationFlag = {
 const checkIdValidation = () => {
   validationFlag.id = false;
   duplicateCheckBtn.disabled = true;
+  isDupChecked = false;
   if (idInput.value.length == 0) {
     idAlert.classList.add("none");
     checkAllValidation();
@@ -164,24 +166,55 @@ pwReInput.addEventListener("input", checkPwReValidation);
 emailInput.addEventListener("input", checkEmailValidation);
 phoneInput.addEventListener("input", checkPhoneValidation);
 
-// 임시
-duplicateCheckBtn.addEventListener("click", () => {
-  console.log("중복 확인 버튼 클릭");
+const postIdDuplicate = async () => {
+  const userId = idInput.value.trim();
+  try {
+    const response = await fetch("/check_id_duplicate", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id: userId }),
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
+      isDupChecked = true;
+      idAlert.classList.remove("none");
+      idAlert.classList.remove("alert_bad");
+      idAlert.classList.add("alert_good");
+      idAlert.textContent = "사용 가능한 아이디입니다.";
+    } else {
+      isDupChecked = false;
+      idAlert.classList.remove("none");
+      idAlert.classList.remove("alert_good");
+      idAlert.classList.add("alert_bad");
+      idAlert.textContent = "이미 사용 중인 아이디입니다.";
+    }
+  } catch (error) {
+    console.error("Error:", error);
+  }
+};
+
+duplicateCheckBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+  postIdDuplicate();
 });
+
 signupBtn.addEventListener("click", () => {
   console.log("회원가입 버튼 클릭");
 });
 
 /* TODO
 0. 아이디 중복 체크 API 연결
-   - 프론트에서도 중복 체크 여부 저장하는 변수 생성 필요
-   - 중복 체크를 했더라도 id input란에 변경이 생기면 다시 중복 체크 여부 저장하는 변수 false
-   - 중복 체크 true가 되었다면 중복 확인 버튼은 비활성화
+   완) 프론트에서도 중복 체크 여부 저장하는 변수 생성 필요
+   완) 중복 체크를 했더라도 id input란에 변경이 생기면 다시 중복 체크 여부 저장하는 변수 false
+   불필) 중복 체크 true가 되었다면 중복 확인 버튼은 비활성화
 1. validationFlag가 모두 true가 되었을 때만 회원가입 하기 버튼 활성화
    완) 중복 체크 여부와 상관없이 우선 id input이 validate 한지만 판단
   완) 휴대전화와 관심 지역은 값을 입력했을 경우에만 flag를 false로 바꾸고 validation 체크
 2. 회원가입 하기 버튼 활성화 클릭 시 post 하기 전 체크해야 할 것
    - 아이디 중복 체크 여부 확인
-   - 관심 지역 선택 안했을 경우 null 등으로 값 변경해서 백엔드에 넘기기 
    - post 실패 원인으로 input focus해주기, input 아래에는 메세지 띄워줌
 */
