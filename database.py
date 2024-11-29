@@ -31,6 +31,19 @@ class DBhandler:
         items = self.db.child("item").get().val()
         return items
     
+    def get_items_by_continent(self, continent):
+        all_items = self.db.child("item").get()
+        filtered_items = {}
+        
+        if all_items.val() is None:
+            return filtered_items
+
+        for item in all_items.each():
+            if item.val().get("continent", "") == continent:
+                filtered_items[item.key()] = item.val()
+        
+        return filtered_items
+    
     # name값으로 item 정보 가져오기
     def get_item_byname(self, name):
         item = self.db.child("item").child(name).get()
