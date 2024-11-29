@@ -26,6 +26,18 @@ class DBhandler:
         self.db.child("item").child(name).set(item_info)
         print(data,img_path)
         return True
+    
+    def get_items(self):
+        items = self.db.child("item").get().val()
+        return items
+    
+    # name값으로 item 정보 가져오기
+    def get_item_byname(self, name):
+        item = self.db.child("item").child(name).get()
+        if item.val() is None:  # name에 해당하는 데이터가 없을 경우
+            return None 
+        return item.val()
+
 
     def insert_user(self, data, pw) :
          user_info = {
@@ -88,7 +100,7 @@ class DBhandler:
         sales_ref = self.db.child('products').order_by_child('sellerId').equal_to(id).get()
         sales = [item.val() for item in sales_ref.each()]
         return sales
-    
+  
     def update_sale_status(self, product_id, new_status):
         self.db.child("item").child(product_id).update({"state": new_status})
         print(f"Updated product {product_id} to {new_status}")
@@ -117,3 +129,63 @@ class DBhandler:
             print(f"User {user_id} updated with email: {new_email}, phone: {new_phone}")
             return True
         return False
+      
+    def get_heart_by_name(self, uid, name):
+        hearts = self.db.child("heart").child(uid).get()
+        target_value=""
+        if hearts.val() == None:
+            return target_value
+
+        for res in hearts.each():
+            key_value = res.key()
+            if key_value == name:
+                target_value=res.val()
+
+        return target_value
+
+    def update_heart(self, user_id, isHeart, item):
+        heart_info = {"interested" : isHeart}
+        self.db.child("heart").child(user_id).child(item).set(heart_info)
+        return True
+
+    # 리뷰 작성 등록
+    def reg_review(self, data, img_path):
+        review_info ={
+            "buyerId": data['buyerId'],
+            "sellerId": data['sellerId'],
+            "title": data['title'],
+            "rate": data['reviewStar'],
+            "review": data['reviewContents'],
+            "review_time": data['review_time'],
+            "img_path": img_path
+        }
+        self.db.child("review").child(data['name']).set(review_info)
+        return True
+    
+    # 리뷰 상세 조회
+    def get_review_by_name(self, name):
+        item = self.db.child("review").child(name).get()
+        if item.val() is None:  # name에 해당하는 데이터가 없을 경우
+            return None 
+        return item.val()
+    
+    # 회원 별 리뷰 전체 조회
+    def get_all_review_by_id(self, id):
+        all_reviews = self.db.child("review").get() 
+        filtered_reviews = {}
+        # 전체 리뷰 들고와서 sellerId와 id가 동일한 것만
+        for rev in all_reviews.each():
+            if rev.val().get("sellerId") == id: 
+                filtered_reviews[rev.key()] = rev.val()
+        return filtered_reviews
+    
+    # 회원 별 좋아요 전체 조회
+    def get_all_like_by_id(self, uid):
+        likes = self.db.child("heart").child(uid).get()
+        like_list = []
+        
+        if likes.each():
+            for l in likes.each():
+                if l.val().get("interested") == "Y":
+                    like_list.append(l.key())
+        return like_list
