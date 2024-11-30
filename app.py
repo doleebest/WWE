@@ -21,7 +21,10 @@ def hello():
 
     data = DB.get_items()
     total_item_count = len(data)
-    data = dict(list(data.items())[start_index:end_index])
+    if total_item_count <= ITEM_COUNT_PER_PAGE:
+        data = dict(list(data.items())[:total_item_count])
+    else:
+        data = dict(list(data.items())[start_index:end_index])
 
     return render_template(
         "index.html",
@@ -39,7 +42,10 @@ def view_items_by_continent(continent):
 
     data = DB.get_items_by_continent(continent)
     total_item_count = len(data)
-    data = dict(list(data.items())[start_index:end_index])
+    if total_item_count <= ITEM_COUNT_PER_PAGE:
+        data = dict(list(data.items())[:total_item_count])
+    else:
+        data = dict(list(data.items())[start_index:end_index])
 
     return render_template(
         "index.html",
