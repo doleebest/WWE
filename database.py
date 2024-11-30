@@ -44,6 +44,20 @@ class DBhandler:
         
         return filtered_items
     
+    def get_items_by_query(self, query):
+        all_items = self.db.child("item").get()
+        searched_items = {}
+        
+        if all_items.val() is None:
+            return searched_items
+
+        for item in all_items.each():
+            item_data = item.val()
+            if query.lower() in item_data.get("productName", "").lower():
+                searched_items[item.key()] = item_data
+        
+        return searched_items
+    
     # name값으로 item 정보 가져오기
     def get_item_byname(self, name):
         item = self.db.child("item").child(name).get()
