@@ -21,14 +21,17 @@ def hello():
 
     data = DB.get_items()
     total_item_count = len(data)
-    data = dict(list(data.items())[start_index:end_index])
+    if total_item_count <= ITEM_COUNT_PER_PAGE:
+        data = dict(list(data.items())[:total_item_count])
+    else:
+        data = dict(list(data.items())[start_index:end_index])
 
     return render_template(
         "index.html",
         datas = data.items(),
         limit = ITEM_COUNT_PER_PAGE, # 한 페이지에 상품 개수
         page = page, # 현재 페이지 인덱스
-        page_count = int((total_item_count/ITEM_COUNT_PER_PAGE)+1), # 페이지 개수
+        page_count = int(math.ceil(total_item_count/ITEM_COUNT_PER_PAGE)), # 페이지 개수
         total = total_item_count) # 총 상품 개수
 
 @application.route("/<continent>/")
@@ -39,14 +42,17 @@ def view_items_by_continent(continent):
 
     data = DB.get_items_by_continent(continent)
     total_item_count = len(data)
-    data = dict(list(data.items())[start_index:end_index])
+    if total_item_count <= ITEM_COUNT_PER_PAGE:
+        data = dict(list(data.items())[:total_item_count])
+    else:
+        data = dict(list(data.items())[start_index:end_index])
 
     return render_template(
         "index.html",
         datas = data.items(),
         limit = ITEM_COUNT_PER_PAGE, # 한 페이지에 상품 개수
         page = page, # 현재 페이지 인덱스
-        page_count = int((total_item_count/ITEM_COUNT_PER_PAGE)+1), # 페이지 개수
+        page_count = int(math.ceil(total_item_count/ITEM_COUNT_PER_PAGE)), # 페이지 개수
         total = total_item_count) # 총 상품 개수
 
 @application.route("/login")
