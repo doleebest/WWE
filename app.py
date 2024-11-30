@@ -55,6 +55,28 @@ def view_items_by_continent(continent):
         page_count = int(math.ceil(total_item_count/ITEM_COUNT_PER_PAGE)), # 페이지 개수
         total = total_item_count) # 총 상품 개수
 
+@application.route("/search", methods=['GET'])
+def search_items():
+    query = request.args.get('query')
+    page = request.args.get("page", 1, type=int)
+    start_index = ITEM_COUNT_PER_PAGE * (page - 1)
+    end_index = ITEM_COUNT_PER_PAGE * page
+
+    data = DB.get_items_by_query(query)
+    total_item_count = len(data)
+    if total_item_count <= ITEM_COUNT_PER_PAGE:
+        data = dict(list(data.items())[:total_item_count])
+    else:
+        data = dict(list(data.items())[start_index:end_index])
+
+    return render_template(
+        "index.html",
+        datas = data.items(),
+        limit = ITEM_COUNT_PER_PAGE, # 한 페이지에 상품 개수
+        page = page, # 현재 페이지 인덱스
+        page_count = int(math.ceil(total_item_count/ITEM_COUNT_PER_PAGE)), # 페이지 개수
+        total = total_item_count) # 총 상품 개수
+
 @application.route("/login")
 def login():
     return render_template("login.html")
