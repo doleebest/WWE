@@ -79,6 +79,8 @@ def register_user() :
     data=request.form
     id=request.form['id']
     pw=request.form['pw']
+    email=request.form['email']
+    phone=request.form['phone']
     pw_hash = hashlib.sha256(pw.encode('utf-8')).hexdigest()
     # ID와 비밀번호 유효성 검사
     if not DB.validate_user_id(id):
@@ -87,6 +89,13 @@ def register_user() :
     if not DB.validate_password(pw):
         flash("비밀번호는 최소 8자이며, 문자, 숫자, 특수문자를 각각 1개 이상 포함해야 합니다!")
         return render_template("signup.html")
+    if not DB.validate_email(email) :
+        flash("올바른 이메일 형식이 아닙니다!")
+        return render_template("signup.html")
+    if not DB.validate_phone(phone) :
+        flash("올바른 전화번호 형식이 아닙니다!")
+        return render_template("signup.html")    
+
     
     #사용자 정보 삽입
     if DB.insert_user(data,pw_hash):
@@ -180,11 +189,15 @@ def delete_sale():
 
     return jsonify({"message": "Product deleted successfully"}), 200
 
-
+"""
 @application.route("/mypage/profile/update", methods=["POST"])
 def update_user_info():
     data = request.json
+<<<<<<< HEAD
     id = session.get('id')
+=======
+    user_id = 'user_id_example'  # 사용자 ID는 세션 등에서 가져올 수 있음
+>>>>>>> 4e1dd14 (fix : crash)
     new_email = data.get("email")
     new_phone = data.get("phone")
 
@@ -200,7 +213,7 @@ def update_user_info():
         return jsonify({"success": True, "message": "정보가 업데이트되었습니다."}), 200
     else:
         return jsonify({"success": False, "message": "정보 업데이트에 실패했습니다."}), 500
-
+"""
 
 @application.route("/list")
 def view_list():
