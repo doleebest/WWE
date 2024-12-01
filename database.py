@@ -70,6 +70,8 @@ class DBhandler:
          user_info = {
              "id" : data['id'],
              "pw" : pw,
+             "email" : data['email'],
+             "phone" : data['phone']
              # "nickname" : data['nickname']
          }
          if self.user_duplicate_check(str(data['id'])): # id 중복 체크
