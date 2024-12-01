@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, flash, redirect, url_for, ses
 from database import DBhandler
 from datetime import datetime
 import hashlib
+import math
 
 ITEM_COUNT_PER_PAGE = 12
 REVIEW_COUNT_PER_PAGE = 6   # 마이페이지 내의 전체 리뷰 조회
@@ -20,14 +21,60 @@ def hello():
 
     data = DB.get_items()
     total_item_count = len(data)
-    data = dict(list(data.items())[start_index:end_index])
+    if total_item_count <= ITEM_COUNT_PER_PAGE:
+        data = dict(list(data.items())[:total_item_count])
+    else:
+        data = dict(list(data.items())[start_index:end_index])
 
     return render_template(
         "index.html",
         datas = data.items(),
         limit = ITEM_COUNT_PER_PAGE, # 한 페이지에 상품 개수
         page = page, # 현재 페이지 인덱스
-        page_count = int((total_item_count/ITEM_COUNT_PER_PAGE)+1), # 페이지 개수
+        page_count = int(math.ceil(total_item_count/ITEM_COUNT_PER_PAGE)), # 페이지 개수
+        total = total_item_count) # 총 상품 개수
+
+@application.route("/<continent>/")
+def view_items_by_continent(continent):
+    page = request.args.get("page", 1, type=int)
+    start_index = ITEM_COUNT_PER_PAGE * (page - 1)
+    end_index = ITEM_COUNT_PER_PAGE * page
+
+    data = DB.get_items_by_continent(continent)
+    total_item_count = len(data)
+    if total_item_count <= ITEM_COUNT_PER_PAGE:
+        data = dict(list(data.items())[:total_item_count])
+    else:
+        data = dict(list(data.items())[start_index:end_index])
+
+    return render_template(
+        "index.html",
+        datas = data.items(),
+        limit = ITEM_COUNT_PER_PAGE, # 한 페이지에 상품 개수
+        page = page, # 현재 페이지 인덱스
+        page_count = int(math.ceil(total_item_count/ITEM_COUNT_PER_PAGE)), # 페이지 개수
+        total = total_item_count) # 총 상품 개수
+
+@application.route("/search", methods=['GET'])
+def search_items():
+    query = request.args.get('query')
+    page = request.args.get("page", 1, type=int)
+    start_index = ITEM_COUNT_PER_PAGE * (page - 1)
+    end_index = ITEM_COUNT_PER_PAGE * page
+
+    data = DB.get_items_by_query(query)
+    total_item_count = len(data)
+    if total_item_count <= ITEM_COUNT_PER_PAGE:
+        data = dict(list(data.items())[:total_item_count])
+    else:
+        data = dict(list(data.items())[start_index:end_index])
+
+    return render_template(
+        "index.html",
+        datas = data.items(),
+        limit = ITEM_COUNT_PER_PAGE, # 한 페이지에 상품 개수
+        page = page, # 현재 페이지 인덱스
+        page_count = int(math.ceil(total_item_count/ITEM_COUNT_PER_PAGE)), # 페이지 개수
         total = total_item_count) # 총 상품 개수
 
 @application.route("/login")
@@ -43,7 +90,7 @@ def login_user():
             session['id']=id
             return redirect('/')
         else:
-            flash("wrong ID or PW!")
+            flash("잘못된 아이디 또는 비밀번호 입니다.")
             return render_template("login.html")
         
 @application.route("/logout")
@@ -60,6 +107,8 @@ def register_user() :
     data=request.form
     id=request.form['id']
     pw=request.form['pw']
+    email=request.form['email']
+    phone=request.form['phone']
     pw_hash = hashlib.sha256(pw.encode('utf-8')).hexdigest()
     # ID와 비밀번호 유효성 검사
     if not DB.validate_user_id(id):
@@ -68,6 +117,13 @@ def register_user() :
     if not DB.validate_password(pw):
         flash("비밀번호는 최소 8자이며, 문자, 숫자, 특수문자를 각각 1개 이상 포함해야 합니다!")
         return render_template("signup.html")
+    if not DB.validate_email(email) :
+        flash("올바른 이메일 형식이 아닙니다!")
+        return render_template("signup.html")
+    if not DB.validate_phone(phone) :
+        flash("올바른 전화번호 형식이 아닙니다!")
+        return render_template("signup.html")    
+
     
     #사용자 정보 삽입
     if DB.insert_user(data,pw_hash):
@@ -75,6 +131,19 @@ def register_user() :
     else :
         flash("user id already exist!")
         return render_template("signup.html")
+
+@application.route('/check_id_duplicate', methods=['POST'])
+def check_id_duplicate():
+    """Endpoint to check if an ID is already in use."""
+    id_to_check = request.json.get('id')  # Expecting JSON payload with 'id'
+    if not id_to_check:
+        return jsonify({'success': False, 'message': 'ID not provided'}), 400
+
+    is_available = DB.user_duplicate_check(id_to_check)
+    if is_available:
+        return jsonify({'success': True, 'message': 'ID is available'})
+    else:
+        return jsonify({'success': False, 'message': 'ID is already in use'})
     
 # my page 관련 routing
 @application.route("/mypage")
@@ -119,6 +188,60 @@ def sales(id):
     sales = DB.get_user_sales(id)
     return jsonify(sales or []), 200
 
+# 판매 상태 업데이트
+@application.route("/mypage/sales/update_status", methods=['POST'])
+def update_sale_status():
+    id = session.get('id')
+    if not id:
+        return redirect(url_for('login'))
+
+    data = request.json
+    product_id = data.get("product_id")
+    status = data.get("status")
+
+    if not DB.update_sale_status(id, product_id, status):
+        return jsonify({"error": "Failed to update sale status"}), 500
+
+    return jsonify({"message": "Sale status updated"}), 200
+
+# 상품 삭제
+@application.route("/mypage/sales/delete", methods=['POST'])
+def delete_sale():
+    id = session.get('id')
+    if not id:
+        return redirect(url_for('login'))
+
+    product_id = request.json.get("product_id")
+    if not DB.delete_product(id, product_id):
+        return jsonify({"error": "Failed to delete product"}), 500
+
+    return jsonify({"message": "Product deleted successfully"}), 200
+
+"""
+@application.route("/mypage/profile/update", methods=["POST"])
+def update_user_info():
+    data = request.json
+<<<<<<< HEAD
+    id = session.get('id')
+=======
+    user_id = 'user_id_example'  # 사용자 ID는 세션 등에서 가져올 수 있음
+>>>>>>> 4e1dd14 (fix : crash)
+    new_email = data.get("email")
+    new_phone = data.get("phone")
+
+    db_handler = DBhandler()
+
+    # 이메일, 전화번호 중 적어도 하나가 주어져야 업데이트가 진행됨
+    if not new_email and not new_phone:
+        return jsonify({"success": False, "message": "이메일 또는 전화번호를 입력하세요."}), 400
+
+    # 사용자 정보 업데이트
+    success = db_handler.update_user_info(user_id, new_email=new_email, new_phone=new_phone)
+    if success:
+        return jsonify({"success": True, "message": "정보가 업데이트되었습니다."}), 200
+    else:
+        return jsonify({"success": False, "message": "정보 업데이트에 실패했습니다."}), 500
+"""
 
 @application.route("/list")
 def view_list():

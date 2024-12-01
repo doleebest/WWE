@@ -89,3 +89,8 @@ header {
   white-space: nowrap;
   text-align: end;
 }
+
+/* 일반화 */
+.none {
+  display: none;
+}
