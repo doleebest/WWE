@@ -85,6 +85,14 @@ class DBhandler:
               return True
         return False
     
+    # id로 회원 정보 가져오기
+    def get_user_by_id(self, id):
+        users = self.db.child("user").get()
+        for user in users.each():
+            if user.val()["id"] == id:
+                return user.val()
+        return None 
+
     # my page 관련
     def get_user_wishlist(self,id):
         wishlist_ref = self.db.child('wishlist').order_by_child('id').equal_to(id).get()
