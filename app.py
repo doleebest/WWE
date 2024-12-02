@@ -248,12 +248,11 @@ def view_list():
     return render_template("list.html")
 
 # 리뷰 상세 페이지
-# TODO: 리뷰어 정보 가져오기
 @application.route("/review/<name>/")
 def view_review(name):
-    # DB에서 리뷰정보 및 상품정보 가져옴
     review = DB.get_review_by_name(name)
     item = DB.get_item_byname(name)
+    seller = DB.get_user_by_id('sj')
 
     # 리뷰정보 혹은 상품정보 없을 경우 404
     if not review or not item:
@@ -262,7 +261,8 @@ def view_review(name):
         "review.html", 
         review=review,  # 리뷰 정보
         item=item,  # 상품 정보
-        name=name
+        name=name,
+        seller=seller
     )
 
 # 리뷰 등록 페이지
@@ -309,8 +309,6 @@ def all_reviews():
     data = DB.get_all_review_by_id(id)
     item_counts = len(data)  # 총 리뷰 개수
     current_page_data = list(data.items())[start_idx:end_idx]
-
-    print(current_page_data)
 
     # JSON 응답으로 반환
     return render_template(
