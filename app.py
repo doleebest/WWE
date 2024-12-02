@@ -3,6 +3,7 @@ from database import DBhandler
 from datetime import datetime
 import hashlib
 import math
+from elasticsearch_helper import *
 
 ITEM_COUNT_PER_PAGE = 12
 REVIEW_COUNT_PER_PAGE = 6   # 마이페이지 내의 전체 리뷰 조회
@@ -337,6 +338,17 @@ def reg_item_submit_post():
     image_file.save("static/images/{}".format(image_file.filename))
     data = request.form
     DB.insert_item(data['productName'], data, image_file.filename)
+
+    product_data = {
+        "name": data['productName'],
+        "description": data['description'],
+        "price": data['price'],
+        "image_path": f"static/images/{image_file.filename}",
+        "continent": data['continent']
+    }
+    es = get_elasticsearch()
+    es.index(index = "products", id = data['productName'], body=product_data)
+
     return render_template("submit_item_result.html", data=data, img_path="static/images/{}".format(image_file.filename))
 
 @application.route("/detail/<name>/")
