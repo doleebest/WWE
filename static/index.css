@@ -130,3 +130,31 @@
   font-weight: 600;
   font-size: 15px;
 }
+
+.select-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.select-btn {
+  padding: 8px 20px;
+  border-radius: 20px;
+  background-color: #f4f4f4;
+  color: #888;
+  cursor: pointer;
+  outline: none;
+  border: 1px solid #f4f4f4;
+}
+
+.select-btn:hover {
+  color: var(--ewhagreen);
+  border: 1px solid var(--ewhagreen);
+  background-color: #00462a5e;
+}
+
+.select-btn.active {
+  border: 1px solid var(--ewhagreen);
+  background-color: var(--ewhagreen);
+  color: white;
+  font-weight: 600;
+}

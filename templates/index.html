@@ -19,10 +19,16 @@
     <main>
       <img class="map" src="../static/images/temp-map.svg" />
       <div class="home_container">
-        <form class="home_form">
+        <form
+          class="home_form"
+          action="{{ url_for('get_data',query=request.args.get('query', ''), page=1) }}"
+          method="get"
+        >
           <input
             class="search_bar"
             type="text"
+            name="query"
+            value="{{ request.args.get('query', '') }}"
             placeholder="어떤 상품을 찾으시나요?"
           />
           <button class="serach_btn" type="submit">
@@ -33,10 +39,46 @@
           <h2>상품 전체 조회</h2>
           <!-- <div class="whole_items"></div> -->
           <div class="pagenation_container">
-            <!-- 개발 및 삭제 예정 -->
-
             {% if total > 0 %}
             <p class="item_count">상품 전체 {{total}}개</p>
+            <div class="select-buttons" style="margin: 15px 0px">
+              <a
+                href="{{ url_for('get_data', continent='아시아') }}"
+                class="continent-btn select-btn {{ 'active' if request.args.get('continent') == '아시아' else '' }}"
+              >
+                아시아
+              </a>
+              <a
+                href="{{ url_for('get_data', continent='유럽') }}"
+                class="continent-btn select-btn {{ 'active' if request.args.get('continent') == '유럽' else '' }}"
+              >
+                유럽
+              </a>
+              <a
+                href="{{ url_for('get_data', continent='북아메리카') }}"
+                class="continent-btn select-btn {{ 'active' if request.args.get('continent') == '북아메리카' else '' }}"
+              >
+                북아메리카
+              </a>
+              <a
+                href="{{ url_for('get_data', continent='남아메리카') }}"
+                class="continent-btn select-btn {{ 'active' if request.args.get('continent') == '남아메리카' else '' }}"
+              >
+                남아메리카
+              </a>
+              <a
+                href="{{ url_for('get_data', continent='오세아니아') }}"
+                class="continent-btn select-btn {{ 'active' if request.args.get('continent') == '오세아니아' else '' }}"
+              >
+                오세아니아
+              </a>
+              <a
+                href="{{ url_for('get_data', continent='아프리카') }}"
+                class="continent-btn select-btn {{ 'active' if request.args.get('continent') == '아프리카' else '' }}"
+              >
+                아프리카
+              </a>
+            </div>
             <div class="whole_items">
               {% for key, value in datas %}
               <a href="{{ url_for('view_item_detail', name=key) }}">
@@ -64,7 +106,9 @@
                 <ul>
                   <li>
                     {% for i in range(page_count)%}
-                    <a href="{{url_for('hello', page=i+1)}}" color="black"
+                    <a
+                      href="{{url_for('get_data', continent=request.args.get('continent', ''), query=request.args.get('query', ''), page=i+1)}}"
+                      color="black"
                       >{{i+1}}</a
                     >
                     {% endfor %}
