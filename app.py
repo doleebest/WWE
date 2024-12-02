@@ -61,14 +61,20 @@ def search_items():
     query = request.args.get('query')
     page = request.args.get("page", 1, type=int)
     start_index = ITEM_COUNT_PER_PAGE * (page - 1)
-    end_index = ITEM_COUNT_PER_PAGE * page
-
-    data = DB.get_items_by_query(query)
-    total_item_count = len(data)
-    if total_item_count <= ITEM_COUNT_PER_PAGE:
-        data = dict(list(data.items())[:total_item_count])
-    else:
-        data = dict(list(data.items())[start_index:end_index])
+    
+    es = get_elasticsearch()
+    body = {
+        "query": {
+            "multi_match": {
+                "query": query,
+                "fields": ["name", "description", "continent"]
+            }
+        }
+    }
+    
+    results = es.search(index="products", body=body, from_=start_index, size=ITEM_COUNT_PER_PAGE)
+    total_item_count = results['hits']['total']['value']
+    data = {hit["_id"]: hit["_source"] for hit in results['hits']['hits']}
 
     return render_template(
         "index.html",
