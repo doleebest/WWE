@@ -13,7 +13,6 @@ application.config["SECRET_KEY"] = "helloosp"
 
 DB = DBhandler()
 
-@application.before_first_request
 def initialize_elasticsearch():
     """Initialize Elasticsearch index and populate data."""
     es = get_elasticsearch()
@@ -23,6 +22,8 @@ def initialize_elasticsearch():
     all_items = DB.get_items()
     for item_name, item_data in all_items.items():
         es.index(index="products", id=item_name, body=item_data)
+
+initialize_elasticsearch()
 
 # 홈화면
 @application.route("/")
