@@ -14,9 +14,13 @@ application.config['ELASTICSEARCH_URL'] = 'http://localhost:9200'
 
 DB = DBhandler()
 
+app_has_run_before = False
+
+@application.before_request
 def initialize_elasticsearch():
-    """Initialize Elasticsearch index and populate data."""
-    with application.app_context():
+    global app_has_run_before
+    if not app_has_run_before:
+        """Initialize Elasticsearch index and populate data."""
         es = get_elasticsearch()
         if not es.indices.exists(index="products"):
             es.indices.create(index="products")
@@ -24,6 +28,7 @@ def initialize_elasticsearch():
         all_items = DB.get_items()
         for item_name, item_data in all_items.items():
             es.index(index="products", id=item_name, body=item_data)
+        app_has_run_before = True
 
 # 홈화면
 @application.route("/")
@@ -399,5 +404,4 @@ def likelist(id):
     return jsonify(like_list)
 
 if __name__ == "__main__":
-    initialize_elasticsearch()
     application.run(host='0.0.0.0', debug=True)
