@@ -3,32 +3,14 @@ from database import DBhandler
 from datetime import datetime
 import hashlib
 import math
-from elasticsearch_helper import *
 
 ITEM_COUNT_PER_PAGE = 12
 REVIEW_COUNT_PER_PAGE = 6   # 마이페이지 내의 전체 리뷰 조회
 
 application = Flask(__name__)
 application.config["SECRET_KEY"] = "helloosp"
-application.config['ELASTICSEARCH_URL'] = 'http://localhost:9200'
 
 DB = DBhandler()
-
-app_has_run_before = False
-
-@application.before_request
-def initialize_elasticsearch():
-    global app_has_run_before
-    if not app_has_run_before:
-        """Initialize Elasticsearch index and populate data."""
-        es = get_elasticsearch()
-        if not es.indices.exists(index="products"):
-            es.indices.create(index="products")
-        
-        all_items = DB.get_items()
-        for item_name, item_data in all_items.items():
-            es.index(index="products", id=item_name, body=item_data)
-        app_has_run_before = True
 
 # 홈화면
 @application.route("/")
@@ -78,20 +60,14 @@ def search_items():
     query = request.args.get('query')
     page = request.args.get("page", 1, type=int)
     start_index = ITEM_COUNT_PER_PAGE * (page - 1)
-    
-    es = get_elasticsearch()
-    body = {
-        "query": {
-            "multi_match": {
-                "query": query,
-                "fields": ["name", "description", "continent"]
-            }
-        }
-    }
-    
-    results = es.search(index="products", body=body, from_=start_index, size=ITEM_COUNT_PER_PAGE)
-    total_item_count = results['hits']['total']['value']
-    data = {hit["_id"]: hit["_source"] for hit in results['hits']['hits']}
+    end_index = ITEM_COUNT_PER_PAGE * page
+
+    data = DB.get_items_by_query(query)
+    total_item_count = len(data)
+    if total_item_count <= ITEM_COUNT_PER_PAGE:
+        data = dict(list(data.items())[:total_item_count])
+    else:
+        data = dict(list(data.items())[start_index:end_index])
 
     return render_template(
         "index.html",
@@ -381,17 +357,6 @@ def reg_item_submit_post():
     image_file.save("static/images/{}".format(image_file.filename))
     data = request.form
     DB.insert_item(data['productName'], data, image_file.filename)
-
-    product_data = {
-        "name": data['productName'],
-        "description": data['description'],
-        "price": data['price'],
-        "image_path": f"static/images/{image_file.filename}",
-        "continent": data['continent']
-    }
-    es = get_elasticsearch()
-    es.index(index = "products", id = data['productName'], body=product_data)
-
     return render_template("submit_item_result.html", data=data, img_path="static/images/{}".format(image_file.filename))
 
 @application.route("/detail/<name>/")
