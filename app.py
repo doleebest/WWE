@@ -10,20 +10,20 @@ REVIEW_COUNT_PER_PAGE = 6   # 마이페이지 내의 전체 리뷰 조회
 
 application = Flask(__name__)
 application.config["SECRET_KEY"] = "helloosp"
+application.config['ELASTICSEARCH_URL'] = 'http://localhost:9200'
 
 DB = DBhandler()
 
 def initialize_elasticsearch():
     """Initialize Elasticsearch index and populate data."""
-    es = get_elasticsearch()
-    if not es.indices.exists(index="products"):
-        es.indices.create(index="products")
-    
-    all_items = DB.get_items()
-    for item_name, item_data in all_items.items():
-        es.index(index="products", id=item_name, body=item_data)
-
-initialize_elasticsearch()
+    with application.app_context():
+        es = get_elasticsearch()
+        if not es.indices.exists(index="products"):
+            es.indices.create(index="products")
+        
+        all_items = DB.get_items()
+        for item_name, item_data in all_items.items():
+            es.index(index="products", id=item_name, body=item_data)
 
 # 홈화면
 @application.route("/")
@@ -399,4 +399,5 @@ def likelist(id):
     return jsonify(like_list)
 
 if __name__ == "__main__":
+    initialize_elasticsearch()
     application.run(host='0.0.0.0', debug=True)
