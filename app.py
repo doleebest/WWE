@@ -217,6 +217,28 @@ def delete_sale():
 
     return jsonify({"message": "Product deleted successfully"}), 200
 
+@application.route('/user/<user_id>')
+def user_page(user_id):
+    # 현재 로그인된 사용자
+    current_user = session.get('user_id')
+
+    # 사용자 데이터 가져오기
+    user_wishlist = DB.get_user_wishlist(user_id)
+    user_purchases = DB.get_user_purchases(user_id)
+    user_sales = DB.get_user_sales(user_id)
+
+    # 현재 사용자가 자신의 마이페이지인지 확인
+    is_own_page = (current_user == user_id)
+
+    return render_template(
+        'user_page.html',
+        is_own_page=is_own_page,
+        user_wishlist=user_wishlist,
+        user_purchases=user_purchases,
+        user_sales=user_sales,
+        user_id=user_id
+    )
+
 """
 @application.route("/mypage/profile/update", methods=["POST"])
 def update_user_info():
