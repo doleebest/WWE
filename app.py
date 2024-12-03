@@ -65,7 +65,7 @@ def login_user():
 @application.route("/logout")
 def logout_user():
     session.clear()
-    return redirect(url_for('hello'))
+    return redirect("/")
 
 @application.route("/signup")
 def signup():
