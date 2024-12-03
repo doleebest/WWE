@@ -73,7 +73,10 @@ def signup():
 
 @application.route("/signup_post", methods=['POST'])
 def register_user() :
-    data=request.form
+    data = request.form.to_dict()
+    print(data)
+    data['region'] = data.get('region') or None
+    data['phone'] = data.get('phone') or None
     id=request.form['id']
     pw=request.form['pw']
     email=request.form['email']
@@ -93,7 +96,6 @@ def register_user() :
         flash("올바른 전화번호 형식이 아닙니다!")
         return render_template("signup.html")    
 
-    
     #사용자 정보 삽입
     if DB.insert_user(data,pw_hash):
         return render_template("login.html")
