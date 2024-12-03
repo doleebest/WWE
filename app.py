@@ -151,17 +151,33 @@ def mypage():
     id = session.get('id')
     if not id : 
         return redirect(url_for('login'))
+
+    # 페이징
+    page = request.args.get("page", 0, type=int)
+    start_idx = REVIEW_COUNT_PER_PAGE * page
+    end_idx = REVIEW_COUNT_PER_PAGE * (page + 1)
     
     #사용자가 마이페이지를 열면, 각각을 데베에서 가져온다.
     wishlist = DB.get_user_wishlist(id)
     purchase_history = DB.get_user_purchases(id)
     sales_history = DB.get_user_sales(id)
-    
+
+    # 리뷰 전체 조회
+    data = DB.get_all_review_by_id(id)
+    item_counts = len(data)  # 총 리뷰 개수
+    current_page_data = list(data.items())[start_idx:end_idx]
+
     return render_template(
         'mypage.html',
         wishlist=wishlist,
         purchase_history=purchase_history,
         sales_history=sales_history,
+
+        # 전체 리뷰
+        reviews=current_page_data,  # key-value 쌍 리스트로 보냄
+        limit=REVIEW_COUNT_PER_PAGE,  # 한 화면에 보일 리뷰 개수
+        page=page,  # 현재 페이지
+        page_count=(item_counts + REVIEW_COUNT_PER_PAGE - 1) // REVIEW_COUNT_PER_PAGE,  # 총 페이지 수
     )
 
 @application.route('/mypage/wishlist', methods=['GET'])
