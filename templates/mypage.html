@@ -16,10 +16,15 @@
     <div class="profile-header">
         <img src="{{ url_for('static', filename='images/user_icon.png') }}" alt="user_icon.png" />
         <div class="profile-info">
-            <h2>osori01</h2>
-            <p>유럽</p>
-            <p>osori01@ewha.ac.kr</p>
-            <p>010-XXXX-XXXX</p>
+            <h2>{{ seller.id }}</h2>
+            {% if seller.region %}
+            <p>{{ seller.region }}</p>
+            {% endif %}
+            <p>{{ seller.email }}</p>
+            {% if seller.phone %}
+            <p>{{ seller.phone }}</p>
+            {% endif %}
+            
         </div>
         <button class="edit-profile-btn">
             <!-- <img src="{{ url_for('static', filename='images/edit.png') }}" alt="edit.png" /> -->

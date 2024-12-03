@@ -71,12 +71,12 @@ class DBhandler:
              "id" : data['id'],
              "pw" : pw,
              "email" : data['email'],
-             "phone" : data['phone']
+             "phone" : data['phone'],
+             "region": data['region']
              # "nickname" : data['nickname']
          }
          if self.user_duplicate_check(str(data['id'])): # id 중복 체크
              self.db.child("user").push(user_info)
-             print(data)
              return True
          else:
              return False
@@ -97,21 +97,21 @@ class DBhandler:
 
     def validate_user_id(self,id):
         # 영어 소문자로 시작하고, 숫자를 1개 이상 포함하며 영어와 숫자로만 구성된 5~15자
-        pattern = r'/^[a-z](?=.*[0-9])[a-zA-Z0-9]{4,14}$/',
+        pattern = r'^[a-z](?=.*[0-9])[a-zA-Z0-9]{4,14}$'  # 올바른 정규식
         return re.match(pattern, id)
 
-    def validate_password(self,pw):
+    def validate_password(self, pw):
         # 최소 8자, 문자, 숫자, 특수문자 각각 1개 이상 포함
-        pattern = r'/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/'
+        pattern = r'^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$'
         return re.match(pattern, pw)
     
-    def validate_email(self,email) :
-        pattern = r'/^[A-Za-z-0-9\-\.]+@[A-Ja-z-0-9\-\.]+\.[A-Ja-z-0-9]+$/'
-        return re.match(pattern,email)
-    
-    def validate_phone(self,phone) :
-        pattern = r'/^\d{3}-\d{3,4}-\d{4}$/'
-        return re.match(pattern=phone)
+    def validate_email(self, email):
+        pattern = r'^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$'
+        return re.match(pattern, email)
+
+    def validate_phone(self, phone):
+        pattern = r'^\d{3}-\d{3,4}-\d{4}$'
+        return re.match(pattern, phone)
         
     def find_user(self, id_, pw_):  
         users = self.db.child("user").get()

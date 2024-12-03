@@ -65,7 +65,7 @@ def login_user():
 @application.route("/logout")
 def logout_user():
     session.clear()
-    return redirect(url_for('hello'))
+    return redirect("/")
 
 @application.route("/signup")
 def signup():
@@ -73,7 +73,10 @@ def signup():
 
 @application.route("/signup_post", methods=['POST'])
 def register_user() :
-    data=request.form
+    data = request.form.to_dict()
+    print(data)
+    data['region'] = None if data.get('region') in [None, '', 'none'] else data['region']
+    data['phone'] = None if data.get('phone') in [None, '', 'none'] else data['phone']
     id=request.form['id']
     pw=request.form['pw']
     email=request.form['email']
@@ -89,11 +92,10 @@ def register_user() :
     if not DB.validate_email(email) :
         flash("올바른 이메일 형식이 아닙니다!")
         return render_template("signup.html")
-    if not DB.validate_phone(phone) :
+    if phone and not DB.validate_phone(phone):
         flash("올바른 전화번호 형식이 아닙니다!")
-        return render_template("signup.html")    
+        return render_template("signup.html")   
 
-    
     #사용자 정보 삽입
     if DB.insert_user(data,pw_hash):
         return render_template("login.html")
@@ -120,6 +122,9 @@ def mypage():
     id = session.get('id')
     if not id : 
         return redirect(url_for('login'))
+    
+    # 회원 정보
+    seller = DB.get_user_by_id(id)
 
     # 페이징
     page = request.args.get("page", 0, type=int)
@@ -138,6 +143,7 @@ def mypage():
 
     return render_template(
         'mypage.html',
+        seller=seller,
         wishlist=wishlist,
         purchase_history=purchase_history,
         sales_history=sales_history,
