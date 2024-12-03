@@ -122,6 +122,9 @@ def mypage():
     id = session.get('id')
     if not id : 
         return redirect(url_for('login'))
+    
+    # 회원 정보
+    seller = DB.get_user_by_id(id)
 
     # 페이징
     page = request.args.get("page", 0, type=int)
@@ -140,6 +143,7 @@ def mypage():
 
     return render_template(
         'mypage.html',
+        seller=seller,
         wishlist=wishlist,
         purchase_history=purchase_history,
         sales_history=sales_history,
