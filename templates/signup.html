@@ -44,27 +44,33 @@
               <input
                 type="password"
                 id="pw_check"
+                name="pw_check"
                 placeholder="비밀번호 재확인"
               />
               <span id="pw_check_alert" class="none alert"></span>
             </div>
             <div class="input_div">
               <label for="email">이메일</label>
-              <input type="text" id="email" placeholder="이메일" />
+              <input type="text" id="email" name="email" placeholder="이메일" />
               <span id="email_alert" class="none alert"></span>
             </div>
             <div class="input_div">
               <label for="phone"
                 >휴대전화<span class="optional">(선택)</span></label
               >
-              <input type="text" id="phone" placeholder="010-XXXX-XXXX" />
+              <input
+                type="text"
+                id="phone"
+                name="phone"
+                placeholder="010-XXXX-XXXX"
+              />
               <span id="phone_alert" class="none alert"></span>
             </div>
             <div class="input_div">
               <label for="region"
                 >관심 지역<span class="optional">(선택)</span></label
               >
-              <select id="region">
+              <select id="region" name="region">
                 <!-- 이후 수정 가능 -->
                 <option value="none">== 선택 ==</option>
                 <option value="europe">유럽</option>
