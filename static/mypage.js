@@ -94,7 +94,7 @@ const deleteItem = (productId) => {
     data: { productId: productId },
     success: function(response) {
       // 삭제 성공 시 UI에서 항목 제거
-      $(`#product-${productId}`).remove();
+      document.querySelector(`#product-${productId}`).remove();
     },
     error: function(request, status, error) {
       console.error('항목 삭제 실패:', error);

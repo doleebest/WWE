@@ -95,6 +95,12 @@ body {
     color: #666;
 }
 
+.reviewer-country {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 15px;
+}
+
 .rating {
     display: flex;
     gap: 5px;
