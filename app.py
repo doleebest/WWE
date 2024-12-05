@@ -142,7 +142,8 @@ def mypage():
     current_page_data = list(data.items())[start_idx:end_idx]
 
     # 좋아요 전체 조회
-    like_list = DB.get_all_like_by_id(id)
+    like_list = DB.get_liked_item_details(id)
+    print(like_list)
 
     return render_template(
         'mypage.html',
@@ -157,7 +158,7 @@ def mypage():
         page=page,  # 현재 페이지
         page_count=(item_counts + REVIEW_COUNT_PER_PAGE - 1) // REVIEW_COUNT_PER_PAGE,  # 총 페이지 수
 
-        like=like_list
+        likes=like_list
     )
 
 @application.route('/mypage/wishlist', methods=['GET'])
