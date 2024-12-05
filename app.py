@@ -141,6 +141,9 @@ def mypage():
     item_counts = len(data)  # 총 리뷰 개수
     current_page_data = list(data.items())[start_idx:end_idx]
 
+    # 좋아요 전체 조회
+    like_list = DB.get_all_like_by_id(id)
+
     return render_template(
         'mypage.html',
         seller=seller,
@@ -153,6 +156,8 @@ def mypage():
         limit=REVIEW_COUNT_PER_PAGE,  # 한 화면에 보일 리뷰 개수
         page=page,  # 현재 페이지
         page_count=(item_counts + REVIEW_COUNT_PER_PAGE - 1) // REVIEW_COUNT_PER_PAGE,  # 총 페이지 수
+
+        like=like_list
     )
 
 @application.route('/mypage/wishlist', methods=['GET'])
