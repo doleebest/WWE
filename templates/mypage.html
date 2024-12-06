@@ -72,26 +72,54 @@
     </div>
 
     <!-- 판매 내역 콘텐츠 -->
+<!-- 판매 내역 콘텐츠 -->
 <div class="tab-content" id="sales-history">
     <ul class="product-items">
-        {% for product in products %}
-        <li class="product-item" data-product-id="{{ product.id }}">
-            <img src="{{ url_for('static', filename='images/clothes.png') }}" alt="clothes.png" />
+        <li class="product-item" data-product-id="1">
+            <img src="static/images/clothes.png" alt="clothes.png" />
             <div class="product-info">
-                <p class="product-name">{{ product.name }}</p>
-                <p class="product-desc">{{ product.desc }}</p>
+                <p class="product-name">청바지</p>
+                <p class="product-desc">슬림핏 청바지</p>
                 <button class="delete-btn" onclick="deleteItem(this)">
-                    <img src="{{ url_for('static', filename='images/trashbin.png') }}" alt="삭제">
+                    <img src="static/images/trashbin.png" alt="삭제">
                 </button>
             </div>
-            <p class="product-price">{{ product.price }}원</p>
-            <button class="toggle-sale-status {{ 'completed' if product.status == '판매 완료' else 'soldout' }}" onclick="toggleSaleStatus(this)">
-                {{ product.status }}
+            <p class="product-price">25,000원</p>
+            <button class="toggle-sale-status completed" onclick="toggleSaleStatus(this)">
+                판매 완료
             </button>
         </li>
-        {% endfor %}
+        <li class="product-item" data-product-id="2">
+            <img src="static/images/clothes.png" alt="clothes.png" />
+            <div class="product-info">
+                <p class="product-name">패딩</p>
+                <p class="product-desc">겨울용 패딩</p>
+                <button class="delete-btn" onclick="deleteItem(this)">
+                    <img src="static/images/trashbin.png" alt="삭제">
+                </button>
+            </div>
+            <p class="product-price">50,000원</p>
+            <button class="toggle-sale-status soldout" onclick="toggleSaleStatus(this)">
+                판매중
+            </button>
+        </li>
+        <li class="product-item" data-product-id="3">
+            <img src="static/images/clothes.png" alt="clothes.png" />
+            <div class="product-info">
+                <p class="product-name">후드티</p>
+                <p class="product-desc">심플한 디자인의 후드티</p>
+                <button class="delete-btn" onclick="deleteItem(this)">
+                    <img src="static/images/trashbin.png" alt="삭제">
+                </button>
+            </div>
+            <p class="product-price">20,000원</p>
+            <button class="toggle-sale-status soldout" onclick="toggleSaleStatus(this)">
+                판매중
+            </button>
+        </li>
     </ul>
 </div>
+
 
     <!-- 리뷰 전체 조회 콘텐츠 -->
     <div class="tab-content" id="review-overview">
