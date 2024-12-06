@@ -37,71 +37,6 @@ const mypage = () => {
   loadTabData("wishlist");
 };
 
-// 페이지 데이터 로드 함수
-const loadPageData = (pageNumber) => {
-  $.ajax({
-    type: 'GET',
-    url: '/api/mypage/page',
-    data: { page: pageNumber },
-    success: function(response) {
-      updatePageContent(response);
-    },
-    error: function(request, status, error) {
-      console.error('페이지 로드 실패:', error);
-    }
-  });
-};
-
-// 탭 데이터 로드 함수
-const loadTabData = (tabId) => {
-  $.ajax({
-    type: 'GET',
-    url: '/api/mypage/tab',
-    data: { tab: tabId },
-    success: function(response) {
-      updateTabContent(tabId, response);
-    },
-    error: function(request, status, error) {
-      console.error('탭 데이터 로드 실패:', error);
-    }
-  });
-};
-
-// 판매 상태 변경 함수
-const updateSaleStatus = (productId, status) => {
-  $.ajax({
-    type: 'POST',
-    url: '/api/mypage/update-status',
-    data: {
-      productId: productId,
-      status: status
-    },
-    success: function(response) {
-      // 상태 업데이트 성공 시 UI 업데이트
-      updateStatusUI(productId, status);
-    },
-    error: function(request, status, error) {
-      console.error('상태 업데이트 실패:', error);
-    }
-  });
-};
-
-// 항목 삭제 함수
-const deleteItem = (productId) => {
-  $.ajax({
-    type: 'POST',
-    url: '/api/mypage/delete-item',
-    data: { productId: productId },
-    success: function(response) {
-      // 삭제 성공 시 UI에서 항목 제거
-      document.querySelector(`#product-${productId}`).remove();
-    },
-    error: function(request, status, error) {
-      console.error('항목 삭제 실패:', error);
-    }
-  });
-};
-
 // UI 업데이트 함수들
 const updatePageContent = (data) => {
   // 페이지 컨텐츠 업데이트 로직
@@ -157,3 +92,17 @@ const init = () => {
 
 // DOMContentLoaded 후 초기화
 document.addEventListener("DOMContentLoaded", init);
+
+// Define the loadTabData function
+const loadTabData = (tabId) => {
+  // Logic to load data for the specified tab
+  console.log(`Loading data for tab: ${tabId}`);
+  // You can add your data fetching logic here
+};
+
+// Define the showTab function if needed
+const showTab = (tabId) => {
+  // Logic to show the specified tab
+  console.log(`Showing tab: ${tabId}`);
+  // You can add your tab display logic here
+};
