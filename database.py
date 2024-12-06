@@ -141,10 +141,20 @@ class DBhandler:
         purchases = [item.val() for item in purchases_ref.each()]
         return purchases
 
-    def get_user_sales(self,id):
-        sales_ref = self.db.child('products').order_by_child('sellerId').equal_to(id).get()
-        sales = [item.val() for item in sales_ref.each()]
-        return sales
+    def get_user_sales(self, id):
+        all_reviews = self.db.child("item").get()
+        reviews = []
+
+        # 모든 리뷰를 순회하여 sellerId가 일치하는 경우 필터링
+        for rev in all_reviews.each():
+            review_data = rev.val()
+            if review_data.get("sellerId") == id:
+                # 필터링된 리뷰에 리뷰 ID를 추가
+                review_data["reviewId"] = rev.key()
+                reviews.append(review_data)
+
+        return reviews
+
   
     def update_sale_status(self, product_id, new_status):
         self.db.child("item").child(product_id).update({"state": new_status})

@@ -75,11 +75,12 @@
 <!-- 판매 내역 콘텐츠 -->
 <div class="tab-content" id="sales-history">
     <ul class="product-items">
-        <li class="product-item" data-product-id="1">
-            <img src="static/images/clothes.png" alt="clothes.png" />
+        {% for product in products %}
+        <li class="product-item" data-product-id="{{ product.id }}">
+            <img src="{{ url_for('static', filename='images/' + product.img_path) }}" alt="{{ key }}">
             <div class="product-info">
-                <p class="product-name">청바지</p>
-                <p class="product-desc">슬림핏 청바지</p>
+                <p class="product-name">{{ product.productName }}</p>
+                <p class="product-desc">{{ product.description }}</p>
                 <button class="delete-btn" onclick="deleteItem(this)">
                     <img src="static/images/trashbin.png" alt="삭제">
                 </button>

@@ -135,6 +135,7 @@ def mypage():
     wishlist = DB.get_user_wishlist(id)
     purchase_history = DB.get_user_purchases(id)
     sales_history = DB.get_user_sales(id)
+    print(sales_history)
 
     # 리뷰 전체 조회
     data = DB.get_all_review_by_id(id)
@@ -143,14 +144,13 @@ def mypage():
 
     # 좋아요 전체 조회
     like_list = DB.get_liked_item_details(id)
-    print(like_list)
 
     return render_template(
         'mypage.html',
         seller=seller,
         wishlist=wishlist,
         purchase_history=purchase_history,
-        sales_history=sales_history,
+        products=sales_history,
 
         # 전체 리뷰
         reviews=current_page_data,  # key-value 쌍 리스트로 보냄
