@@ -72,27 +72,26 @@
     </div>
 
     <!-- 판매 내역 콘텐츠 -->
-<!-- 판매 내역 콘텐츠 -->
-<div class="tab-content" id="sales-history">
-    <ul class="product-items">
-        {% for product in products %}
-        <li class="product-item" data-product-id="{{ product.id }}">
-            <img src="{{ url_for('static', filename='images/' + product.img_path) }}" alt="{{ key }}">
-            <div class="product-info">
-                <p class="product-name">{{ product.productName }}</p>
-                <p class="product-desc">{{ product.description }}</p>
-                <button class="delete-btn" onclick="deleteItem(this)">
-                    <img src="static/images/trashbin.png" alt="삭제">
+    <div class="tab-content" id="sales-history">
+        <ul class="product-items">
+            {% for product in products %}
+            <a href="{{ url_for('view_item_detail', name=product.productName) }}" class="product-item">
+                <img src="{{ url_for('static', filename='images/' + product.img_path) }}" alt="{{ key }}">
+                <div class="product-info">
+                    <p class="product-name">{{ product.productName }}</p>
+                    <p class="product-desc">{{ product.description }}</p>
+                    <button class="delete-btn" onclick="deleteItem(this)">
+                        <img src="static/images/trashbin.png" alt="삭제">
+                    </button>
+                </div>
+                <p class="product-price">{{ product.price }}원</p>
+                <button class="toggle-sale-status completed" onclick="toggleSaleStatus(this)">
+                    판매 완료
                 </button>
-            </div>
-            <p class="product-price">{{ product.price }}원</p>
-            <button class="toggle-sale-status completed" onclick="toggleSaleStatus(this)">
-                판매 완료
-            </button>
-        </li>
-        {% endfor %}
-    </ul>
-</div>
+            </a>
+            {% endfor %}
+        </ul>
+    </div>
 
 
     <!-- 리뷰 전체 조회 콘텐츠 -->
