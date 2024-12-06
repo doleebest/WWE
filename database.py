@@ -30,8 +30,11 @@ class DBhandler:
     
     def get_items(self):
         items = self.db.child("item").get().val()
-        return items
-    
+        if items:
+            filtered_items = {key: value for key, value in items.items() if value.get("buyerId") is None}
+            return filtered_items
+        return {}
+
     def get_items_by_continent(self, continent):
         all_items = self.db.child("item").get()
         filtered_items = {}
@@ -40,9 +43,10 @@ class DBhandler:
             return filtered_items
 
         for item in all_items.each():
-            if item.val().get("continent", "") == continent:
-                filtered_items[item.key()] = item.val()
-        
+            item_data = item.val()
+            if (item_data.get("continent", "") == continent) and (item_data.get("buyerId") is None):
+                filtered_items[item.key()] = item_data
+
         return filtered_items
     
     def get_items_by_query(self, query):
@@ -54,10 +58,11 @@ class DBhandler:
 
         for item in all_items.each():
             item_data = item.val()
-            if query.lower() in item_data.get("productName", "").lower():
+            if (query.lower() in item_data.get("productName", "").lower()) and (item_data.get("buyerId") is None):
                 searched_items[item.key()] = item_data
-        
+
         return searched_items
+
     
     # name값으로 item 정보 가져오기
     def get_item_byname(self, name):
