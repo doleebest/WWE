@@ -76,10 +76,10 @@
     <ul class="product-items">
         {% for product in products %}
         <li class="product-item" data-product-id="{{ product.id }}">
-            <img src="{{ url_for('static', filename='images/clothes.png') }}" alt="clothes.png" />
+            <img src="{{ url_for('static', filename='images/' + product.img_path) }}" alt="{{ key }}">
             <div class="product-info">
-                <p class="product-name">{{ product.name }}</p>
-                <p class="product-desc">{{ product.desc }}</p>
+                <p class="product-name">{{ product.productName }}</p>
+                <p class="product-desc">{{ product.description }}</p>
                 <button class="delete-btn" onclick="deleteItem(this)">
                     <img src="{{ url_for('static', filename='images/trashbin.png') }}" alt="삭제">
                 </button>
