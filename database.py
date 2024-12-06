@@ -21,7 +21,8 @@ class DBhandler:
             "nation": data['nation'],
             "address": data['address'],
             "state": data['state'],
-            "description": data['description']
+            "description": data['description'],
+            "buyerId": None
         }
         self.db.child("item").child(name).set(item_info)
         print(data,img_path)
