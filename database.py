@@ -165,6 +165,26 @@ class DBhandler:
     def update_sale_status(self, product_id, new_status):
         self.db.child("item").child(product_id).update({"state": new_status})
         print(f"Updated product {product_id} to {new_status}")
+    
+    def mark_item_as_sold(self, product_id, buyer_id):
+        # 상품 상태를 'sold'로 업데이트
+        self.db.child("item").child(product_id).update({"state": "sold", "buyerId": buyer_id})
+    
+        # 구매자의 구매 내역에 추가
+        purchase_info = self.db.child("item").child(product_id).get().val()
+        if purchase_info:
+            self.db.child("purchases").push({
+                "buyerId": buyer_id,
+                "productId": product_id,
+                "productName": purchase_info.get("productName"),
+                "price": purchase_info.get("price"),
+                "sellerId": purchase_info.get("sellerId"),
+                "date": str(datetime.now())  # 구매 날짜 기록
+            })
+            print(f"Product {product_id} marked as sold to {buyer_id}.")
+            return True
+        return False
+
         
     # 사용자 정보 업데이트 함수 추가
     def update_user_info(self, user_id, new_email=None, new_phone=None):
