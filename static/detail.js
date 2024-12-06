@@ -58,3 +58,7 @@ function unlike() {
 $(document).ready(function () {
   showHeart();
 });
+
+function showContact(contact) {
+  alert(`판매자의 연락처: ${contact}`);
+}
