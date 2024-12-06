@@ -32,6 +32,7 @@
   flex-direction: column;
   align-items: center;
   gap: 30px;
+  min-width: 915px;
 }
 
 .home_items h2 {
@@ -44,6 +45,7 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 30px;
+  width: 915px;
 }
 
 .item_container {
@@ -94,6 +96,7 @@
 .pagenation_container {
   margin-top: 100px;
   margin-bottom: 200px;
+  width: 915px;
 }
 
 .page-nation li {
