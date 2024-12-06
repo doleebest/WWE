@@ -30,8 +30,11 @@ class DBhandler:
     
     def get_items(self):
         items = self.db.child("item").get().val()
-        return items
-    
+        if items:
+            filtered_items = {key: value for key, value in items.items() if value.get("buyerId") is None}
+            return filtered_items
+        return {}
+
     def get_items_by_continent(self, continent):
         all_items = self.db.child("item").get()
         filtered_items = {}
