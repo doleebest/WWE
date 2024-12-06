@@ -39,7 +39,7 @@
     </div>
 
     <!-- 찜한 상품 콘텐츠 -->
-    <div class="tab-content" id="wishlist">
+    <div class="tab-content active" id="wishlist">
         <ul class="product-items">
             {% for key, like in likes.items() %}
             <a href="{{ url_for('view_item_detail', name=key) }}" class="product-item">
