@@ -42,9 +42,11 @@
               class="reviewer-icon"
             />
             <div class="reviewer-text">
-              <span class="reviewer-name">SJ</span>
-              <span class="reviewer-email">sj@gmail.com</span>
-              <span class="reviewer-country">대한민국</span>
+              <p class="reviewer-name">{{ seller.id }}</p>
+              <p class="reviewer-email">{{ seller.email }}</p>
+              {% if seller.region %}
+              <p class="reviewer-type">{{ seller.region }}</p>
+              {% endif %}
             </div>
           </div>
           <h3>{{ review.title }}</h3>

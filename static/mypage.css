@@ -248,9 +248,13 @@ body {
     margin-bottom: 8px;
 }
 
-.star-rating {
-    color: var(--ewhacoral);
+.star {
     font-size: 14px;
+    color: #ccc;
+}
+
+.star.filled {
+    color: #ff9800;
 }
 
 /* Pagination Styles */
