@@ -1,5 +1,9 @@
 @import "./styles.css";
 
+main {
+  height: calc(100svh - 100px);
+}
+
 .login_container {
   margin: 60px 0;
   padding: 50px 0;
