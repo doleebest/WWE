@@ -24,30 +24,23 @@
           enctype="multipart/form-data"
           action="/submit_product_post"
         >
-          <div class="productForm-topDiv">
-            <div class="productPhoto">
-              <img src="../static/images/camera-img.svg" alt="상품 사진" />
-            </div>
-            <div class="sellerInfo">
-              <label for="sellerId">판매자 ID</label>
-              <input
-                type="text"
-                id="sellerId"
-                name="sellerId"
-                placeholder="판매자 ID"
-                required
-              />
-
-              <label for="contact">판매자 연락처</label>
-              <input
-                type="text"
-                id="contact"
-                name="contact"
-                placeholder="이메일"
-                required
-              />
-            </div>
-          </div>
+          <h1 class="form-title">상품 등록하기</h1>
+          <label for="sellerId">판매자 ID</label>
+          <input
+            type="text"
+            id="sellerId"
+            name="sellerId"
+            placeholder="판매자 ID"
+            required
+          />
+          <label for="contact">판매자 연락처</label>
+          <input
+            type="text"
+            id="contact"
+            name="contact"
+            placeholder="이메일"
+            required
+          />
           <label for="productName">제품명</label>
           <input
             type="text"
