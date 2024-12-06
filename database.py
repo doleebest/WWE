@@ -43,9 +43,10 @@ class DBhandler:
             return filtered_items
 
         for item in all_items.each():
-            if item.val().get("continent", "") == continent:
-                filtered_items[item.key()] = item.val()
-        
+            item_data = item.val()
+            if (item_data.get("continent", "") == continent) and (item_data.get("buyerId") is None):
+                filtered_items[item.key()] = item_data
+
         return filtered_items
     
     def get_items_by_query(self, query):
