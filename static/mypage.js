@@ -10,7 +10,7 @@ const mypage = () => {
     page.addEventListener("click", function () {
       pageNumbers.forEach((p) => p.classList.remove("active"));
       this.classList.add("active");
-      
+
       // 페이지 번호 클릭시 해당 페이지 데이터 로드
       loadPageData(this.textContent);
     });
@@ -27,7 +27,7 @@ const mypage = () => {
       this.classList.add("active");
       const tabId = this.getAttribute("onclick").split("'")[1];
       document.getElementById(tabId).style.display = "block";
-      
+
       // 탭 클릭시 해당 탭의 데이터 로드
       loadTabData(tabId);
     });
@@ -40,7 +40,7 @@ const mypage = () => {
 // UI 업데이트 함수들
 const updatePageContent = (data) => {
   // 페이지 컨텐츠 업데이트 로직
-  const contentContainer = document.querySelector('.content-container');
+  const contentContainer = document.querySelector(".content-container");
   contentContainer.innerHTML = data.html;
   setupEventListeners();
 };
@@ -53,36 +53,64 @@ const updateTabContent = (tabId, data) => {
 };
 
 const updateStatusUI = (productId, status) => {
-  const button = document.querySelector(`#product-${productId} .toggle-sale-status`);
-  if (status === 'completed') {
-    button.textContent = '판매 완료';
-    button.classList.remove('soldout');
-    button.classList.add('completed');
+  const button = document.querySelector(
+    `#product-${productId} .toggle-sale-status`
+  );
+  if (status === "completed") {
+    button.textContent = "판매 완료";
+    button.classList.remove("soldout");
+    button.classList.add("completed");
   } else {
-    button.textContent = '판매 미완';
-    button.classList.remove('completed');
-    button.classList.add('soldout');
+    button.textContent = "판매 미완";
+    button.classList.remove("completed");
+    button.classList.add("soldout");
   }
 };
 
 // 이벤트 리스너 설정 함수
 const setupEventListeners = () => {
   // 삭제 버튼 이벤트 리스너
-  document.querySelectorAll('.delete-btn').forEach(button => {
-    button.addEventListener('click', function() {
-      const productId = this.closest('.product-item').getAttribute('data-product-id');
-      deleteItem(productId);
+  document.querySelectorAll(".delete-btn").forEach((button) => {
+    button.addEventListener("click", function () {
+      const productId =
+        this.closest(".product-item").getAttribute("data-product-id");
+      //deleteItem(productId);
     });
   });
 
   // 판매 상태 토글 버튼 이벤트 리스너
-  document.querySelectorAll('.toggle-sale-status').forEach(button => {
-    button.addEventListener('click', function() {
-      const productId = this.closest('.product-item').getAttribute('data-product-id');
-      const newStatus = this.textContent === '판매 미완' ? 'completed' : 'pending';
-      updateSaleStatus(productId, newStatus);
+  document.querySelectorAll(".toggle-sale-status").forEach((button) => {
+    button.addEventListener("click", function () {
+      const productId =
+        this.closest(".product-item").getAttribute("data-product-id");
+      const newStatus =
+        this.textContent === "판매 미완" ? "completed" : "pending";
+      //updateSaleStatus(productId, newStatus);
     });
   });
+};
+
+const clickSaleStatus = (productName, state) => {
+  const isSoldOut = state == "sold" ? true : false;
+  console.log(isSoldOut);
+  if (!isSoldOut) {
+    const buyerId = prompt("구매자의 아이디를 입력해주세요.");
+    if (!buyerId || !buyerId.trim()) {
+      return;
+    }
+
+    fetch("/mark_as_sold", {
+      method: "POST",
+      body: JSON.stringify({ product_id: productName, buyer_id: buyerId }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((response) => {
+      console.log(response.json());
+    });
+  } else {
+    // 판매 재개 API 연결 필요
+  }
 };
 
 // 초기화 함수 정의
