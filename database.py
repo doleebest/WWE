@@ -58,10 +58,11 @@ class DBhandler:
 
         for item in all_items.each():
             item_data = item.val()
-            if query.lower() in item_data.get("productName", "").lower():
+            if (query.lower() in item_data.get("productName", "").lower()) and (item_data.get("buyerId") is None):
                 searched_items[item.key()] = item_data
-        
+
         return searched_items
+
     
     # name값으로 item 정보 가져오기
     def get_item_byname(self, name):
