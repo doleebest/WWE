@@ -257,8 +257,11 @@ def user_page(user_id):
 @application.route("/mypage/profile/update", methods=["POST"])
 def update_user_info():
     data = request.json
+<<<<<<< HEAD
     id = session.get('id')
+=======
     user_id = 'user_id_example'  # 사용자 ID는 세션 등에서 가져올 수 있음
+>>>>>>> 4e1dd14 (fix : crash)
     new_email = data.get("email")
     new_phone = data.get("phone")
 
@@ -362,11 +365,6 @@ def reg_item():
 def detail():
     return render_template("detail.html")
 
-@application.route("/detail")
-def detail():
-    return render_template("detail.html")
-
-# POST 방식으로 하면 form을 통으로 넘겨받음.
 @application.route("/submit_product_post", methods=['POST'])
 def reg_item_submit_post():
     id = session.get('id')
