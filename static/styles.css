@@ -76,6 +76,7 @@ header {
   align-items: center;
   gap: 10px;
   justify-content: flex-end;
+  margin-left: auto;
 }
 
 .user * {
