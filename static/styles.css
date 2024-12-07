@@ -29,6 +29,8 @@ main {
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
 header {
   display: grid;
   grid-template-columns: min-content auto auto;

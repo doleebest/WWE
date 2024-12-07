@@ -46,7 +46,26 @@
     <main>로그인</main>
 =======
     <main>
-      <div class="login_container"></div>
+      <div class="login_container">
+        <h2>WWE 로그인</h2>
+        <form class="login_form">
+          <div class="input_container">
+            <div class="input_div">
+              <label for="id">ID</label>
+              <input type="text" id="id" placeholder="ID" required />
+            </div>
+            <div class="input_div">
+              <label for="pw">PASSWORD</label>
+              <input type="text" id="pw" placeholder="PASSWORD" required />
+            </div>
+          </div>
+          <button class="login_btn" type="submit">로그인</button>
+        </form>
+        <div class="login_signup">
+          <span>WWE 회원이 아니신가요?</span>
+          <a href="/signup">회원가입 하기</a>
+        </div>
+      </div>
     </main>
 >>>>>>> 76c82dd (Style: 네비게이션 바 고정)
     {% endblock main %} {% block script %}
