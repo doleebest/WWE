@@ -1,7 +1,8 @@
 import pyrebase
 import json
 import re
-import datetime
+#import datetime
+from datetime import datetime
 
 class DBhandler:
     def __init__(self):
