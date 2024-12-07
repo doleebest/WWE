@@ -14,7 +14,6 @@
     {% endblock head %}
   </head>
   <body>
-<<<<<<< HEAD
     {% block main %} {% with mesg = get_flashed_messages() %} {% if mesg !=[] %}
     <script>
       alert("{{ mesg[0] }}");
@@ -39,28 +38,12 @@
               <label for="pw">비밀번호</label>
               <input type="password" id="pw" name="pw" placeholder="비밀번호" />
               <span id="pw_alert" class="none alert"></span>
-=======
-    {% block main %}
-    <main>
-      <div class="signup_container">
-        <img src="../static/images/logo-long.svg" alt="long WWE logo" />
-        <form class="signup_form">
-          <div class="input_container">
-            <div class="input_div">
-              <label for="id">아이디</label>
-              <input type="text" id="id" placeholder="아이디" required />
-            </div>
-            <div class="input_div">
-              <label for="pw">비밀번호</label>
-              <input type="password" id="pw" placeholder="비밀번호" required />
->>>>>>> fd6be8d (Style: 회원가입 화면 스타일링 완료)
             </div>
             <div class="input_div">
               <label for="pw_check">비밀번호 재확인</label>
               <input
                 type="password"
                 id="pw_check"
-<<<<<<< HEAD
                 name="pw_check"
                 placeholder="비밀번호 재확인"
               />
@@ -70,21 +53,11 @@
               <label for="email">이메일</label>
               <input type="text" id="email" name="email" placeholder="이메일" />
               <span id="email_alert" class="none alert"></span>
-=======
-                placeholder="비밀번호 재확인"
-                required
-              />
-            </div>
-            <div class="input_div">
-              <label for="email">이메일</label>
-              <input type="text" id="email" placeholder="이메일" required />
->>>>>>> fd6be8d (Style: 회원가입 화면 스타일링 완료)
             </div>
             <div class="input_div">
               <label for="phone"
                 >휴대전화<span class="optional">(선택)</span></label
               >
-<<<<<<< HEAD
               <input
                 type="text"
                 id="phone"
@@ -92,19 +65,12 @@
                 placeholder="010-XXXX-XXXX"
               />
               <span id="phone_alert" class="none alert"></span>
-=======
-              <input type="text" id="phone" placeholder="010-XXXX-XXXX" />
->>>>>>> fd6be8d (Style: 회원가입 화면 스타일링 완료)
             </div>
             <div class="input_div">
               <label for="region"
                 >관심 지역<span class="optional">(선택)</span></label
               >
-<<<<<<< HEAD
               <select id="region" name="region">
-=======
-              <select id="region">
->>>>>>> fd6be8d (Style: 회원가입 화면 스타일링 완료)
                 <!-- 이후 수정 가능 -->
                 <option value="none">== 선택 ==</option>
                 <option value="europe">유럽</option>
@@ -113,18 +79,12 @@
                 <option value="japan">일본</option>
                 <option value="china">중국</option>
               </select>
-<<<<<<< HEAD
               <span id="region_alert" class="none alert"></span>
             </div>
           </div>
           <button class="signup_btn btn_deactivate" type="submit" disabled>
             회원가입 하기
           </button>
-=======
-            </div>
-          </div>
-          <button class="signup_btn" type="submit">회원가입 하기</button>
->>>>>>> fd6be8d (Style: 회원가입 화면 스타일링 완료)
         </form>
       </div>
     </main>

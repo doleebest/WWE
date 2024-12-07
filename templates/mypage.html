@@ -1,6 +1,5 @@
 {% extends "header.html" %}
 
-<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -29,25 +28,6 @@
         </div>
         <button class="edit-profile-btn">
             <!-- <img src="{{ url_for('static', filename='images/edit.png') }}" alt="edit.png" /> -->
-=======
-{% block head %}
-<title>My Page</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='mypage.css') }}">
-{% endblock head %}
-
-{% block main %}
-<div class="profile-container">
-    <div class="profile-header">
-        <img src="{{ url_for('static', filename='images/profile.png') }}" alt="Profile Picture" class="profile-pic">
-        <div class="profile-info">
-            <h2>osori01</h2>
-            <p>유럽</p>
-            <p>osori01@ewha.ac.kr</p>
-            <p>010-XXXX-XXXX</p>
-        </div>
-        <button class="edit-profile-btn">
-            <img src="{{ url_for('static', filename='images/edit-icon.png') }}" alt="Edit Icon">
->>>>>>> de69e22 (마이페이지 1차 수정)
         </button>
     </div>
 
@@ -58,7 +38,6 @@
         <button class="tab" onclick="showTab('review-overview')">리뷰 전체 조회</button>
     </div>
 
-<<<<<<< HEAD
     <!-- 찜한 상품 콘텐츠 -->
     <div class="tab-content active" id="wishlist">
         <ul class="product-items">
@@ -81,45 +60,17 @@
         <ul class="product-items">
             <li class="product-item">
                 <img src="{{ url_for('static', filename='images/clothes.png') }}" alt="clothes.png" />
-=======
-    <div class="tab-content" id="wishlist">
-        <!-- 찜한 상품 콘텐츠 (예시 3개) -->
-        <ul class="product-items">
-            <li class="product-item">
-                <img src="{{ url_for('static', filename='images/product1.png') }}" alt="Product Image">
                 <div class="product-info">
                     <p class="product-name">비비안웨스트우드 아이보리 가디건</p>
                     <p class="product-desc">따뜻하고 가벼운 가디건 입니다</p>
                 </div>
                 <p class="product-price">35,000원</p>
-                <span class="sold-out">거래완료</span>
-            </li>
-            <li class="product-item">
-                <img src="{{ url_for('static', filename='images/product1.png') }}" alt="Product Image">
-                <div class="product-info">
-                    <p class="product-name">비비안웨스트우드 아이보리 가디건</p>
-                    <p class="product-desc">따뜻하고 가벼운 가디건 입니다</p>
-                </div>
-                <p class="product-price">35,000원</p>
-            </li>
-            <li class="product-item">
-                <img src="{{ url_for('static', filename='images/product1.png') }}" alt="Product Image">
->>>>>>> de69e22 (마이페이지 1차 수정)
-                <div class="product-info">
-                    <p class="product-name">비비안웨스트우드 아이보리 가디건</p>
-                    <p class="product-desc">따뜻하고 가벼운 가디건 입니다</p>
-                </div>
-                <p class="product-price">35,000원</p>
-<<<<<<< HEAD
                 <!-- TODO: 백이랑 연결되면 url도 함께 수정 필요 -->
                 <a href="{{ url_for('write_review', name='드롱기 토스터기') }}" class="review-btn">리뷰 남기기</a>
-=======
->>>>>>> de69e22 (마이페이지 1차 수정)
             </li>
         </ul>
     </div>
 
-<<<<<<< HEAD
     <!-- 판매 내역 콘텐츠 -->
     <div class="tab-content" id="sales-history">
         <ul class="product-items">
@@ -171,18 +122,4 @@
 {% block script %}
 <script src="{{ url_for('static', filename='mypage.js') }}"></script>
 <script src="{{ url_for('static', filename='header.js') }}"></script>
-=======
-    <div class="pagination">
-        <span class="prev-page">«</span>
-        <span class="page-number active">1</span>
-        <span class="page-number">2</span>
-        <span class="page-number">3</span>
-        <span class="next-page">»</span>
-    </div>
-</div>
-{% endblock main %}
-
-{% block script %}
-<script src="{{ url_for('static', filename='mypage.js') }}"></script>
->>>>>>> de69e22 (마이페이지 1차 수정)
 {% endblock script %}

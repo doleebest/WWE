@@ -1,10 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-<<<<<<< HEAD
     background-color: #fff;
-=======
-    background-color: #ffffff;
->>>>>>> de69e22 (마이페이지 1차 수정)
     color: #333;
     margin: 0;
     padding: 0;
@@ -16,19 +12,8 @@ body {
     padding: 20px;
     display: flex;
     flex-direction: column;
-<<<<<<< HEAD
     align-items: flex-start;
     gap: 20px;
-=======
-    align-items: center;
-    margin: 40px auto;
-    max-width: 800px;
-    padding: 20px;
-    /* 배경, 그림자, 테두리 반경 제거 */
-    background-color: transparent; 
-    box-shadow: none;
-    border-radius: 0;
->>>>>>> de69e22 (마이페이지 1차 수정)
 }
 
 .product-info {
@@ -70,20 +55,12 @@ body {
 }
 
 .review-section {
-<<<<<<< HEAD
     width: 650px;
     padding-top: 100px;
     margin: 0 auto;
-=======
-    width: 100%;
-    margin-top: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center; 
->>>>>>> de69e22 (마이페이지 1차 수정)
 }
 
-.review-section img {
+.review-image {
     width: 100%;
     border-radius: 8px;
     object-fit: cover;
