@@ -356,8 +356,9 @@ def reg_item_submit_post():
     image_file = request.files["file"]
     image_file.save("static/images/{}".format(image_file.filename))
     data = request.form
-    DB.insert_item(data['productName'], data, image_file.filename, user)
-    return render_template("submit_item_result.html", data=data, img_path="static/images/{}".format(image_file.filename))
+    product_name = data['productName']
+    DB.insert_item(product_name, data, image_file.filename, user)
+    return redirect(url_for("view_item_detail", name=product_name))
 
 @application.route("/detail/<name>/")
 def view_item_detail(name):
