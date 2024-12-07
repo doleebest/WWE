@@ -83,6 +83,9 @@
 
 .signup_btn_activate {
   background-color: var(--ewhagreen);
+  background-color: var(--ewhagreen);
+  font-weight: 500;
+  font-size: 16px;
   color: white;
 }
 

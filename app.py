@@ -162,6 +162,22 @@ def mypage():
         likes=like_list
     )
 
+# 구매 내역 탭
+@application.route('/mypage/purchases', methods=['GET'])
+def get_user_purchases():
+    # 요청에서 사용자 ID 가져오기
+    id = session.get('id')
+    if not id:
+        return jsonify({"error": "User ID is required"}), 400
+    
+    # 구매 내역 가져오기
+    purchases = DB.get_user_purchases(id)
+    
+    if not purchases:
+        return jsonify({"message": "No purchases found"}), 404
+
+    return jsonify({"purchases": purchases}), 200
+
 @application.route('/mypage/wishlist', methods=['GET'])
 def wishlist():
     id = session.get('id')
@@ -241,11 +257,8 @@ def user_page(user_id):
 @application.route("/mypage/profile/update", methods=["POST"])
 def update_user_info():
     data = request.json
-<<<<<<< HEAD
     id = session.get('id')
-=======
     user_id = 'user_id_example'  # 사용자 ID는 세션 등에서 가져올 수 있음
->>>>>>> 4e1dd14 (fix : crash)
     new_email = data.get("email")
     new_phone = data.get("phone")
 
@@ -349,6 +362,11 @@ def reg_item():
 def detail():
     return render_template("detail.html")
 
+@application.route("/detail")
+def detail():
+    return render_template("detail.html")
+
+# POST 방식으로 하면 form을 통으로 넘겨받음.
 @application.route("/submit_product_post", methods=['POST'])
 def reg_item_submit_post():
     id = session.get('id')

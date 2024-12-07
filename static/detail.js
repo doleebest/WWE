@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 function getNameFromPath() {
   const path = window.location.pathname; // "/detail/그립톡"
   const parts = path.split("/"); // ["", "detail", "그립톡"]
@@ -61,4 +62,9 @@ $(document).ready(function () {
 
 function showContact(contact) {
   alert(`판매자의 연락처: ${contact}`);
+=======
+function toggleLike() {
+  const likeBtn = document.querySelector(".like-btn");
+  likeBtn.classList.toggle("clicked");
+>>>>>>> d97eb73 (상품 상세 페이지 화면 구현)
 }

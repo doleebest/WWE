@@ -106,7 +106,11 @@
 }
 
 /* 하트 버튼 */
+<<<<<<< HEAD
 #heart {
+=======
+.like-btn {
+>>>>>>> d97eb73 (상품 상세 페이지 화면 구현)
   width: 24px;
   height: 24px;
   cursor: pointer;
@@ -114,15 +118,24 @@
   margin-top: 15px;
 }
 
+<<<<<<< HEAD
 #heart svg {
+=======
+.like-btn svg {
+>>>>>>> d97eb73 (상품 상세 페이지 화면 구현)
   width: 100%;
   height: 100%;
   fill: #aaa;
   transition: fill 0.3s;
 }
 
+<<<<<<< HEAD
 #heart:hover svg,
 #heart.clicked svg {
+=======
+.like-btn:hover svg,
+.like-btn.clicked svg {
+>>>>>>> d97eb73 (상품 상세 페이지 화면 구현)
   fill: red;
 }
 

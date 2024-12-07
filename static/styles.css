@@ -29,6 +29,12 @@ main {
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+header {
+  display: grid;
+  grid-template-columns: min-content auto auto;
+  gap: 200px;
   align-items: center;
 }
 
@@ -41,6 +47,15 @@ main {
   background-color: #ffffff;
   z-index: 999;
   border-bottom: 1px solid rgba(0, 0, 0, 0.081);
+  height: 100px;
+  position: fixed;
+  top: 0;
+  background-color: #ffffff;
+  z-index: 999;
+}
+
+main {
+  padding-top: 100px;
 }
 
 header {
@@ -76,6 +91,7 @@ header {
   align-items: center;
   gap: 10px;
   justify-content: flex-end;
+  margin-left: auto;
 }
 
 .user * {
