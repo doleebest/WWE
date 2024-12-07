@@ -162,22 +162,6 @@ def mypage():
         likes=like_list
     )
 
-# 구매 내역 탭
-@application.route('/mypage/purchases', methods=['GET'])
-def get_user_purchases():
-    # 요청에서 사용자 ID 가져오기
-    id = session.get('id')
-    if not id:
-        return jsonify({"error": "User ID is required"}), 400
-    
-    # 구매 내역 가져오기
-    purchases = DB.get_user_purchases(id)
-    
-    if not purchases:
-        return jsonify({"message": "No purchases found"}), 404
-
-    return jsonify({"purchases": purchases}), 200
-
 @application.route('/mypage/wishlist', methods=['GET'])
 def wishlist():
     id = session.get('id')

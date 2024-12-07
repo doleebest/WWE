@@ -105,6 +105,7 @@ const showTab = (tabId) => {
   // Logic to show the specified tab
   console.log(`Showing tab: ${tabId}`);
   // You can add your tab display logic here
+<<<<<<< HEAD
 };
 document.addEventListener("DOMContentLoaded", function () {
   const pageNumbers = document.querySelectorAll(".page-number");
@@ -134,3 +135,6 @@ document.addEventListener("DOMContentLoaded", function () {
   // 기본 탭 설정
   document.getElementById("wishlist").style.display = "block";
 });
+=======
+};
+>>>>>>> dev
