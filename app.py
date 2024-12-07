@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, flash, redirect, url_for, session, jsonify, abort
 from database import DBhandler
 from datetime import datetime
+from flask import jsonify
 import hashlib
 import math
 
@@ -356,6 +357,7 @@ def reg_item_submit_post():
     DB.insert_item(data['productName'], data, image_file.filename)
     return render_template("submit_item_result.html", data=data, img_path="static/images/{}".format(image_file.filename))
 
+
 @application.route("/detail/<name>/")
 def view_item_detail(name):
     print("###name:",name)
@@ -387,31 +389,30 @@ def likelist(id):
 
 if __name__ == "__main__":
     application.run(host='0.0.0.0', debug=True)
-    
+
 @application.route("/mark_as_sold", methods=["POST"])
 def mark_as_sold():
-    if not session.get("user_id"):
-        return abort(403)  # 로그인되지 않은 경우 접근 불가
+    id = session.get('id')
+    if not id:
+        return jsonify({"error": "로그인되지 않았습니다."}), 403  # JSON 응답
 
-    seller_id = session["user_id"]  # 현재 로그인된 판매자 ID
-    product_id = request.form.get("product_id")
-    buyer_id = request.form.get("buyer_id")
+    seller_id = session["id"]  # 현재 로그인된 판매자 ID
+    data = request.json  # JSON 데이터를 받음
+    product_id = data.get("product_id")
+    buyer_id = data.get("buyer_id")
 
     if not product_id or not buyer_id:
-        flash("상품 ID와 구매자 ID를 모두 입력해주세요.", "error")
-        return redirect(url_for("mypage"))  # 마이페이지로 리디렉션
+        return jsonify({"error": "상품 ID와 구매자 ID를 모두 입력해주세요."}), 400
 
     # 판매자 확인
     product = DB.get_item_byname(product_id)
-    if product.get("sellerId") != seller_id:
-        flash("이 상품에 대한 권한이 없습니다.", "error")
-        return redirect(url_for("mypage"))
+    if not product or product.get("sellerId") != seller_id:
+        return jsonify({"error": "이 상품에 대한 권한이 없습니다."}), 403
 
     # 판매 완료 처리
     if DB.mark_item_as_sold(product_id, buyer_id):
-        flash(f"상품 {product_id}이(가) {buyer_id}에게 판매 완료 처리되었습니다.", "success")
+        return jsonify({"message": f"상품 {product_id}이(가) {buyer_id}에게 판매 완료 처리되었습니다."}), 200
     else:
-        flash("판매 완료 처리 중 문제가 발생했습니다.", "error")
+        return jsonify({"error": "판매 완료 처리 중 문제가 발생했습니다."}), 500
 
-    return redirect(url_for("mypage"))
 
