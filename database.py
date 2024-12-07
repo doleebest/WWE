@@ -11,9 +11,9 @@ class DBhandler:
         firebase = pyrebase.initialize_app(config)
         self.db = firebase.database()
 
-    def insert_item(self, name, data, img_path):
+    def insert_item(self, name, data, img_path, user):
         item_info ={
-            "sellerId": data['sellerId'],
+            "sellerId": user['id'],
             "contact": data['contact'],
             "productName": data['productName'],
             "price": data['price'],
