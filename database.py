@@ -185,7 +185,21 @@ class DBhandler:
             print(f"Product {product_id} marked as sold to {buyer_id}.")
             return True
         return False
+    
+    def mark_item_as_unsold(self, product_id):
+        self.db.child("item").child(product_id).update({"state": "unsold", "buyerId": None})
 
+        # 구매자의 구매 내역에서 제거
+        purchase_entries = self.db.child("purchases").get().each()
+        if purchase_entries:
+            for entry in purchase_entries:
+                purchase = entry.val()
+                if purchase.get("productId") == product_id:
+                    self.db.child("purchases").child(entry.key()).remove()
+                    print(f"Product {product_id} marked as unsold and removed from purchase history.")
+                    return True
+        print(f"Product {product_id} marked as unsold but no purchase history found.")
+        return True  # 구매 내역이 없더라도 상태를 변경한 경우 True 반환
         
     # 사용자 정보 업데이트 함수 추가
     def update_user_info(self, user_id, new_email=None, new_phone=None):
