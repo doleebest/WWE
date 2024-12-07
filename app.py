@@ -350,10 +350,13 @@ def detail():
 
 @application.route("/submit_product_post", methods=['POST'])
 def reg_item_submit_post():
+    id = session.get('id')
+    if not id or not (user := DB.get_user_by_id(id)):
+        return redirect(url_for('login'))
     image_file = request.files["file"]
     image_file.save("static/images/{}".format(image_file.filename))
     data = request.form
-    DB.insert_item(data['productName'], data, image_file.filename)
+    DB.insert_item(data['productName'], data, image_file.filename, user)
     return render_template("submit_item_result.html", data=data, img_path="static/images/{}".format(image_file.filename))
 
 @application.route("/detail/<name>/")
