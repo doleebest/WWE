@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 // mypage 함수 정의
 const mypage = () => {
   // 네비게이션 바 설정
@@ -107,7 +106,6 @@ const showTab = (tabId) => {
   console.log(`Showing tab: ${tabId}`);
   // You can add your tab display logic here
 };
-=======
 document.addEventListener("DOMContentLoaded", function () {
   const pageNumbers = document.querySelectorAll(".page-number");
 
@@ -136,4 +134,3 @@ document.addEventListener("DOMContentLoaded", function () {
   // 기본 탭 설정
   document.getElementById("wishlist").style.display = "block";
 });
->>>>>>> de69e22 (마이페이지 1차 수정)
