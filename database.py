@@ -329,6 +329,14 @@ class DBhandler:
         self.db.child("item").child(product_id).update({"state": new_status})
         print(f"Updated product {product_id} to {new_status}")
 
+    def get_buyerId_by_productName(self, productName):
+        items = self.db.child("item").get()
+        
+        for item in items.each():
+            if item.key() == productName:
+                return item.val().get("buyerId")
+        return None
+
 """        
     # 사용자 정보 업데이트 함수 추가
     def update_user_info(self, user_id, new_email=None, new_phone=None):
