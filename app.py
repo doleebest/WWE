@@ -162,6 +162,32 @@ def mypage():
         likes=like_list
     )
 
+
+# 마이페이지 구매 내역 전체 조회
+@application.route('/mypage/purchases', methods=['GET'])
+def get_user_purchases():
+    # 요청에서 사용자 ID 가져오기
+    id = session.get('id')
+    if not id:
+        return jsonify({"error": "User ID is required"}), 400
+
+    try:
+        # "purchases" 테이블에서 buyerId가 user_id인 모든 구매 내역 가져오기
+        purchases = DB.child("purchases").order_by_child("buyerId").equal_to(id).get()
+
+        # 구매 내역 확인
+        if not purchases.each():
+            return jsonify({"purchases": []}), 200
+
+        # 데이터 포맷팅
+        purchase_list = [purchase.val() for purchase in purchases.each()]
+        return jsonify({"purchases": purchase_list}), 200
+
+    except Exception as e:
+        # 예외 처리
+        return jsonify({"error": "Failed to retrieve purchases", "details": str(e)}), 500
+
+
 @application.route('/mypage/wishlist', methods=['GET'])
 def wishlist():
     id = session.get('id')
