@@ -69,7 +69,9 @@
                 <p class="product-desc">{{ like.description }}</p>
               </div>
               <p class="product-price">{{ like.price }}원</p>
-              <span class="sold-out">거래완료</span>
+              <span class="sold-out {% if like.buyerId %}completed{% endif %}">
+                {% if like.buyerId %}거래완료{% else %}판매중{% endif %}
+              </span>
             </a>
             {% endfor %}
           </ul>
