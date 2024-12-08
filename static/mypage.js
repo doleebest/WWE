@@ -59,17 +59,6 @@ const setupEventListeners = () => {
       //deleteItem(productId);
     });
   });
-
-  // 판매 상태 토글 버튼 이벤트 리스너
-  document.querySelectorAll(".toggle-sale-status").forEach((button) => {
-    button.addEventListener("click", function () {
-      const productId =
-        this.closest(".product-item").getAttribute("data-product-id");
-      const newStatus =
-        this.textContent === "판매 미완" ? "completed" : "pending";
-      //updateSaleStatus(productId, newStatus);
-    });
-  });
 };
 
 const clickSaleStatus = (btn, productName, buyerId) => {
@@ -92,7 +81,17 @@ const clickSaleStatus = (btn, productName, buyerId) => {
 
     setSoldOutBtnUI(btn, true);
   } else {
-    // 판매 재개 API 연결 필요
+    fetch("/mark_as_unsold", {
+      method: "POST",
+      body: JSON.stringify({ product_id: productName }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((response) => {
+      if (response.redirected) {
+        window.location.href = response.url; // 리다이렉트
+      }
+    });
 
     setSoldOutBtnUI(btn, false);
   }
