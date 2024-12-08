@@ -107,10 +107,6 @@
 
 /* 하트 버튼 */
 #heart {
-<<<<<<< HEAD
-.like-btn {
-=======
->>>>>>> dev
   width: 24px;
   height: 24px;
   cursor: pointer;
@@ -119,10 +115,6 @@
 }
 
 #heart svg {
-<<<<<<< HEAD
-.like-btn svg {
-=======
->>>>>>> dev
   width: 100%;
   height: 100%;
   fill: #aaa;
@@ -131,11 +123,6 @@
 
 #heart:hover svg,
 #heart.clicked svg {
-<<<<<<< HEAD
-.like-btn:hover svg,
-.like-btn.clicked svg {
-=======
->>>>>>> dev
   fill: red;
 }
 
