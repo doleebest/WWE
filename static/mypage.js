@@ -61,39 +61,66 @@ const setupEventListeners = () => {
   });
 };
 
-const clickSaleStatus = (btn, productName, buyerId) => {
+const getBuyerId = async (productName) => {
+  try {
+    const response = await fetch(`/returnId/${productName}`);
+    if (!response.ok) {
+      throw new Error("네트워크 에러");
+    }
+    const data = await response.json();
+    if (data.buyerId) {
+      return data.buyerId;
+    }
+    return null;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
+const clickSaleStatus = async (btn, productName) => {
+  const buyerId = await getBuyerId(productName);
   const isSoldOut = buyerId ? true : false;
+
   if (!isSoldOut) {
     const buyer = prompt("구매자의 아이디를 입력해주세요.");
     if (!buyer || !buyer.trim()) {
       return;
     }
 
-    fetch("/mark_as_sold", {
-      method: "POST",
-      body: JSON.stringify({ product_id: productName, buyer_id: buyer }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }).then((response) => {
-      console.log(response.json());
-    });
+    try {
+      const response = await fetch("/mark_as_sold", {
+        method: "POST",
+        body: JSON.stringify({ product_id: productName, buyer_id: buyer }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-    setSoldOutBtnUI(btn, true);
-  } else {
-    fetch("/mark_as_unsold", {
-      method: "POST",
-      body: JSON.stringify({ product_id: productName }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }).then((response) => {
-      if (response.redirected) {
-        window.location.href = response.url; // 리다이렉트
+      if (response.ok) {
+        setSoldOutBtnUI(btn, true);
+        console.log("판매 완료 처리 성공");
       }
-    });
+    } catch (error) {
+      console.error("판매 완료 처리 중 에러:", error);
+    }
+  } else {
+    try {
+      const response = await fetch("/mark_as_unsold", {
+        method: "POST",
+        body: JSON.stringify({ product_id: productName }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-    setSoldOutBtnUI(btn, false);
+      if (response.ok) {
+        setSoldOutBtnUI(btn, false);
+        console.log("판매 재개 처리 성공");
+      }
+    } catch (error) {
+      console.error("판매 재개 처리 중 에러:", error);
+    }
   }
 };
 
@@ -105,9 +132,6 @@ const init = () => {
 // DOMContentLoaded 후 초기화
 document.addEventListener("DOMContentLoaded", init);
 
-// Define the showTab function if needed
 const showTab = (tabId) => {
-  // Logic to show the specified tab
   console.log(`Showing tab: ${tabId}`);
-  // You can add your tab display logic here
 };
