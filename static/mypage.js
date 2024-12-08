@@ -90,18 +90,19 @@ const setupEventListeners = () => {
   });
 };
 
-const clickSaleStatus = (productName, state) => {
-  const isSoldOut = state == "sold" ? true : false;
+const clickSaleStatus = (productName, buyerId) => {
+  console.log(buyerId);
+  const isSoldOut = buyerId ? true : false;
   console.log(isSoldOut);
   if (!isSoldOut) {
-    const buyerId = prompt("구매자의 아이디를 입력해주세요.");
-    if (!buyerId || !buyerId.trim()) {
+    const buyer = prompt("구매자의 아이디를 입력해주세요.");
+    if (!buyer || !buyer.trim()) {
       return;
     }
 
     fetch("/mark_as_sold", {
       method: "POST",
-      body: JSON.stringify({ product_id: productName, buyer_id: buyerId }),
+      body: JSON.stringify({ product_id: productName, buyer_id: buyer }),
       headers: {
         "Content-Type": "application/json",
       },
