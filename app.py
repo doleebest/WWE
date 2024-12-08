@@ -232,7 +232,7 @@ def update_sale_status():
 def buyerId_by_productName(productName):
     item = DB.get_buyerId_by_productName(productName)
     if item:
-        return item, 200
+        return jsonify(item)
     else:
         return {"error": "Product not found"}, 404
 
