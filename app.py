@@ -162,6 +162,32 @@ def mypage():
         likes=like_list
     )
 
+
+# 마이페이지 구매 내역 전체 조회
+@application.route('/mypage/purchases', methods=['GET'])
+def get_user_purchases():
+    # 요청에서 사용자 ID 가져오기
+    id = session.get('id')
+    if not id:
+        return jsonify({"error": "User ID is required"}), 400
+
+    try:
+        # "purchases" 테이블에서 buyerId가 user_id인 모든 구매 내역 가져오기
+        purchases = DB.child("purchases").order_by_child("buyerId").equal_to(id).get()
+
+        # 구매 내역 확인
+        if not purchases.each():
+            return jsonify({"purchases": []}), 200
+
+        # 데이터 포맷팅
+        purchase_list = [purchase.val() for purchase in purchases.each()]
+        return jsonify({"purchases": purchase_list}), 200
+
+    except Exception as e:
+        # 예외 처리
+        return jsonify({"error": "Failed to retrieve purchases", "details": str(e)}), 500
+
+
 @application.route('/mypage/wishlist', methods=['GET'])
 def wishlist():
     id = session.get('id')
@@ -421,22 +447,25 @@ def mark_as_sold():
 
 
 @application.route("/mark_as_unsold", methods=["POST"])
-def mark_as_unsold(product_id):
-    if not session.get("user_id"):
-        return abort(403)  # 로그인되지 않은 경우 접근 불가
+def mark_as_unsold():
+    id = session.get('id')
+    if not id:
+        return jsonify({"error": "로그인되지 않았습니다."}), 403
 
-    seller_id = session["user_id"]  # 현재 로그인된 판매자 ID
+    data = request.get_json()
+    if not data or "product_id" not in data:
+        return jsonify({"error": "유효하지 않은 요청입니다."}), 400
+    
+    product_id = data["product_id"]
+    seller_id = session["id"]
 
     # 판매자 확인
     product = DB.get_item_byname(product_id)
-    if product.get("sellerId") != seller_id:
-        flash("이 상품에 대한 권한이 없습니다.", "error")
-        return redirect(url_for("mypage"))
+    if not product or product.get("sellerId") != seller_id:
+        return jsonify({"error": "이 상품에 대한 권한이 없습니다."}), 403
 
     # 판매 미완료 처리
     if DB.mark_item_as_unsold(product_id):
-        flash(f"상품 {product_id}이(가) 판매 미완료 상태로 변경되었습니다.", "success")
+        return jsonify({"message": f"상품 {product_id}이(가) 판매 미완료 상태로 변경되었습니다."}), 200
     else:
-        flash("판매 미완료 처리 중 문제가 발생했습니다.", "error")
-
-    return redirect(url_for("mypage"))
+        return jsonify({"error": "판매 미완료 처리 중 문제가 발생했습니다."}), 500
