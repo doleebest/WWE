@@ -10,11 +10,19 @@ const setSoldOutBtnUI = (btn, isSoldOut) => {
   }
 };
 
-const initSalesData = () => {
-  document.querySelectorAll(".toggle-sale-status").forEach((button) => {
-    const isSoldOut = button.getAttribute("data-buyer-id") ? true : false;
-    setSoldOutBtnUI(button, isSoldOut);
-  });
+const initSalesData = async () => {
+  const buttons = document.querySelectorAll(".toggle-sale-status");
+  for (const button of buttons) {
+    const productName = button.getAttribute("data-product-name");
+    try {
+      const buyerId = await getBuyerId(productName);
+      const isSoldOut = buyerId ? true : false;
+      console.log(`${productName}의 구매자는 ${buyerId}`);
+      setSoldOutBtnUI(button, isSoldOut);
+    } catch (error) {
+      console.error(`${productName}의 구매자 정보 로드 중 오류:`, error);
+    }
+  }
 };
 
 // mypage 함수 정의
