@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-
-=======
->>>>>>> dev
 function getNameFromPath() {
   const path = window.location.pathname; // "/detail/그립톡"
   const parts = path.split("/"); // ["", "detail", "그립톡"]
@@ -65,10 +61,4 @@ $(document).ready(function () {
 
 function showContact(contact) {
   alert(`판매자의 연락처: ${contact}`);
-<<<<<<< HEAD
-function toggleLike() {
-  const likeBtn = document.querySelector(".like-btn");
-  likeBtn.classList.toggle("clicked");
-=======
->>>>>>> dev
 }
