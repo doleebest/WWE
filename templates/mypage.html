@@ -123,7 +123,8 @@
                 <div class="temp-bottom">
                   <button
                     class="toggle-sale-status completed"
-                    onclick="clickSaleStatus('{{ product.productName }}', '{{ product.buyerId }}')"
+                    data-buyer-id="{{ product.buyerId }}"
+                    onclick="clickSaleStatus(this, '{{ product.productName }}', '{{ product.buyerId }}')"
                   >
                     판매 완료
                   </button>
