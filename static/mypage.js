@@ -1,3 +1,30 @@
+const setSoldOutBtnUI = (btn, isSoldOut) => {
+  if (isSoldOut) {
+    btn.textContent = "판매 재개";
+    btn.classList.remove("completed");
+    btn.classList.add("soldout");
+  } else {
+    btn.textContent = "판매 완료";
+    btn.classList.remove("soldout");
+    btn.classList.add("completed");
+  }
+};
+
+const initSalesData = async () => {
+  const buttons = document.querySelectorAll(".toggle-sale-status");
+  for (const button of buttons) {
+    const productName = button.getAttribute("data-product-name");
+    try {
+      const buyerId = await getBuyerId(productName);
+      const isSoldOut = buyerId ? true : false;
+      console.log(`${productName}의 구매자는 ${buyerId}`);
+      setSoldOutBtnUI(button, isSoldOut);
+    } catch (error) {
+      console.error(`${productName}의 구매자 정보 로드 중 오류:`, error);
+    }
+  }
+};
+
 // mypage 함수 정의
 const mypage = () => {
   // 네비게이션 바 설정
@@ -10,9 +37,6 @@ const mypage = () => {
     page.addEventListener("click", function () {
       pageNumbers.forEach((p) => p.classList.remove("active"));
       this.classList.add("active");
-      
-      // 페이지 번호 클릭시 해당 페이지 데이터 로드
-      loadPageData(this.textContent);
     });
   });
 
@@ -27,62 +51,85 @@ const mypage = () => {
       this.classList.add("active");
       const tabId = this.getAttribute("onclick").split("'")[1];
       document.getElementById(tabId).style.display = "block";
-      
-      // 탭 클릭시 해당 탭의 데이터 로드
-      loadTabData(tabId);
+
+      if (tabId === "sales-history") initSalesData();
     });
   });
-
-  // 기본 데이터 로드
-  loadTabData("wishlist");
-};
-
-// UI 업데이트 함수들
-const updatePageContent = (data) => {
-  // 페이지 컨텐츠 업데이트 로직
-  const contentContainer = document.querySelector('.content-container');
-  contentContainer.innerHTML = data.html;
-  setupEventListeners();
-};
-
-const updateTabContent = (tabId, data) => {
-  // 탭 컨텐츠 업데이트 로직
-  const tabContent = document.getElementById(tabId);
-  tabContent.innerHTML = data.html;
-  setupEventListeners();
-};
-
-const updateStatusUI = (productId, status) => {
-  const button = document.querySelector(`#product-${productId} .toggle-sale-status`);
-  if (status === 'completed') {
-    button.textContent = '판매 완료';
-    button.classList.remove('soldout');
-    button.classList.add('completed');
-  } else {
-    button.textContent = '판매 미완';
-    button.classList.remove('completed');
-    button.classList.add('soldout');
-  }
 };
 
 // 이벤트 리스너 설정 함수
 const setupEventListeners = () => {
   // 삭제 버튼 이벤트 리스너
-  document.querySelectorAll('.delete-btn').forEach(button => {
-    button.addEventListener('click', function() {
-      const productId = this.closest('.product-item').getAttribute('data-product-id');
-      deleteItem(productId);
+  document.querySelectorAll(".delete-btn").forEach((button) => {
+    button.addEventListener("click", function () {
+      const productId =
+        this.closest(".product-item").getAttribute("data-product-id");
+      //deleteItem(productId);
     });
   });
+};
 
-  // 판매 상태 토글 버튼 이벤트 리스너
-  document.querySelectorAll('.toggle-sale-status').forEach(button => {
-    button.addEventListener('click', function() {
-      const productId = this.closest('.product-item').getAttribute('data-product-id');
-      const newStatus = this.textContent === '판매 미완' ? 'completed' : 'pending';
-      updateSaleStatus(productId, newStatus);
-    });
-  });
+const getBuyerId = async (productName) => {
+  try {
+    const response = await fetch(`/returnId/${productName}`);
+    if (!response.ok) {
+      throw new Error("네트워크 에러");
+    }
+    const data = await response.json();
+    if (data.buyerId) {
+      return data.buyerId;
+    }
+    return null;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
+const clickSaleStatus = async (btn, productName) => {
+  const buyerId = await getBuyerId(productName);
+  const isSoldOut = buyerId ? true : false;
+
+  if (!isSoldOut) {
+    const buyer = prompt("구매자의 아이디를 입력해주세요.");
+    if (!buyer || !buyer.trim()) {
+      return;
+    }
+
+    try {
+      const response = await fetch("/mark_as_sold", {
+        method: "POST",
+        body: JSON.stringify({ product_id: productName, buyer_id: buyer }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.ok) {
+        setSoldOutBtnUI(btn, true);
+        console.log("판매 완료 처리 성공");
+      }
+    } catch (error) {
+      console.error("판매 완료 처리 중 에러:", error);
+    }
+  } else {
+    try {
+      const response = await fetch("/mark_as_unsold", {
+        method: "POST",
+        body: JSON.stringify({ product_id: productName }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.ok) {
+        setSoldOutBtnUI(btn, false);
+        console.log("판매 재개 처리 성공");
+      }
+    } catch (error) {
+      console.error("판매 재개 처리 중 에러:", error);
+    }
+  }
 };
 
 // 초기화 함수 정의
@@ -93,16 +140,6 @@ const init = () => {
 // DOMContentLoaded 후 초기화
 document.addEventListener("DOMContentLoaded", init);
 
-// Define the loadTabData function
-const loadTabData = (tabId) => {
-  // Logic to load data for the specified tab
-  console.log(`Loading data for tab: ${tabId}`);
-  // You can add your data fetching logic here
-};
-
-// Define the showTab function if needed
 const showTab = (tabId) => {
-  // Logic to show the specified tab
   console.log(`Showing tab: ${tabId}`);
-  // You can add your tab display logic here
 };
