@@ -335,7 +335,7 @@ class DBhandler:
         
         for item in items.each():
             if item.key() == productName:
-                return item.val().get("buyerId")
+                return item.val()
         return None
 
 """        
