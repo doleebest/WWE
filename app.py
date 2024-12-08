@@ -230,9 +230,9 @@ def update_sale_status():
 
 @application.route("/returnId/<productName>", methods=['GET'])
 def buyerId_by_productName(productName):
-    buyer_id = DB.get_buyerId_by_productName(productName)
-    if buyer_id:
-        return {"buyerId": buyer_id}, 200
+    item = DB.get_buyerId_by_productName(productName)
+    if item:
+        return item, 200
     else:
         return {"error": "Product not found"}, 404
 
