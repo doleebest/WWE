@@ -1,35 +1,10 @@
 @import "./styles.css";
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Pretendard", sans-serif !important;
-}
-
-:root {
-  --ewhagreen: #00462a;
-  --ewhagray: #b9b9b9;
-  --ewhagrayblank: #b9b9b933;
-  --ewhapear: #fffdf1;
-  --ewhamint: #36ae92;
-  --ewhacoral: #f27367;
-  --gray: #8e8e93;
-}
-
-body {
-  background-color: #ffffff;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
 .profile-container {
   width: 650px;
   padding-top: 100px;
 }
 
-/* Profile Header Styles */
 .profile-header {
   display: flex;
   align-items: center;
@@ -66,7 +41,6 @@ body {
   height: 24px;
 }
 
-/* Tab Menu Styles */
 .tab-menu {
   display: flex;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
@@ -90,28 +64,34 @@ body {
   border-bottom: 2px solid #000;
 }
 
-/* Product List Styles */
 .product-items {
-  list-style: none;
-}
-
-.product-item {
   display: flex;
-  padding: 20px 0;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  position: relative;
+  flex-direction: column;
+  gap: 20px;
 }
 
-.product-item img {
+.product-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 5px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding-bottom: 20px;
+}
+
+.product-left {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+}
+
+.product-left img {
   width: 120px;
   height: 120px;
   border-radius: 8px;
-  margin-right: 20px;
   object-fit: cover;
 }
 
 .product-info {
-  flex-grow: 1;
   display: flex;
   flex-direction: column;
 }
@@ -131,15 +111,28 @@ body {
 .product-price {
   font-weight: 600;
   font-size: 16px;
-  align-self: flex-end;
-  margin-top: 8px;
 }
 
-/* Status Buttons */
+.product-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: end;
+  min-width: 90px;
+}
+
+.product-right-wish {
+  justify-content: end;
+}
+
+.product-bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
 .sold-out {
-  position: absolute;
-  right: 0;
-  bottom: 50px;
   padding: 6px 12px;
   border-radius: 20px;
   font-size: 13px;
@@ -149,9 +142,6 @@ body {
 }
 
 .review-btn {
-  position: absolute;
-  right: 0;
-  top: 20px;
   padding: 6px 12px;
   border-radius: 20px;
   font-size: 13px;
@@ -163,26 +153,6 @@ body {
 }
 
 /* 기존 CSS 코드는 유지하고 아래 코드를 추가/수정 */
-
-.temp {
-  display: flex;
-  justify-content: space-between;
-}
-
-.temp-right {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.temp-bottom {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.delete-btn {
-}
 
 .delete-btn img {
   width: 24px;
@@ -211,28 +181,7 @@ body {
   background-color: rgba(54, 174, 146, 0.1);
 }
 
-/* Review List Styles */
-.review-items {
-  list-style: none;
-}
-
-.review-item {
-  display: flex;
-  padding: 20px 0;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  position: relative;
-}
-
-.review-item img {
-  width: 120px;
-  height: 120px;
-  border-radius: 8px;
-  margin-right: 20px;
-  object-fit: cover;
-}
-
 .review-info {
-  flex-grow: 1;
   display: flex;
   flex-direction: column;
 }
