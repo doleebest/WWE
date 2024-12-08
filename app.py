@@ -228,6 +228,14 @@ def update_sale_status():
 
     return jsonify({"message": "Sale status updated"}), 200
 
+@application.route("/returnId/<productName>", methods=['GET'])
+def buyerId_by_productName(productName):
+    buyer_id = DB.get_buyerId_by_productName(productName)
+    if buyer_id:
+        return {"buyerId": buyer_id}, 200
+    else:
+        return {"error": "Product not found"}, 404
+
 # 상품 삭제
 @application.route("/mypage/sales/delete", methods=['POST'])
 def delete_sale():
