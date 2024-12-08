@@ -447,22 +447,25 @@ def mark_as_sold():
 
 
 @application.route("/mark_as_unsold", methods=["POST"])
-def mark_as_unsold(product_id):
-    if not session.get("user_id"):
-        return abort(403)  # 로그인되지 않은 경우 접근 불가
+def mark_as_unsold():
+    id = session.get('id')
+    if not id:
+        return jsonify({"error": "로그인되지 않았습니다."}), 403
 
-    seller_id = session["user_id"]  # 현재 로그인된 판매자 ID
+    data = request.get_json()
+    if not data or "product_id" not in data:
+        return jsonify({"error": "유효하지 않은 요청입니다."}), 400
+    
+    product_id = data["product_id"]
+    seller_id = session["id"]
 
     # 판매자 확인
     product = DB.get_item_byname(product_id)
-    if product.get("sellerId") != seller_id:
-        flash("이 상품에 대한 권한이 없습니다.", "error")
-        return redirect(url_for("mypage"))
+    if not product or product.get("sellerId") != seller_id:
+        return jsonify({"error": "이 상품에 대한 권한이 없습니다."}), 403
 
     # 판매 미완료 처리
     if DB.mark_item_as_unsold(product_id):
-        flash(f"상품 {product_id}이(가) 판매 미완료 상태로 변경되었습니다.", "success")
+        return jsonify({"message": f"상품 {product_id}이(가) 판매 미완료 상태로 변경되었습니다."}), 200
     else:
-        flash("판매 미완료 처리 중 문제가 발생했습니다.", "error")
-
-    return redirect(url_for("mypage"))
+        return jsonify({"error": "판매 미완료 처리 중 문제가 발생했습니다."}), 500
