@@ -22,6 +22,13 @@
 }
 
 /* 판매자 정보 */
+.profile-button a {
+  display: flex;
+  align-items: center;
+  cursor: pointer; /* 클릭 가능하도록 커서 변경 */
+  width: 100%;
+}
+
 .seller-info {
   display: flex;
   align-items: center;
@@ -47,6 +54,7 @@
   color: #666;
   font-size: 14px;
 }
+
 
 /* 구분선 */
 .divider {

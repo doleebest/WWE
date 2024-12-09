@@ -32,24 +32,13 @@
             <p>{{ seller.phone }}</p>
             {% endif %}
           </div>
-          <button class="edit-profile-btn">
-            <!-- <img src="{{ url_for('static', filename='images/edit.png') }}" alt="edit.png" /> -->
-          </button>
         </div>
 
         <div class="tab-menu">
-          <button class="tab active" onclick="showTab('wishlist')">
-            찜한 상품
-          </button>
-          <button class="tab" onclick="showTab('purchase-history')">
-            구매 내역
-          </button>
-          <button class="tab" onclick="showTab('sales-history')">
-            판매 내역
-          </button>
-          <button class="tab" onclick="showTab('review-overview')">
-            리뷰 전체 조회
-          </button>
+          <button class="tab active" onclick="showTab('wishlist')">찜한 상품</button>
+          <button class="tab" onclick="showTab('purchase-history')">구매 내역</button>
+          <button class="tab" onclick="showTab('sales-history')">판매 내역</button>
+          <button class="tab" onclick="showTab('review-overview')">리뷰 전체 조회</button>
         </div>
 
         <!-- 찜한 상품 콘텐츠 -->
@@ -81,7 +70,6 @@
                 </div>
               </div>
             </div>
-
             {% endfor %}
           </div>
         </div>
@@ -97,7 +85,7 @@
               >
                 <img
                   src="{{ url_for('static', filename='images/' + purchase.img_path) }}"
-                  alt="{{ key }}"
+                  alt="{{ purchase.productName }}"
                 />
                 <div class="product-info">
                   <p class="product-name">{{ purchase.productName }}</p>
@@ -105,11 +93,12 @@
                 </div>
               </a>
               <div class="product-right">
+                {% if is_own_page %}
                 <a
                   href="{{ url_for('write_review', name=purchase.productName) }}"
                   class="review-btn"
-                  >리뷰 남기기</a
-                >
+                  >리뷰 남기기</a>
+                {% endif %}
                 <p class="product-price">{{ purchase.price }}원</p>
               </div>
             </div>
@@ -128,7 +117,7 @@
               >
                 <img
                   src="{{ url_for('static', filename='images/' + product.img_path) }}"
-                  alt="{{ key }}"
+                  alt="{{ product.productName }}"
                 />
                 <div class="product-info">
                   <p class="product-name">{{ product.productName }}</p>
@@ -136,8 +125,9 @@
                 </div>
               </a>
               <div class="product-right">
+                {% if is_own_page %}
                 <button class="delete-btn" onclick="deleteItem(this)">
-                  <img src="static/images/trashbin.png" alt="삭제" />
+                  <img src="{{ url_for('static', filename='images/trashbin.png') }}" alt="삭제" />
                 </button>
                 <div class="product-bottom">
                   <button
@@ -149,9 +139,9 @@
                   </button>
                   <p class="product-price">{{ product.price }}원</p>
                 </div>
+                {% endif %}
               </div>
             </div>
-
             {% endfor %}
           </div>
         </div>
@@ -177,21 +167,19 @@
                     {% for i in range(5) %}
                     <span
                       class="star {% if i < review.rate|int %} filled{% endif %}"
-                      >★</span
-                    >
+                      >★</span>
                     {% endfor %}
                   </div>
                 </div>
               </a>
             </div>
             {% endfor %}
-          </ul>
+          </div>
         </div>
       </div>
     </main>
     {% endblock main %}
   </body>
-
   {% block script %}
   <script src="{{ url_for('static', filename='mypage.js') }}"></script>
   <script src="{{ url_for('static', filename='header.js') }}"></script>
