@@ -136,10 +136,24 @@
   padding: 6px 12px;
   border-radius: 20px;
   font-size: 13px;
+}
+
+.sold-out.completed {
   background-color: rgba(242, 115, 103, 0.1);
   color: var(--ewhacoral);
   border: 1px solid var(--ewhacoral);
 }
+
+.sold-out.available {
+  background-color: #f3f9f6; /* 연한 초록색 배경 */
+  color: #4ba382; /* 초록색 글자 */
+  border: 1px solid #4ba382; /* 초록색 테두리 */
+  padding: 6px 12px;
+  border-radius: 20px; /* 둥근 버튼 */
+  font-size: 13px;
+  text-align: center;
+}
+
 
 .review-btn {
   padding: 6px 12px;

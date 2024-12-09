@@ -62,13 +62,13 @@
               <div class="product-right product-right-wish">
                 <div class="product-bottom">
                   <span
-                    class="sold-out {% if like.buyerId %}completed{% endif %}"
+                    class="sold-out {% if like.buyerId %}completed{% else %}available{% endif %}"
                   >
                     {% if like.buyerId %}거래완료{% else %}판매중{% endif %}
                   </span>
                   <p class="product-price">{{ like.price }}원</p>
                 </div>
-              </div>
+              </div>              
             </div>
             {% endfor %}
           </div>
