@@ -1,10 +1,10 @@
 const setSoldOutBtnUI = (btn, isSoldOut) => {
   if (isSoldOut) {
-    btn.textContent = "판매 재개하기";
+    btn.textContent = "판매 재개";
     btn.classList.remove("completed");
     btn.classList.add("soldout");
   } else {
-    btn.textContent = "판매 완료하기";
+    btn.textContent = "판매 완료";
     btn.classList.remove("soldout");
     btn.classList.add("completed");
   }
