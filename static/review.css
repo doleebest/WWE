@@ -89,30 +89,29 @@
   }
   
   .reviewer-icon {
-    width: 40px;
-    height: 40px;
+    width: 47px;
+    height: 50px;
     border-radius: 50%;
-    object-fit: cover;
   }
   
   .reviewer-details {
-    margin-left: 10px;
+    margin-left: 13px;
   }
   
   .reviewer-name {
-    font-size: 14px;
+    font-size: 16px;
     font-weight: bold;
     color: #333;
   }
   
   .reviewer-email {
-    font-size: 12px;
+    font-size: 14px;
     color: #666;
   }
 
   /* 나라 정보 */
 .reviewer-country {
-    font-size: 12px;
+    font-size: 14px;
     color: #666;
     margin-top: 3px;
   }
