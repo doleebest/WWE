@@ -1,69 +1,76 @@
 {% extends "header.html" %}
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     {% block head %}
-    <title>Review Page</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='review.css') }}">
+    <title>리뷰 페이지</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='review.css') }}"
+    />
     {% endblock head %}
   </head>
   <body>
     {% block main %}
     <main>
-      <div class="product-container">
+      <div class="container">
+        <!-- 상품 정보 -->
         <div class="product-info">
-          <img
-            src="{{ url_for('static', filename='images/' + item.img_path) }}"
-            alt="Product Image"
-            class="product-image"
-          />
+          <div class="product-thumbnail">
+            <img
+              src="{{ url_for('static', filename='images/' + item.img_path) }}"
+              alt="상품 이미지"
+            />
+          </div>
           <div class="product-details">
-            <h2>{{ name }}</h2>
-            <p>{{ item.description }}</p>
-            <p class="price">{{ item.price }}원</p>
+            <div class="product-title">{{ name }}</div>
+            <p class="product-description">{{ item.description }}</p>
+            <p class="product-price">{{ item.price }}원</p>
           </div>
         </div>
 
-        <!-- Review Section -->
-        <div class="review-section">
+        <!-- 리뷰 이미지 -->
+        <div class="divider"></div>
+        <div class="review-image">
           <img
             src="{{ url_for('static', filename='images/' + review.img_path) }}"
-            alt="desk2.png"
-            class="review-image"
+            alt="리뷰 이미지"
           />
+        </div>
+
+        <!-- 리뷰어 정보 및 리뷰 내용 -->
+        <div class="review-section">
           <div class="reviewer-info">
             <img
               src="{{ url_for('static', filename='images/user_icon.png') }}"
-              alt="user_icon.png"
+              alt="유저 아이콘"
               class="reviewer-icon"
             />
-            <div class="reviewer-text">
+            <div class="reviewer-details">
               <p class="reviewer-name">{{ seller.id }}</p>
               <p class="reviewer-email">{{ seller.email }}</p>
-              {% if seller.region %}
-              <p class="reviewer-type">{{ seller.region }}</p>
-              {% endif %}
+              <p class="reviewer-country">{{ seller.region }}</p>
             </div>
           </div>
-          <h3>{{ review.title }}</h3>
+          
+          <div class="divider"></div>
+
+          <h3 class="review-title">{{ review.title }}</h3>
           <div class="rating">
             {% for i in range(5) %}
-              <span class="star {% if i < review.rate|int %} filled{% endif %}">★</span>
+            <span class="star {% if i < review.rate|int %} filled{% endif %}">★</span>
             {% endfor %}
           </div>
-          <p class="review-text">
-            {{ review.review }}
-          </p>
+          <p class="review-text">{{ review.review }}</p>
           <p class="review-date">{{ review.review_time }}</p>
         </div>
       </div>
     </main>
     {% endblock main %}
-    
+
     {% block script %}
     <script src="{{ url_for('static', filename='review.js') }}"></script>
     {% endblock script %}
