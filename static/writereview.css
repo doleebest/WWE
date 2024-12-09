@@ -62,10 +62,11 @@ body {
 
 .stars {
     display: flex;
-    flex-direction: row-reverse;
+    flex-direction: row;
     gap: 10px;
     margin: 10px 0;
 }
+
 
 .stars input[type="radio"] {
     display: none;
