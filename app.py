@@ -132,25 +132,21 @@ def mypage():
     start_idx = REVIEW_COUNT_PER_PAGE * page
     end_idx = REVIEW_COUNT_PER_PAGE * (page + 1)
     
-    #사용자가 마이페이지를 열면, 각각을 데베에서 가져온다.
-    wishlist = DB.get_user_wishlist(id)
+    # 좋아요 전체 조회
+    like_list = DB.get_liked_item_details(id)
+    # 구매내역
     purchase_history = DB.get_user_purchases(id)
+    # 판매 내역
     sales_history = DB.get_user_sales(id)
-    print(sales_history)
-
     # 리뷰 전체 조회
     data = DB.get_all_review_by_id(id)
     item_counts = len(data)  # 총 리뷰 개수
     current_page_data = list(data.items())[start_idx:end_idx]
 
-    # 좋아요 전체 조회
-    like_list = DB.get_liked_item_details(id)
-
     return render_template(
         'mypage.html',
         seller=seller,
-        wishlist=wishlist,
-        purchase_history=purchase_history,
+        purchases=purchase_history,
         products=sales_history,
 
         # 전체 리뷰
@@ -161,56 +157,6 @@ def mypage():
 
         likes=like_list
     )
-
-
-# 마이페이지 구매 내역 전체 조회
-@application.route('/mypage/purchases', methods=['GET'])
-def get_user_purchases():
-    # 요청에서 사용자 ID 가져오기
-    id = session.get('id')
-    if not id:
-        return jsonify({"error": "User ID is required"}), 400
-
-    try:
-        # "purchases" 테이블에서 buyerId가 user_id인 모든 구매 내역 가져오기
-        purchases = DB.child("purchases").order_by_child("buyerId").equal_to(id).get()
-
-        # 구매 내역 확인
-        if not purchases.each():
-            return jsonify({"purchases": []}), 200
-
-        # 데이터 포맷팅
-        purchase_list = [purchase.val() for purchase in purchases.each()]
-        return jsonify({"purchases": purchase_list}), 200
-
-    except Exception as e:
-        # 예외 처리
-        return jsonify({"error": "Failed to retrieve purchases", "details": str(e)}), 500
-
-
-@application.route('/mypage/wishlist', methods=['GET'])
-def wishlist():
-    id = session.get('id')
-    if not id:
-        return redirect(url_for('login'))
-    wishlist = DB.get_user_wishlist(id)
-    return jsonify(wishlist or []), 200  # 빈 리스트 반환
-
-@application.route('/mypage/purchases', methods=['GET'])
-def purchases():
-    id = session.get('id')
-    if not id:
-        return redirect(url_for('login'))
-    purchases = DB.get_user_purchases(id)
-    return jsonify(purchases or []), 200
-
-@application.route('/mypage/sales', methods=['GET'])
-def sales(id):
-    id = session.get('id')
-    if not id:
-        return redirect(url_for('login'))
-    sales = DB.get_user_sales(id)
-    return jsonify(sales or []), 200
 
 # 판매 상태 업데이트
 @application.route("/mypage/sales/update_status", methods=['POST'])
