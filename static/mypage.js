@@ -27,6 +27,7 @@ const initSalesData = async () => {
 
 // mypage 함수 정의
 const mypage = () => {
+  // TODO: 임의로 수정한 것이기 때문에 다시 수정 필요함 ..
   if (window.location.pathname === "/mypage") {
     // 네비게이션 바 설정
     const mypageNavBar = document.querySelector("#navbar__menu__mypage");
