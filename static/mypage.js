@@ -1,10 +1,10 @@
 const setSoldOutBtnUI = (btn, isSoldOut) => {
   if (isSoldOut) {
-    btn.textContent = "판매 재개";
+    btn.textContent = "판매 재개하기";
     btn.classList.remove("completed");
     btn.classList.add("soldout");
   } else {
-    btn.textContent = "판매 완료";
+    btn.textContent = "판매 완료하기";
     btn.classList.remove("soldout");
     btn.classList.add("completed");
   }
@@ -27,9 +27,12 @@ const initSalesData = async () => {
 
 // mypage 함수 정의
 const mypage = () => {
-  // 네비게이션 바 설정
-  const mypageNavBar = document.querySelector("#navbar__menu__mypage");
-  mypageNavBar.classList.add("navbar__menu_selected");
+  // TODO: 임의로 수정한 것이기 때문에 다시 수정 필요함 ..
+  if (window.location.pathname === "/mypage") {
+    // 네비게이션 바 설정
+    const mypageNavBar = document.querySelector("#navbar__menu__mypage");
+    mypageNavBar.classList.add("navbar__menu_selected");
+  }
 
   // 페이지 번호 활성화 설정
   const pageNumbers = document.querySelectorAll(".page-number");
@@ -134,16 +137,16 @@ const clickSaleStatus = async (btn, productName) => {
 
 function deleteItem(button) {
   // 버튼의 부모 요소 중 product-container를 찾음
-  const productContainer = button.closest('.product-container');
-  
+  const productContainer = button.closest(".product-container");
+
   if (productContainer) {
     // 삭제 확인 메시지
-    if (confirm('정말로 삭제하시겠습니까?')) {
+    if (confirm("정말로 삭제하시겠습니까?")) {
       productContainer.remove(); // 해당 항목 삭제
-      console.log('Product deleted');
+      console.log("Product deleted");
     }
   } else {
-    console.error('Product container not found');
+    console.error("Product container not found");
   }
 }
 

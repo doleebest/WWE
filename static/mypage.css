@@ -118,7 +118,7 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: end;
-  min-width: 90px;
+  min-width: 100px;
 }
 
 .product-right-wish {
@@ -153,7 +153,6 @@
   font-size: 13px;
   text-align: center;
 }
-
 
 .review-btn {
   padding: 6px 12px;

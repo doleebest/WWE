@@ -35,10 +35,18 @@
         </div>
 
         <div class="tab-menu">
-          <button class="tab active" onclick="showTab('wishlist')">찜한 상품</button>
-          <button class="tab" onclick="showTab('purchase-history')">구매 내역</button>
-          <button class="tab" onclick="showTab('sales-history')">판매 내역</button>
-          <button class="tab" onclick="showTab('review-overview')">리뷰 전체 조회</button>
+          <button class="tab active" onclick="showTab('wishlist')">
+            찜한 상품
+          </button>
+          <button class="tab" onclick="showTab('purchase-history')">
+            구매 내역
+          </button>
+          <button class="tab" onclick="showTab('sales-history')">
+            판매 내역
+          </button>
+          <button class="tab" onclick="showTab('review-overview')">
+            리뷰 전체 조회
+          </button>
         </div>
 
         <!-- 찜한 상품 콘텐츠 -->
@@ -68,7 +76,7 @@
                   </span>
                   <p class="product-price">{{ like.price }}원</p>
                 </div>
-              </div>              
+              </div>
             </div>
             {% endfor %}
           </div>
@@ -97,7 +105,8 @@
                 <a
                   href="{{ url_for('write_review', name=purchase.productName) }}"
                   class="review-btn"
-                  >리뷰 남기기</a>
+                  >리뷰 남기기</a
+                >
                 {% endif %}
                 <p class="product-price">{{ purchase.price }}원</p>
               </div>
@@ -127,16 +136,17 @@
               <div class="product-right">
                 {% if is_own_page %}
                 <button class="delete-btn" onclick="deleteItem(this)">
-                  <img src="{{ url_for('static', filename='images/trashbin.png') }}" alt="삭제" />
+                  <img
+                    src="{{ url_for('static', filename='images/trashbin.png') }}"
+                    alt="삭제"
+                  />
                 </button>
                 <div class="product-bottom">
                   <button
                     class="toggle-sale-status completed"
                     data-product-name="{{ product.productName }}"
                     onclick="clickSaleStatus(this, '{{ product.productName }}')"
-                  >
-                    판매 완료
-                  </button>
+                  ></button>
                   <p class="product-price">{{ product.price }}원</p>
                 </div>
                 {% endif %}
@@ -167,7 +177,8 @@
                     {% for i in range(5) %}
                     <span
                       class="star {% if i < review.rate|int %} filled{% endif %}"
-                      >★</span>
+                      >★</span
+                    >
                     {% endfor %}
                   </div>
                 </div>
