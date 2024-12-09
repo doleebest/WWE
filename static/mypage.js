@@ -27,9 +27,11 @@ const initSalesData = async () => {
 
 // mypage 함수 정의
 const mypage = () => {
-  // 네비게이션 바 설정
-  const mypageNavBar = document.querySelector("#navbar__menu__mypage");
-  mypageNavBar.classList.add("navbar__menu_selected");
+  if (window.location.pathname === "/mypage") {
+    // 네비게이션 바 설정
+    const mypageNavBar = document.querySelector("#navbar__menu__mypage");
+    mypageNavBar.classList.add("navbar__menu_selected");
+  }
 
   // 페이지 번호 활성화 설정
   const pageNumbers = document.querySelectorAll(".page-number");
