@@ -145,9 +145,7 @@ def mypage(id):
     like_list = DB.get_liked_item_details(id)
     purchase_history = DB.get_user_purchases(id)
     sales_history = DB.get_user_sales(id)
-    data = DB.get_all_review_by_id(id)
-    item_counts = len(data)
-    current_page_data = list(data.items())[start_idx:end_idx]
+    reviews = DB.get_all_review_by_id(id)
 
     # 자신 페이지 여부 확인
     is_own_page = (current_user == id)
@@ -157,63 +155,10 @@ def mypage(id):
         seller=seller,
         purchases=purchase_history,
         products=sales_history,
-        reviews=current_page_data,
-        limit=REVIEW_COUNT_PER_PAGE,
-        page=page,
-        page_count=(item_counts + REVIEW_COUNT_PER_PAGE - 1) // REVIEW_COUNT_PER_PAGE,
+        reviews=reviews,
         likes=like_list,
         is_own_page=is_own_page
     )
-
-
-# 마이페이지 구매 내역 전체 조회
-@application.route('/mypage/purchases', methods=['GET'])
-def get_user_purchases():
-    # 요청에서 사용자 ID 가져오기
-    id = session.get('id')
-    if not id:
-        return jsonify({"error": "User ID is required"}), 400
-
-    try:
-        # "purchases" 테이블에서 buyerId가 user_id인 모든 구매 내역 가져오기
-        purchases = DB.child("purchases").order_by_child("buyerId").equal_to(id).get()
-
-        # 구매 내역 확인
-        if not purchases.each():
-            return jsonify({"purchases": []}), 200
-
-        # 데이터 포맷팅
-        purchase_list = [purchase.val() for purchase in purchases.each()]
-        return jsonify({"purchases": purchase_list}), 200
-
-    except Exception as e:
-        # 예외 처리
-        return jsonify({"error": "Failed to retrieve purchases", "details": str(e)}), 500
-
-
-@application.route('/mypage/wishlist', methods=['GET'])
-def wishlist():
-    id = session.get('id')
-    if not id:
-        return redirect(url_for('login'))
-    wishlist = DB.get_user_wishlist(id)
-    return jsonify(wishlist or []), 200  # 빈 리스트 반환
-
-@application.route('/mypage/purchases', methods=['GET'])
-def purchases():
-    id = session.get('id')
-    if not id:
-        return redirect(url_for('login'))
-    purchases = DB.get_user_purchases(id)
-    return jsonify(purchases or []), 200
-
-@application.route('/mypage/sales', methods=['GET'])
-def sales(id):
-    id = session.get('id')
-    if not id:
-        return redirect(url_for('login'))
-    sales = DB.get_user_sales(id)
-    return jsonify(sales or []), 200
 
 # 판매 상태 업데이트
 @application.route("/mypage/sales/update_status", methods=['POST'])
@@ -274,32 +219,6 @@ def user_page(user_id):
         user_id=user_id
     )
 
-"""
-@application.route("/mypage/profile/update", methods=["POST"])
-def update_user_info():
-    data = request.json
-<<<<<<< HEAD
-    id = session.get('id')
-=======
-    user_id = 'user_id_example'  # 사용자 ID는 세션 등에서 가져올 수 있음
->>>>>>> 4e1dd14 (fix : crash)
-    new_email = data.get("email")
-    new_phone = data.get("phone")
-
-    db_handler = DBhandler()
-
-    # 이메일, 전화번호 중 적어도 하나가 주어져야 업데이트가 진행됨
-    if not new_email and not new_phone:
-        return jsonify({"success": False, "message": "이메일 또는 전화번호를 입력하세요."}), 400
-
-    # 사용자 정보 업데이트
-    success = db_handler.update_user_info(user_id, new_email=new_email, new_phone=new_phone)
-    if success:
-        return jsonify({"success": True, "message": "정보가 업데이트되었습니다."}), 200
-    else:
-        return jsonify({"success": False, "message": "정보 업데이트에 실패했습니다."}), 500
-"""
-
 @application.route("/list")
 def view_list():
     return render_template("list.html")
@@ -309,7 +228,7 @@ def view_list():
 def view_review(name):
     review = DB.get_review_by_name(name)
     item = DB.get_item_byname(name)
-    seller = DB.get_user_by_id('sj')
+    seller = DB.get_user_by_id(review.get('buyerId'))
 
     # 리뷰정보 혹은 상품정보 없을 경우 404
     if not review or not item:
@@ -458,22 +377,25 @@ def mark_as_sold():
 
 
 @application.route("/mark_as_unsold", methods=["POST"])
-def mark_as_unsold(product_id):
-    if not session.get("user_id"):
-        return abort(403)  # 로그인되지 않은 경우 접근 불가
+def mark_as_unsold():
+    id = session.get('id')
+    if not id:
+        return jsonify({"error": "로그인되지 않았습니다."}), 403
 
-    seller_id = session["user_id"]  # 현재 로그인된 판매자 ID
+    data = request.get_json()
+    if not data or "product_id" not in data:
+        return jsonify({"error": "유효하지 않은 요청입니다."}), 400
+
+    product_id = data["product_id"]
+    seller_id = session["id"]
 
     # 판매자 확인
     product = DB.get_item_byname(product_id)
-    if product.get("sellerId") != seller_id:
-        flash("이 상품에 대한 권한이 없습니다.", "error")
-        return redirect(url_for("mypage"))
+    if not product or product.get("sellerId") != seller_id:
+        return jsonify({"error": "이 상품에 대한 권한이 없습니다."}), 403
 
     # 판매 미완료 처리
     if DB.mark_item_as_unsold(product_id):
-        flash(f"상품 {product_id}이(가) 판매 미완료 상태로 변경되었습니다.", "success")
+        return jsonify({"message": f"상품 {product_id}이(가) 판매 미완료 상태로 변경되었습니다."}), 200
     else:
-        flash("판매 미완료 처리 중 문제가 발생했습니다.", "error")
-
-    return redirect(url_for("mypage"))
+        return jsonify({"error": "판매 미완료 처리 중 문제가 발생했습니다."}), 500
