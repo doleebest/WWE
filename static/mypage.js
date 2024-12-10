@@ -60,39 +60,36 @@ const mypage = () => {
   });
 };
 
-const setupEventListeners = () => {
-  // 삭제 버튼 이벤트 리스너
-  document.querySelectorAll(".delete-btn").forEach((button) => {
-    button.addEventListener("click", function () {
-      const productId = this.closest(".product-item").getAttribute("data-product-id");
+// deleteItem 함수 정의
+function deleteItem(button) {
+  // 상품 ID를 포함하고 있는 부모 요소 찾기
+  const productItem = button.closest(".product-item");
+  const productId = productItem.getAttribute("data-product-id");
 
-      // DELETE 요청 보내기
-      fetch("/mypage/sales/delete", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ product_id: productId }),
-      })
-        .then((response) => {
-          if (response.ok) {
-            return response.json();
-          } else {
-            throw new Error(`Server error: ${response.status}`);
-          }
-        })
-        .then((data) => {
-          alert(data.message); // 성공 메시지 표시
-          this.closest(".product-item").remove(); // UI에서 해당 항목 삭제
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-          alert("Failed to delete product. Please check your network or server.");
-        });
+  // 백엔드 DELETE 엔드포인트로 요청 보내기 (예: /delete/<product_id>)
+  fetch(`/delete/${productId}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("삭제에 실패했습니다.");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      // 성공 메시지 처리 (옵션)
+      console.log(data.message);
+      // DOM에서 해당 상품 요소 제거
+      productItem.remove();
+    })
+    .catch((error) => {
+      console.error("에러:", error);
+      alert("상품 삭제 중 오류가 발생했습니다.");
     });
-  });
-};
-
+}
 
 
 const getBuyerId = async (productName) => {
