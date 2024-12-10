@@ -296,13 +296,15 @@ class DBhandler:
     
     # 회원 별 리뷰 전체 조회
     def get_all_review_by_id(self, id):
-        all_reviews = self.db.child("review").get() 
-        filtered_reviews = {}
-        # 전체 리뷰 들고와서 sellerId와 id가 동일한 것만
-        for rev in all_reviews.each():
-            if rev.val().get("sellerId") == id: 
-                filtered_reviews[rev.key()] = rev.val()
-        return filtered_reviews
+        all_reviews = self.db.child("review").get()
+        reviews = []
+        if all_reviews.each():
+            for rev in all_reviews.each():
+                review_data = rev.val()
+                if review_data.get("sellerId") == id:
+                    review_data["reviewId"] = rev.key() 
+                    reviews.append(review_data)
+        return reviews
 
     # 좋아요 리스트
     def get_all_like_by_id(self, uid):
