@@ -159,30 +159,24 @@
         <!-- 리뷰 전체 조회 콘텐츠 -->
         <div class="tab-content" id="review-overview">
           <div class="product-items">
-            {% for key, review in reviews %}
+            {% for review in reviews %}
             <div class="product-container">
-              <a
-                href="{{ url_for('view_review', name=key) }}"
-                class="product-left"
-              >
-                <img
-                  src="{{ url_for('static', filename='images/' + review.img_path) }}"
-                  alt="{{ key }}"
-                />
-                <div class="product-info">
-                  <p class="review-username">{{ review.buyerId }}</p>
-                  <p class="product-name">{{ key }}</p>
-                  <p class="review-text">{{ review.review }}</p>
-                  <div class="star-rating">
-                    {% for i in range(5) %}
-                    <span
-                      class="star {% if i < review.rate|int %} filled{% endif %}"
-                      >★</span
-                    >
-                    {% endfor %}
-                  </div>
-                </div>
-              </a>
+                <a href="{{ url_for('view_review', name=review.reviewId) }}" class="product-left">
+                    <img
+                        src="{{ url_for('static', filename='images/' + review.img_path) }}"
+                        alt="{{ review.reviewId }}"
+                    />
+                    <div class="product-info">
+                        <p class="review-username">{{ review.buyerId }}</p>
+                        <p class="product-name">{{ review.reviewId }}</p>
+                        <p class="review-text">{{ review.review }}</p>
+                        <div class="star-rating">
+                            {% for i in range(5) %}
+                            <span class="star {% if i < review.rate|int %} filled{% endif %}">★</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </a>
             </div>
             {% endfor %}
           </div>
