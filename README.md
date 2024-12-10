@@ -20,7 +20,7 @@ WWE는 2024학년도 2학기 이화여자대학교 오픈SW플랫폼 오소리�
 ### BACKEND
 |     복지희     |     이나경     |     이소정     |
 |:--------------:|:--------------:|:--------------:|
-|     [@2.or_kng](https://github.com/rinarina0429)     |     [@2.or_kng](https://github.com/rinarina0429)     |     [@2.or_kng](https://github.com/rinarina0429)     |
+|     [@2.or_kng](https://github.com/rinarina0429)     |     [@2.or_kng](https://github.com/rinarina0429)     |     [@doleebest](https://github.com/doleebest)     |
 | 리뷰 도메인 | 상품 도메인 | 회원 도메인 |
 
 ### FRONTEND
