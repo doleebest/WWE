@@ -60,17 +60,40 @@ const mypage = () => {
   });
 };
 
-// 이벤트 리스너 설정 함수
 const setupEventListeners = () => {
   // 삭제 버튼 이벤트 리스너
   document.querySelectorAll(".delete-btn").forEach((button) => {
     button.addEventListener("click", function () {
-      const productId =
-        this.closest(".product-item").getAttribute("data-product-id");
-      //deleteItem(productId);
+      const productId = this.closest(".product-item").getAttribute("data-product-id");
+
+      // DELETE 요청 보내기
+      fetch("/mypage/sales/delete", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ product_id: productId }),
+      })
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            throw new Error(`Server error: ${response.status}`);
+          }
+        })
+        .then((data) => {
+          alert(data.message); // 성공 메시지 표시
+          this.closest(".product-item").remove(); // UI에서 해당 항목 삭제
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+          alert("Failed to delete product. Please check your network or server.");
+        });
     });
   });
 };
+
+
 
 const getBuyerId = async (productName) => {
   try {
