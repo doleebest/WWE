@@ -2,7 +2,7 @@
 
 ### ✨ 프로젝트 소개
 _**World Wide Ewha**_<br>
-WWE는 2024학년도 2학기 이화여자대학교 오픈SW플랫폼 오소리팀에서 탄생한 플랫폼입니다.
+WWE는 2024학년도 2학기 이화여자대학교 오픈SW플랫폼 오소리팀에서 탄생한 플랫폼입니다.<br>
 교환학생/방문학생 등의 이유로 해외에 나가있는 학생들이 중고물품을 보다 쉽게 거래할 수 있도록 지원합니다.
 
 ### ✨ 기능
@@ -20,13 +20,13 @@ WWE는 2024학년도 2학기 이화여자대학교 오픈SW플랫폼 오소리�
 ### BACKEND
 |     복지희     |     이나경     |     이소정     |
 |:--------------:|:--------------:|:--------------:|
-|     [@2.or_kng](https://github.com/rinarina0429)     |     [@2.or_kng](https://github.com/rinarina0429)     |     [@doleebest](https://github.com/doleebest)     |
+|     [@jettieb](https://github.com/jettieb)     |     [@2.or_kng](https://github.com/rinarina0429)     |     [@doleebest](https://github.com/doleebest)     |
 | 리뷰 도메인 | 상품 도메인 | 회원 도메인 |
 
 ### FRONTEND
 |     김기연     |     김희서     |     이나현     |
 |:--------------:|:--------------:|:--------------:|
-|     [@2.or_kng](https://github.com/rinarina0429)     |     [@2.or_kng](https://github.com/rinarina0429)     |     [@2.or_kng](https://github.com/rinarina0429)     |
+|     [@arky02](https://github.com/arky02)     |     [@his0si](https://github.com/his0si)     |     [@CSE-pebble](https://github.com/CSE-pebble)     |
 | 상품 도메인 | 리뷰 도메인 | 회원 도메인 |
 
 <br>
@@ -137,7 +137,7 @@ WWE는 2024학년도 2학기 이화여자대학교 오픈SW플랫폼 오소리�
 git clone https://github.com/Ewha-Ohsori/WWE.git
 cd WWE
 conda activate OSWF # 생성한 가상환경 이름
-<!-- 설치할거 -->
+# 설치
 flask --debug run
 ```
 ## 📚 기능 예시
