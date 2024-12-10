@@ -228,7 +228,7 @@ def view_list():
 def view_review(name):
     review = DB.get_review_by_name(name)
     item = DB.get_item_byname(name)
-    seller = DB.get_user_by_id('sj')
+    seller = DB.get_user_by_id(review.get('buyerId'))
 
     # 리뷰정보 혹은 상품정보 없을 경우 404
     if not review or not item:
