@@ -33,7 +33,7 @@ WWE는 2024학년도 2학기 이화여자대학교 오픈SW플랫폼 오소리�
 
 ## 🗂 기술 스택
 <!-- 버전 명시 -->
-- Frontend:
+- Frontend: HTML, CSS, Javascript
 - Backend: Python, Flask
 - Database: Firebase
 - Version Control: GitHub
@@ -87,7 +87,6 @@ WWE는 2024학년도 2학기 이화여자대학교 오픈SW플랫폼 오소리�
 │  database.py
 │  LICENSE
 │  README.md
-│  review.css
 │  
 ├─ 📂 .github
 │   └─ PULL_REQUEST_TEMPLATE.md
