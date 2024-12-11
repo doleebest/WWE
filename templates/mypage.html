@@ -45,7 +45,7 @@
             판매 내역
           </button>
           <button class="tab" onclick="showTab('review-overview')">
-            리뷰 전체 조회
+            받은 리뷰
           </button>
         </div>
 
@@ -108,7 +108,9 @@
                   >리뷰 남기기</a
                 >
                 {% endif %}
-                <p class="product-price">{{ purchase.price }}원</p>
+                <div class="product-bottom">
+                  <p class="product-price">{{ purchase.price }}원</p>
+                </div>
               </div>
             </div>
             {% endfor %}
@@ -135,12 +137,6 @@
               </a>
               <div class="product-right">
                 {% if is_own_page %}
-                <button class="delete-btn" onclick="deleteItem(this)">
-                  <img
-                    src="{{ url_for('static', filename='images/trashbin.png') }}"
-                    alt="삭제"
-                  />
-                </button>
                 <div class="product-bottom">
                   <button
                     class="toggle-sale-status completed"
