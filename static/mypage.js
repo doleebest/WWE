@@ -27,8 +27,8 @@ const initSalesData = async () => {
 
 // mypage 함수 정의
 const mypage = () => {
-  // TODO: 임의로 수정한 것이기 때문에 다시 수정 필요함 ..
-  if (window.location.pathname === "/mypage") {
+  const isOwnPage = document.querySelector("main").dataset.isOwnPage === "true";
+  if (isOwnPage) {
     // 네비게이션 바 설정
     const mypageNavBar = document.querySelector("#navbar__menu__mypage");
     mypageNavBar.classList.add("navbar__menu_selected");
@@ -90,7 +90,6 @@ function deleteItem(button) {
       alert("상품 삭제 중 오류가 발생했습니다.");
     });
 }
-
 
 const getBuyerId = async (productName) => {
   try {

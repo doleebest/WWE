@@ -29,20 +29,17 @@
           />
         </div>
 
-        <a 
-    href="{{ url_for('mypage', id=data.sellerId) }}" 
-    class="seller-info">
-    <img
-        src="{{ url_for('static', filename='images/user_icon.png') }}"
-        alt="판매자 프로필 사진"
-    />
-    <div class="details">
-        <div class="name">{{ data.sellerId }}</div>
-        <div class="email">{{ data.contact }}</div>
-        <div class="email">{{data.nation}}</div>
-    </div>
-</a>
-
+        <a href="{{ url_for('mypage', id=data.sellerId) }}" class="seller-info">
+          <img
+            src="{{ url_for('static', filename='images/user_icon.png') }}"
+            alt="판매자 프로필 사진"
+          />
+          <div class="details">
+            <div class="name">{{ data.sellerId }}</div>
+            <div class="email">{{ data.contact }}</div>
+            <div class="email">{{data.nation}}</div>
+          </div>
+        </a>
 
         <!-- 구분선 -->
         <div class="divider"></div>
@@ -53,7 +50,7 @@
           <span class="status-tag">{{data.state}}</span>
         </div>
         <div class="product-detail">{{data.address}}</div>
-        <div class="price">{{data.price}}</div>
+        <div class="price">{{data.price}}원</div>
 
         <div class="product-description">{{data.description}}</div>
 
