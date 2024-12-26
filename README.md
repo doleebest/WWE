@@ -9,6 +9,7 @@ WWE는 2024학년도 2학기 이화여자대학교 오픈SW플랫폼 오소리�
 [notion](https://www.notion.so/WWE-9daecf91d5fa4a349034219436699234?pvs=4)
 [ppt](https://docs.google.com/presentation/d/1vwaE_uGfPQfEEeGfcE2KKxOqT3lrJdtg/edit?usp=share_link&ouid=108552118158799990334&rtpof=true&sd=true)
 [기술블로그](https://ewha-ohsori.tistory.com)
+[데모시연](https://youtu.be/uqQpgeS5Cjs?si=FEnudW-8SaJhUYnX)
 <br><br>
 
 ### ✨ 기능
