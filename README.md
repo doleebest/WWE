@@ -1,4 +1,4 @@
-# 🌎 WWE : World Wide Ewha
+# 🌎 WWE : World Wide Ewha (교환학생을 위한 해외 중고거래 플랫폼)
 
 ### ✨ 프로젝트 소개
 _**World Wide Ewha**_<br>
