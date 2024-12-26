@@ -3,7 +3,12 @@
 ### ✨ 프로젝트 소개
 _**World Wide Ewha**_<br>
 WWE는 2024학년도 2학기 이화여자대학교 오픈SW플랫폼 오소리팀에서 탄생한 플랫폼입니다.<br>
-교환학생/방문학생 등의 이유로 해외에 나가있는 학생들이 중고물품을 보다 쉽게 거래할 수 있도록 지원합니다.
+교환학생/방문학생 등의 이유로 해외에 나가있는 학생들이 중고물품을 보다 쉽게 거래할 수 있도록 지원합니다.  
+<br>
+### ✨ 링크
+[notion](https://www.notion.so/WWE-9daecf91d5fa4a349034219436699234?pvs=4)
+[ppt](https://docs.google.com/presentation/d/1vwaE_uGfPQfEEeGfcE2KKxOqT3lrJdtg/edit?usp=share_link&ouid=108552118158799990334&rtpof=true&sd=true)
+<br><br>
 
 ### ✨ 기능
 **WWE**가 제공하는 기능은 다음과 같습니다.
